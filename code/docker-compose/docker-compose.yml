@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  mattcanello.newsfeed.rssreader:
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
+    build:
+      context: .
+      dockerfile: ../MattCanello.NewsFeed.RssReader/Dockerfile
