@@ -1,6 +1,11 @@
+using MattCanello.NewsFeed.RssReader.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure;
+using MattCanello.NewsFeed.RssReader.Interfaces;
+using MattCanello.NewsFeed.RssReader.Services;
+
 namespace MattCanello.NewsFeed.RssReader
 {
-    public class Program
+    static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,6 +18,8 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAppServices();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -24,10 +31,37 @@ namespace MattCanello.NewsFeed.RssReader
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void AddAppServices(this IServiceCollection services)
+        {
+            services
+                .AddScoped<IChannelPublisher, ChannelPublisher>()
+                .AddSingleton<IChannelReader, ChannelReader>()
+                .AddScoped<IChannelService, ChannelService>();
+
+            services
+                .AddScoped<IEntryPublisher, EntryPublisher>()
+                .AddSingleton<IEntryReader, EntryReader>()
+                .AddScoped<IEntryService, EntryService>();
+
+            services
+                .AddSingleton<INonStandardEnricherEvaluator, NonStandardEnricherEvaluator>();
+
+            services
+                // TODO: Substituir pela implementação de fato.
+                .AddSingleton<IFeedRepository, InMemoryFeedRepository>();
+
+            services
+                .AddSingleton<ReadRssRequestMessageFactory>();
+
+            services
+                .AddHttpClient()
+                .AddScoped<IRssClient, RssClient>()
+                .AddScoped<IRssService, RssService>();
         }
     }
 }
