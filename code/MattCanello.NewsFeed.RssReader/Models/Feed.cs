@@ -1,4 +1,19 @@
-﻿namespace MattCanello.NewsFeed.RssReader.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MattCanello.NewsFeed.RssReader.Models
 {
-    public record Feed(string ChannelId, string FeedId, string Url, string? ETag = null, DateTimeOffset? LastModifiedDate = null);
+    [Serializable]
+    public sealed class Feed
+    {
+        public string ChannelId { get; set; }
+
+        public string FeedId { get; set; }
+
+        [DataType(DataType.Url)]
+        public string Url { get; set; }
+
+        public string? LastETag { get; set; }
+
+        public DateTimeOffset? LastModifiedDate { get; set; }
+    }
 }
