@@ -9,11 +9,16 @@ namespace MattCanello.NewsFeed.RssReader.Messages
 
         private ReadRssResponseMessage() { }
 
-        public ReadRssResponseMessage(SyndicationFeed? feed, string? eTag, DateTimeOffset? responseDate)
+        public ReadRssResponseMessage(string? eTag, DateTimeOffset? responseDate)
         {
-            Feed = feed;
             ETag = eTag;
             ResponseDate = responseDate;
+        }
+
+        public ReadRssResponseMessage(SyndicationFeed? feed, string? eTag, DateTimeOffset? responseDate)
+            : this(eTag, responseDate)
+        {
+            Feed = feed;
         }
 
         public SyndicationFeed? Feed { get; }
