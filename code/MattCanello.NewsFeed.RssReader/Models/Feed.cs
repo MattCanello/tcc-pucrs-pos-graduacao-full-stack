@@ -5,6 +5,15 @@ namespace MattCanello.NewsFeed.RssReader.Models
     [Serializable]
     public sealed class Feed
     {
+        public Feed() { }
+
+        public Feed(string channelId, string feedId, string url)
+        {
+            this.ChannelId = channelId;
+            this.FeedId = feedId;
+            this.Url = url;
+        }
+
         public string ChannelId { get; set; }
 
         public string FeedId { get; set; }
