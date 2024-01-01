@@ -7,6 +7,8 @@ namespace MattCanello.NewsFeed.RssReader.Factories
     {
         public ReadRssRequestMessage FromFeed(Feed feed)
         {
+            ArgumentNullException.ThrowIfNull(feed);
+
             return new ReadRssRequestMessage(new Uri(feed.Url, UriKind.Absolute), feed.LastETag, feed.LastModifiedDate);
         }
     }
