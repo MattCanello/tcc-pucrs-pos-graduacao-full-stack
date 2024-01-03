@@ -1,14 +1,26 @@
 ﻿using MattCanello.NewsFeed.RssReader.Interfaces;
 using MattCanello.NewsFeed.RssReader.Models;
+using System.Diagnostics.CodeAnalysis;
 
-namespace MattCanello.NewsFeed.RssReader.Infrastructure
+namespace MattCanello.NewsFeed.RssReader.Tests.Mocks
 {
-    public sealed class InMemoryFeedRepository : IFeedRepository
+    [ExcludeFromCodeCoverage]
+    internal sealed class InMemoryFeedRepository : IFeedRepository
     {
         private static readonly IDictionary<string, Feed> Data = new Dictionary<string, Feed>(StringComparer.OrdinalIgnoreCase)
         {
             { "the-guardian-uk", new Feed(channelId: "the-guardian", feedId: "the-guardian-uk", url: "https://www.theguardian.com/uk/rss") }
         };
+
+        public InMemoryFeedRepository() { }
+
+        public InMemoryFeedRepository(params Feed[] feeds)
+        {
+            foreach (var feed in feeds)
+            {
+                Data.Add(feed.FeedId, feed);
+            }
+        }
 
         public Task<Feed?> GetAsync(string feedId, CancellationToken cancellationToken = default)
         {
