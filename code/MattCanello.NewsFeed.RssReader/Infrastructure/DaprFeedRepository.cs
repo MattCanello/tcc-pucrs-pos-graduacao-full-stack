@@ -7,7 +7,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure
     public sealed class DaprFeedRepository : IFeedRepository
     {
         private readonly DaprClient _daprClient;
-        private const string StateStoreName = "statestore";
+        private const string StateStoreName = "rssreaderstate";
 
         public DaprFeedRepository(DaprClient daprClient)
         {
