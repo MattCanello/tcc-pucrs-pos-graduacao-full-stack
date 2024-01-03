@@ -1,3 +1,6 @@
+using CloudNative.CloudEvents;
+using CloudNative.CloudEvents.SystemTextJson;
+using MattCanello.NewsFeed.RssReader.Factories;
 using MattCanello.NewsFeed.RssReader.Filters;
 using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
@@ -25,6 +28,7 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddMapperProfiles();
 
             builder.Services.AddDapr();
+            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -98,6 +102,19 @@ namespace MattCanello.NewsFeed.RssReader
             {
                 config.AddProfile<FeedProfile>();
             });
+        }
+
+        private static void AddCloudEvents(this IServiceCollection services)
+        {
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
+                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
+                {
+                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+                    {
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                    }, new JsonDocumentOptions());
+                });
         }
     }
 }

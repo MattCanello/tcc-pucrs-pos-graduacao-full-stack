@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.RssReader.Services
         {
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
-            foreach (var item in syndicationFeed.Items)
+            foreach (var item in syndicationFeed.Items.OrderBy(item => item.PublishDate))
             {
                 var authors = item
                     .Authors
