@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
 using MattCanello.NewsFeed.RssReader.Profiles;
 using MattCanello.NewsFeed.RssReader.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,10 +15,15 @@ namespace MattCanello.NewsFeed.RssReader
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddControllers(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            });
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -31,7 +37,6 @@ namespace MattCanello.NewsFeed.RssReader
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
