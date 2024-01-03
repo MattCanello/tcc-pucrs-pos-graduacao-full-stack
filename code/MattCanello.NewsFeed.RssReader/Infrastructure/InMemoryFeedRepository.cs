@@ -23,5 +23,11 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure
             Data[feedId] = feed;
             return Task.CompletedTask;
         }
+
+        public Task DeleteAsync(string feedId, CancellationToken cancellationToken = default)
+        {
+            Data.Remove(feedId);
+            return Task.CompletedTask;
+        }
     }
 }

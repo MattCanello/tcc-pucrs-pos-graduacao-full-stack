@@ -31,5 +31,10 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure
 
             await _daprClient.SaveStateAsync(StateStoreName, feedId, feed, cancellationToken: cancellationToken);
         }
+
+        public async Task DeleteAsync(string feedId, CancellationToken cancellationToken = default)
+        {
+            await _daprClient.DeleteStateAsync(StateStoreName, feedId, cancellationToken: cancellationToken);
+        }
     }
 }

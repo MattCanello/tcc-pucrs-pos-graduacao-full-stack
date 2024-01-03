@@ -1,6 +1,7 @@
 using MattCanello.NewsFeed.RssReader.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
+using MattCanello.NewsFeed.RssReader.Profiles;
 using MattCanello.NewsFeed.RssReader.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,6 +20,11 @@ namespace MattCanello.NewsFeed.RssReader
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddAutoMapper((config) =>
+            {
+                config.AddProfile<FeedProfile>();
+            });
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
