@@ -7,7 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.RssRea
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose\docker-compose.dcproj", "{A4FD780B-F657-451A-8B10-F625E0D639B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.RssReader.Tests", "MattCanello.NewsFeed.RssReader.Tests\MattCanello.NewsFeed.RssReader.Tests.csproj", "{AA904D92-FEF1-4282-8FC1-C23E03306DF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.RssReader.Tests", "MattCanello.NewsFeed.RssReader.Tests\MattCanello.NewsFeed.RssReader.Tests.csproj", "{AA904D92-FEF1-4282-8FC1-C23E03306DF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{D03D8E47-AD18-4B46-80F9-87B707619186}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{05F41E28-E4C4-4966-9F92-1F3F23D92B2F}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\statestore.yaml = dapr\components\statestore.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05F41E28-E4C4-4966-9F92-1F3F23D92B2F} = {D03D8E47-AD18-4B46-80F9-87B707619186}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}

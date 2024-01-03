@@ -2,6 +2,8 @@ using MattCanello.NewsFeed.RssReader.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
 using MattCanello.NewsFeed.RssReader.Services;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.RssReader
 {
@@ -18,6 +20,7 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDapr();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -52,8 +55,7 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddSingleton<INonStandardEnricherEvaluator, NonStandardEnricherEvaluator>();
 
             services
-                // TODO: Substituir pela implementação de fato.
-                .AddSingleton<IFeedRepository, InMemoryFeedRepository>();
+                .AddSingleton<IFeedRepository, DaprFeedRepository>();
 
             services
                 .AddSingleton<ReadRssRequestMessageFactory>();
@@ -62,6 +64,17 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
                 .AddScoped<IRssService, RssService>();
+        }
+
+        private static void AddDapr(this IServiceCollection services)
+        {
+            services.AddDaprClient((builder) =>
+            {
+                builder.UseJsonSerializationOptions(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                });
+            });
         }
     }
 }
