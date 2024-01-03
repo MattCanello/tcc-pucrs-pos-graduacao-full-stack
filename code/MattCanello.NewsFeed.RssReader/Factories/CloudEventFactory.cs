@@ -9,6 +9,9 @@ namespace MattCanello.NewsFeed.RssReader.Factories
     {
         public CloudEvent CreateNewEntryEvent(string feedId, Entry entry)
         {
+            ArgumentNullException.ThrowIfNull(feedId);
+            ArgumentNullException.ThrowIfNull(entry);
+
             var cloudEvent = new CloudEvent(CloudEventsSpecVersion.V1_0)
             {
                 Data = entry,
@@ -16,7 +19,7 @@ namespace MattCanello.NewsFeed.RssReader.Factories
                 Time = entry.PublishDate,
                 Id = entry.Id,
                 Subject = entry.Id,
-                Source = new Uri($"/rss-reader/{feedId}")
+                Source = new Uri($"/rss-reader/{feedId}", UriKind.Relative)
             };
 
             cloudEvent.SetPartitionKey(feedId);
