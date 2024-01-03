@@ -4,33 +4,25 @@ using MattCanello.NewsFeed.RssReader.Interfaces;
 using MattCanello.NewsFeed.RssReader.Profiles;
 using MattCanello.NewsFeed.RssReader.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.RssReader
 {
+    [ExcludeFromCodeCoverage]
     static class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers(options =>
-            {
-                options.RespectBrowserAcceptHeader = true;
-                options.OutputFormatters.RemoveType<StringOutputFormatter>();
-            }).AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
-            });
+            builder.Services.AddDefaultControllers();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddAutoMapper((config) =>
-            {
-                config.AddProfile<FeedProfile>();
-            });
+            builder.Services.AddMapperProfiles();
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
@@ -85,6 +77,27 @@ namespace MattCanello.NewsFeed.RssReader
                 {
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                 });
+            });
+        }
+
+        private static void AddDefaultControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            });
+        }
+
+        private static void AddMapperProfiles(this IServiceCollection services)
+        {
+            services.AddAutoMapper((config) =>
+            {
+                config.AddProfile<FeedProfile>();
             });
         }
     }
