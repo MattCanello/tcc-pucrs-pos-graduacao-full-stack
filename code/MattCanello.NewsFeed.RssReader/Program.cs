@@ -1,4 +1,3 @@
-using MattCanello.NewsFeed.RssReader.Factories;
 using MattCanello.NewsFeed.RssReader.Filters;
 using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
@@ -60,9 +59,6 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddSingleton<IFeedRepository, DaprFeedRepository>();
-
-            services
-                .AddSingleton<ReadRssRequestMessageFactory>();
 
             services
                 .AddHttpClient()
