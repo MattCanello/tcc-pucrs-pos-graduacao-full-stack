@@ -10,13 +10,11 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
     [ApiController]
     public class FeedController : ControllerBase
     {
-        private readonly IRssService _rssService;
         private readonly IFeedRepository _feedRepository;
         private readonly IMapper _mapper;
 
-        public FeedController(IRssService rssService, IFeedRepository feedRepository, IMapper mapper)
+        public FeedController(IFeedRepository feedRepository, IMapper mapper)
         {
-            _rssService = rssService;
             _feedRepository = feedRepository;
             _mapper = mapper;
         }
@@ -53,14 +51,6 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
         public async Task<IActionResult> Delete(string feedId, CancellationToken cancellationToken = default)
         {
             await _feedRepository.DeleteAsync(feedId, cancellationToken);
-            return NoContent();
-        }
-
-        [HttpPost("process/{feedId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Process(string feedId, CancellationToken cancellationToken = default)
-        {
-            await _rssService.ProcessFeedAsync(feedId, cancellationToken);
             return NoContent();
         }
     }
