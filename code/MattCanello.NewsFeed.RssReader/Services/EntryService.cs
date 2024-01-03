@@ -14,14 +14,14 @@ namespace MattCanello.NewsFeed.RssReader.Services
             _entryPublisher = entryPublisher;
         }
 
-        public async Task ProcessEntriesFromRSSAsync(SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
+        public async Task ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
             var publishTasks = new List<Task>();
             foreach (var entry in _entryReader.FromRSS(syndicationFeed))
             {
-                var publishEntryTask = _entryPublisher.PublishNewEntryAsync(entry, cancellationToken);
+                var publishEntryTask = _entryPublisher.PublishNewEntryAsync(feedId, entry, cancellationToken);
                 publishTasks.Add(publishEntryTask);
             }
 

@@ -50,7 +50,7 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddScoped<IChannelService, ChannelService>();
 
             services
-                .AddScoped<IEntryPublisher, EntryPublisher>()
+                .AddScoped<IEntryPublisher, DaprEntryPublisher>()
                 .AddSingleton<IEntryReader, EntryReader>()
                 .AddScoped<IEntryService, EntryService>();
 
