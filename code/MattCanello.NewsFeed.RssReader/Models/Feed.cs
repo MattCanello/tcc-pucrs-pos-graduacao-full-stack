@@ -7,17 +7,20 @@ namespace MattCanello.NewsFeed.RssReader.Models
     {
         public Feed() { }
 
-        public Feed(string channelId, string feedId, string url)
+        public Feed(string channelId, string feedId, string url, string? lastETag = null, DateTimeOffset? lastModifiedDate = null)
         {
             this.ChannelId = channelId;
             this.FeedId = feedId;
             this.Url = url;
+            this.LastETag = lastETag;
+            this.LastModifiedDate = lastModifiedDate;
         }
 
         public string ChannelId { get; set; }
 
         public string FeedId { get; set; }
 
+        [Url]
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
