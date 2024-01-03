@@ -1,4 +1,5 @@
 using MattCanello.NewsFeed.RssReader.Factories;
+using MattCanello.NewsFeed.RssReader.Filters;
 using MattCanello.NewsFeed.RssReader.Infrastructure;
 using MattCanello.NewsFeed.RssReader.Interfaces;
 using MattCanello.NewsFeed.RssReader.Profiles;
@@ -86,6 +87,8 @@ namespace MattCanello.NewsFeed.RssReader
             {
                 options.RespectBrowserAcceptHeader = true;
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
+
+                options.Filters.Add<HttpExceptionFilter>();
             })
             .AddJsonOptions(options =>
             {

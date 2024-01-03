@@ -15,6 +15,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
         }
 
         [HttpPost("{feedId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Process(string feedId, CancellationToken cancellationToken = default)
         {
