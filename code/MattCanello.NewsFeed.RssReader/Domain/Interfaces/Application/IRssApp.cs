@@ -1,6 +1,6 @@
-﻿namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services
+﻿namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application
 {
-    public interface IRssService
+    public interface IRssApp
     {
         Task ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default);
     }

@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
-using MattCanello.NewsFeed.RssReader.Application.Handlers;
 using MattCanello.NewsFeed.RssReader.Controllers;
 using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;

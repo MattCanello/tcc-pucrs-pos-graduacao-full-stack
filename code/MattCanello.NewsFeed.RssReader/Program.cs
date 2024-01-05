@@ -1,6 +1,8 @@
 using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.SystemTextJson;
+using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
@@ -81,7 +83,7 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<IRssService, RssService>();
+                .AddScoped<IRssApp, RssApp>();
         }
 
         private static void AddDapr(this IServiceCollection services)

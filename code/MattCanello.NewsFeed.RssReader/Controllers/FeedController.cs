@@ -1,5 +1,5 @@
-﻿using MattCanello.NewsFeed.RssReader.Application.Interfaces;
-using MattCanello.NewsFeed.RssReader.Domain.Commands;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using Microsoft.AspNetCore.Mvc;

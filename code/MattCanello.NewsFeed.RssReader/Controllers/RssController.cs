@@ -1,4 +1,4 @@
-﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
@@ -7,9 +7,9 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
     [ApiController]
     public class RssController : ControllerBase
     {
-        private readonly IRssService _rssService;
+        private readonly IRssApp _rssService;
 
-        public RssController(IRssService rssService)
+        public RssController(IRssApp rssService)
         {
             _rssService = rssService;
         }

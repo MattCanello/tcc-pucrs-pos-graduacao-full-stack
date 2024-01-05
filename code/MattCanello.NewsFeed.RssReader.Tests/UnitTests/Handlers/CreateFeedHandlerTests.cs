@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
-using MattCanello.NewsFeed.RssReader.Application.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Handlers

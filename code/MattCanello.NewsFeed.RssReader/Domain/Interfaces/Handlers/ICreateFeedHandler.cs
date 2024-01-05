@@ -1,7 +1,7 @@
 ﻿using MattCanello.NewsFeed.RssReader.Domain.Commands;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 
-namespace MattCanello.NewsFeed.RssReader.Application.Interfaces
+namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers
 {
     public interface ICreateFeedHandler
     {

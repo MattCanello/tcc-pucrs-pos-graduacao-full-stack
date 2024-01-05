@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MattCanello.NewsFeed.RssReader.Application.Interfaces;
 using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 
-namespace MattCanello.NewsFeed.RssReader.Application.Handlers
+namespace MattCanello.NewsFeed.RssReader.Domain.Handlers
 {
     public sealed class CreateFeedHandler : ICreateFeedHandler
     {

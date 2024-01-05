@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using MattCanello.NewsFeed.RssReader.Domain.Exceptions;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Messages;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 
-namespace MattCanello.NewsFeed.RssReader.Domain.Services
+namespace MattCanello.NewsFeed.RssReader.Domain.Application
 {
-    public sealed class RssService : IRssService
+    public sealed class RssApp : IRssApp
     {
         private readonly IFeedRepository _feedRepository;
         private readonly IMapper _mapper;
@@ -17,7 +18,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
         private readonly IChannelService _channelService;
         private readonly IEntryService _entryService;
 
-        public RssService(IFeedRepository feedRepository, IMapper mapper, IRssClient rssClient, IChannelService channelService, IEntryService entryService)
+        public RssApp(IFeedRepository feedRepository, IMapper mapper, IRssClient rssClient, IChannelService channelService, IEntryService entryService)
         {
             _feedRepository = feedRepository;
             _mapper = mapper;
