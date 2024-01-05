@@ -2,11 +2,13 @@ using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.SystemTextJson;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
@@ -79,6 +81,9 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddSingleton<IFeedRepository, DaprFeedRepository>();
+
+            services
+                .AddSingleton<ICreateFeedHandler, CreateFeedHandler>();
 
             services
                 .AddHttpClient()
