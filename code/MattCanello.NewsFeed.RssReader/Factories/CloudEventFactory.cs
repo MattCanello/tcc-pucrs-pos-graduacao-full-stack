@@ -27,5 +27,27 @@ namespace MattCanello.NewsFeed.RssReader.Factories
 
             return cloudEvent;
         }
+
+        public CloudEvent CreateChannelUpdatedEvent(string channelId, Channel channel)
+        {
+            ArgumentNullException.ThrowIfNull(channelId);
+            ArgumentNullException.ThrowIfNull(channel);
+
+            var cloudEvent = new CloudEvent(CloudEventsSpecVersion.V1_0)
+            {
+                Data = channel,
+                Type = "mattcanello.newsfeed.channelupdated",
+                Time = DateTimeOffset.UtcNow,
+                Id = channelId,
+                Subject = channelId,
+                Source = new Uri($"/rss-reader/{channelId}", UriKind.Relative)
+            };
+
+            cloudEvent.SetPartitionKey(channelId);
+            cloudEvent.SetAttributeFromString("channelid", channelId);
+
+            return cloudEvent;
+        }
+
     }
 }

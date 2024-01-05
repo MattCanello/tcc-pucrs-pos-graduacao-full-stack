@@ -4,6 +4,6 @@ namespace MattCanello.NewsFeed.RssReader.Interfaces
 {
     public interface IChannelService
     {
-        Task ProcessChannelUpdateFromRssAsync(SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
+        Task ProcessChannelUpdateFromRssAsync(string channelId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
     }
 }

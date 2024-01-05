@@ -49,7 +49,7 @@ namespace MattCanello.NewsFeed.RssReader
         private static void AddAppServices(this IServiceCollection services)
         {
             services
-                .AddScoped<IChannelPublisher, ChannelPublisher>()
+                .AddScoped<IChannelPublisher, DaprChannelPublisher>()
                 .AddSingleton<IChannelReader, ChannelReader>()
                 .AddScoped<IChannelService, ChannelService>();
 

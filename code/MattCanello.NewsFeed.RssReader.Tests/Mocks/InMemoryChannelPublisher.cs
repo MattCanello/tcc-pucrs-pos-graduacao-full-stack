@@ -8,13 +8,14 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Mocks
     [ExcludeFromCodeCoverage]
     internal sealed class InMemoryChannelPublisher : IChannelPublisher
     {
-        private readonly ConcurrentBag<Channel> _publishedChannels = new ConcurrentBag<Channel>();
+        private readonly ConcurrentDictionary<string, Channel> _publishedChannels = new ConcurrentDictionary<string, Channel>(StringComparer.OrdinalIgnoreCase);
 
-        public IEnumerable<Channel> PublishedChannels => _publishedChannels;
+        public IEnumerable<Channel> PublishedChannels => _publishedChannels.Values;
+        public IEnumerable<string> PublishedChannelIds => _publishedChannels.Keys;
 
-        public Task PublishChannelUpdatedAsync(Channel channel, CancellationToken cancellationToken = default)
+        public Task PublishChannelUpdatedAsync(string channelId, Channel channel, CancellationToken cancellationToken = default)
         {
-            _publishedChannels.Add(channel);
+            _publishedChannels.TryAdd(channelId, channel);
             return Task.CompletedTask;
         }
     }
