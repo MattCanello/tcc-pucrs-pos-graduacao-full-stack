@@ -10,7 +10,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
     public sealed class ChannelServiceTests
     {
         [Theory, AutoData]
-        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string channelId)
+        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId)
         {
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
@@ -18,15 +18,15 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var publisher = new InMemoryChannelPublisher();
             var service = new ChannelService(new ChannelReader(), publisher);
 
-            await service.ProcessChannelUpdateFromRssAsync(channelId, feed);
+            await service.ProcessChannelUpdateFromRssAsync(feedId, feed);
 
             Assert.NotNull(publisher.PublishedChannels);
             var singleChannel = Assert.Single(publisher.PublishedChannels);
 
             Assert.NotNull(singleChannel);
 
-            var singleChannelId = Assert.Single(publisher.PublishedChannelIds);
-            Assert.Same(channelId, singleChannelId);
+            var singleFeedId = Assert.Single(publisher.PublishedFeedIds);
+            Assert.Same(feedId, singleFeedId);
         }
     }
 }

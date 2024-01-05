@@ -14,9 +14,9 @@ namespace MattCanello.NewsFeed.RssReader.Services
             _channelPublisher = channelPublisher;
         }
 
-        public async Task ProcessChannelUpdateFromRssAsync(string channelId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
+        public async Task ProcessChannelUpdateFromRssAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(channelId);
+            ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
             var channel = _channelReader.FromRSS(syndicationFeed);
@@ -24,7 +24,7 @@ namespace MattCanello.NewsFeed.RssReader.Services
             if (channel is null)
                 return;
 
-            await _channelPublisher.PublishChannelUpdatedAsync(channelId, channel, cancellationToken);
+            await _channelPublisher.PublishChannelUpdatedAsync(feedId, channel, cancellationToken);
         }
     }
 }

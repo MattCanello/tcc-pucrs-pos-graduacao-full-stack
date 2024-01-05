@@ -16,9 +16,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
         private readonly IRssClient _rssClient = new RssClient(new HttpClient(new MockedRssHandler(Resources.sample_rss_the_guardian_uk, ETag, LastModifiedDate)));
         
         [Theory, AutoData]
-        public async Task ProcessFeedAsync_OnFirstRequest_ShouldUpdateETagAndModifiedDate(Uri url, string feedId, string channelId)
+        public async Task ProcessFeedAsync_OnFirstRequest_ShouldUpdateETagAndModifiedDate(Uri url, string feedId)
         {
-            var feed = new Feed(channelId, feedId, url.ToString());
+            var feed = new Feed(feedId, url.ToString());
 
             var service = new RssService(
                 new InMemoryFeedRepository(feed),
@@ -49,9 +49,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
         }
 
         [Theory, AutoData]
-        public async Task ProcessFeedAsync_WhenFeedIsAlreadyUpdated_ShouldNotProduceEvents(Uri url, string feedId, string channelId)
+        public async Task ProcessFeedAsync_WhenFeedIsAlreadyUpdated_ShouldNotProduceEvents(Uri url, string feedId)
         {
-            var feed = new Feed(channelId, feedId, url.ToString(), ETag, LastModifiedDate);
+            var feed = new Feed(feedId, url.ToString(), ETag, LastModifiedDate);
 
             var entryPublisher = new InMemoryEntryPublisher();
             var channelPublisher = new InMemoryChannelPublisher();

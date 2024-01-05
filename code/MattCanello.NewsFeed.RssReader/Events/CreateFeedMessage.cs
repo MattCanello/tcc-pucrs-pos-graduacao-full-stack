@@ -7,10 +7,6 @@ namespace MattCanello.NewsFeed.RssReader.Events
     {
         [Required]
         [StringLength(100)]
-        public string ChannelId { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string FeedId { get; set; }
 
         [Url]

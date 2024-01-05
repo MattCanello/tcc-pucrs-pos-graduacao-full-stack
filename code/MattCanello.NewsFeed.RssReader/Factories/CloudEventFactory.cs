@@ -28,9 +28,9 @@ namespace MattCanello.NewsFeed.RssReader.Factories
             return cloudEvent;
         }
 
-        public CloudEvent CreateChannelUpdatedEvent(string channelId, Channel channel)
+        public CloudEvent CreateChannelUpdatedEvent(string feedId, Channel channel)
         {
-            ArgumentNullException.ThrowIfNull(channelId);
+            ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
 
             var cloudEvent = new CloudEvent(CloudEventsSpecVersion.V1_0)
@@ -38,13 +38,13 @@ namespace MattCanello.NewsFeed.RssReader.Factories
                 Data = channel,
                 Type = "mattcanello.newsfeed.channelupdated",
                 Time = DateTimeOffset.UtcNow,
-                Id = channelId,
-                Subject = channelId,
-                Source = new Uri($"/rss-reader/{channelId}", UriKind.Relative)
+                Id = feedId,
+                Subject = feedId,
+                Source = new Uri($"/rss-reader/{feedId}", UriKind.Relative)
             };
 
-            cloudEvent.SetPartitionKey(channelId);
-            cloudEvent.SetAttributeFromString("channelid", channelId);
+            cloudEvent.SetPartitionKey(feedId);
+            cloudEvent.SetAttributeFromString("feedId", feedId);
 
             return cloudEvent;
         }

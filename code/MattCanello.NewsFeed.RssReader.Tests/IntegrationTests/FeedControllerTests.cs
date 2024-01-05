@@ -31,7 +31,6 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
                 .Subject;
 
             feed.FeedId.Should().Be(createFeedMessage.FeedId);
-            feed.ChannelId.Should().Be(createFeedMessage.ChannelId);
             feed.Url.Should().Be(createFeedMessage.Url);
 
             feed.LastETag.Should().BeNull();
