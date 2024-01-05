@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev
+      - main
 env:
   DOTNET_CORE_VERSION: 7.0.x
   CONTAINER_APP_NAME: rssreader
