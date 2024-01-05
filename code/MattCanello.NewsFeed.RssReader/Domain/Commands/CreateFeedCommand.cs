@@ -7,11 +7,11 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Commands
     {
         [Required]
         [StringLength(100)]
-        public string FeedId { get; set; }
+        public string? FeedId { get; set; }
 
         [Url]
         [Required]
         [DataType(DataType.Url)]
-        public string Url { get; set; }
+        public string? Url { get; set; }
     }
 }
