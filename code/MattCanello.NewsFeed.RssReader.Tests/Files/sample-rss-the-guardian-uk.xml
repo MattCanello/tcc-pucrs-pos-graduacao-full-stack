@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+	<channel>
+		<title>The Guardian</title>
+		<link>https://www.theguardian.com/uk</link>
+		<description>Latest news, sport, business, comment, analysis and reviews from the Guardian, the world's leading liberal voice</description>
+		<language>en-gb</language>
+		<copyright>Guardian News and Media Limited or its affiliated companies. All rights reserved. 2024</copyright>
+		<pubDate>Mon, 01 Jan 2024 18:42:44 GMT</pubDate>
+		<dc:date>2024-01-01T18:42:44Z</dc:date>
+		<dc:language>en-gb</dc:language>
+		<dc:rights>Guardian News and Media Limited or its affiliated companies. All rights reserved. 2024</dc:rights>
+		<image>
+			<title>The Guardian</title>
+			<url>https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png</url>
+			<link>https://www.theguardian.com</link>
+		</image>
+		<item>
+			<title>Japan orders people to evacuate after 7.6-magnitude quake hits west coast</title>
+			<link>https://www.theguardian.com/world/2024/jan/01/japan-issues-major-tsunami-warning-for-coastal-prefecture-after-76-magnitude-earthquake</link>
+			<description>&lt;p&gt;Major tsunami warnings downgraded but residents in coastal areas told not to return to homes&lt;/p&gt;&lt;p&gt;• &lt;a href="https://www.theguardian.com/world/live/2024/jan/01/japan-tsunami-earthquake-warning-latest-updates-live"&gt;Japan quake: latest updates&lt;/a&gt;&lt;/p&gt;&lt;p&gt;A powerful earthquake has struck central Japan’s western coastline, triggering waves over a metre high and prompting tsunami alerts and warnings for people to evacuate.&lt;/p&gt;&lt;p&gt;The quake, which is estimated to have been magnitude 7.6, struck the Noto peninsula in Ishikawa prefecture on the main central island of Honshu at about 4.10pm local time (07:10 GMT). It knocked out power to tens of thousands of homes and disrupted flights and rail services.&lt;/p&gt; &lt;a href="https://www.theguardian.com/world/2024/jan/01/japan-issues-major-tsunami-warning-for-coastal-prefecture-after-76-magnitude-earthquake"&gt;Continue reading...&lt;/a&gt;</description>
+			<category domain="https://www.theguardian.com/world/japan">Japan</category>
+			<pubDate>Mon, 01 Jan 2024 15:28:01 GMT</pubDate>
+			<guid>https://www.theguardian.com/world/2024/jan/01/japan-issues-major-tsunami-warning-for-coastal-prefecture-after-76-magnitude-earthquake</guid>
+			<media:content width="140" url="https://i.guim.co.uk/img/media/10d3fe792040e29caf0902ec7ac4d592249a5d99/0_140_3645_2187/master/3645.jpg?width=140&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=03dc08c3bf0990310517ffd1f4fcbf41">
+				<media:credit scheme="urn:ebu">Photograph: Yusuke Fukuhara/Yomiuri Shimbun/AFP/Getty Images</media:credit>
+			</media:content>
+			<media:content width="460" url="https://i.guim.co.uk/img/media/10d3fe792040e29caf0902ec7ac4d592249a5d99/0_140_3645_2187/master/3645.jpg?width=460&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=379e2f66f700c4f41e1e36501b3c0aa6">
+				<media:credit scheme="urn:ebu">Photograph: Yusuke Fukuhara/Yomiuri Shimbun/AFP/Getty Images</media:credit>
+			</media:content>
+			<dc:creator>Gavin Blair in Tokyo and agencies</dc:creator>
+			<dc:date>2024-01-01T15:28:01Z</dc:date>
+		</item>
+	</channel>
+</rss>
+
