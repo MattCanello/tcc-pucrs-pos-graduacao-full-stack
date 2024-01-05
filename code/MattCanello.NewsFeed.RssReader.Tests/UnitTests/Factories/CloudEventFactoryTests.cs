@@ -2,6 +2,7 @@
 using CloudNative.CloudEvents.Extensions;
 using MattCanello.NewsFeed.RssReader.Factories;
 using MattCanello.NewsFeed.RssReader.Models;
+using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
 {
@@ -13,7 +14,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
             entry.Url = entryUrl.ToString();
             entry.Id = entryId.ToString();
 
-            var factory = new CloudEventFactory();
+            var factory = new CloudEventFactory(MockedDateTimeProvider.Any);
 
             var cloudEvent = factory.CreateNewEntryEvent(feedId, entry);
 
@@ -24,6 +25,25 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
             Assert.Equal(entry.Id, cloudEvent.Id);
             Assert.Equal(entry.PublishDate, cloudEvent.Time);
             Assert.Equal("mattcanello.newsfeed.newentry", cloudEvent.Type);
+            Assert.Equal(feedId, cloudEvent.GetPartitionKey());
+        }
+
+        [Theory, AutoData]
+        public void CreateChannelUpdatedEvent_WhenDataIsValid_ShouldProduceExpectedResult(string feedId, Channel channel, Uri channelUrl, DateTimeOffset utcNow)
+        {
+            channel.Url = channelUrl.ToString();
+
+            var factory = new CloudEventFactory(new MockedDateTimeProvider(utcNow));
+
+            var cloudEvent = factory.CreateChannelUpdatedEvent(feedId, channel);
+
+            Assert.Equal("1.0", cloudEvent.SpecVersion.VersionId);
+            Assert.Equal(channel, cloudEvent.Data);
+            Assert.Equal($"/rss-reader/{feedId}", cloudEvent.Source!.ToString());
+            Assert.Equal(feedId, cloudEvent.Subject);
+            Assert.Equal(feedId, cloudEvent.Id);
+            Assert.Equal(utcNow, cloudEvent.Time);
+            Assert.Equal("mattcanello.newsfeed.channelupdated", cloudEvent.Type);
             Assert.Equal(feedId, cloudEvent.GetPartitionKey());
         }
     }

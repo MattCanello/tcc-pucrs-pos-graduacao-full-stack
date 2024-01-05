@@ -7,6 +7,13 @@ namespace MattCanello.NewsFeed.RssReader.Factories
 {
     public sealed class CloudEventFactory : ICloudEventFactory
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public CloudEventFactory(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
         public CloudEvent CreateNewEntryEvent(string feedId, Entry entry)
         {
             ArgumentNullException.ThrowIfNull(feedId);
@@ -37,17 +44,16 @@ namespace MattCanello.NewsFeed.RssReader.Factories
             {
                 Data = channel,
                 Type = "mattcanello.newsfeed.channelupdated",
-                Time = DateTimeOffset.UtcNow,
+                Time = _dateTimeProvider.GetUtcNow(),
                 Id = feedId,
                 Subject = feedId,
                 Source = new Uri($"/rss-reader/{feedId}", UriKind.Relative)
             };
 
             cloudEvent.SetPartitionKey(feedId);
-            cloudEvent.SetAttributeFromString("feedId", feedId);
+            cloudEvent.SetAttributeFromString("feedid", feedId);
 
             return cloudEvent;
         }
-
     }
 }
