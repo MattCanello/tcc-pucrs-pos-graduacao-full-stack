@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MattCanello.NewsFeed.RssReader.Profiles;
+using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 
 namespace MattCanello.NewsFeed.RssReader.Tests
 {

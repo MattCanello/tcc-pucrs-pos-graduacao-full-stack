@@ -1,8 +1,10 @@
 ﻿using AutoFixture.Xunit2;
-using MattCanello.NewsFeed.RssReader.Exceptions;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Models;
-using MattCanello.NewsFeed.RssReader.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Exceptions;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Services;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 
@@ -24,8 +26,8 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
                 new InMemoryFeedRepository(feed),
                 Util.Mapper,
                 _rssClient,
-                new ChannelService(new ChannelReader(), new InMemoryChannelPublisher()),
-                new EntryService(new EntryReader(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
+                new ChannelService(new ChannelFactory(), new InMemoryChannelPublisher()),
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
                 );
 
             await service.ProcessFeedAsync(feedId);
@@ -41,8 +43,8 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
                 new InMemoryFeedRepository(),
                 Util.Mapper,
                 _rssClient,
-                new ChannelService(new ChannelReader(), new InMemoryChannelPublisher()),
-                new EntryService(new EntryReader(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
+                new ChannelService(new ChannelFactory(), new InMemoryChannelPublisher()),
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
                 );
 
             await Assert.ThrowsAsync<FeedNotFoundException>(() => service.ProcessFeedAsync(feedId));
@@ -60,8 +62,8 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
                 new InMemoryFeedRepository(feed),
                 Util.Mapper,
                 _rssClient,
-                new ChannelService(new ChannelReader(), channelPublisher),
-                new EntryService(new EntryReader(EmptyNonStandardEnricherEvaluator.Instance), entryPublisher)
+                new ChannelService(new ChannelFactory(), channelPublisher),
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), entryPublisher)
                 );
 
             await service.ProcessFeedAsync(feedId);

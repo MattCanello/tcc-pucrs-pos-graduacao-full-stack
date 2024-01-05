@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using MattCanello.NewsFeed.RssReader.Controllers;
-using MattCanello.NewsFeed.RssReader.Events;
-using MattCanello.NewsFeed.RssReader.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
     public sealed class FeedControllerTests
     {
         [Theory(DisplayName = "Cadastro de Feed válido"), AutoData]
-        public async Task Create_WhenDataIsValid_ShouldCreateFeed(CreateFeedMessage createFeedMessage)
+        public async Task Create_WhenDataIsValid_ShouldCreateFeed(CreateFeedCommand createFeedMessage)
         {
             var controller = new FeedController(new InMemoryFeedRepository(), Util.Mapper);
 

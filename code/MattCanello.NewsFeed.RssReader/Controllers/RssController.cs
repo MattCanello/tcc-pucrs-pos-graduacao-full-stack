@@ -1,4 +1,4 @@
-﻿using MattCanello.NewsFeed.RssReader.Interfaces;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers

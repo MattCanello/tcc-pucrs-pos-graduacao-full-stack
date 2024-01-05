@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using MattCanello.NewsFeed.RssReader.Events;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
@@ -35,7 +35,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
-        public async Task<IActionResult> Create(CreateFeedMessage message)
+        public async Task<IActionResult> Create(CreateFeedCommand message)
         {
             if (message is null)
                 return BadRequest();

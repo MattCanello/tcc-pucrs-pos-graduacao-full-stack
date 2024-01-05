@@ -1,5 +1,5 @@
-﻿using MattCanello.NewsFeed.RssReader.Messages;
-using MattCanello.NewsFeed.RssReader.Services;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Messages;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 

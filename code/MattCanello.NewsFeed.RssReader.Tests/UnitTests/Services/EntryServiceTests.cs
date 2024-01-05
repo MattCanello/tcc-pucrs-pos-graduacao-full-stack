@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
-using MattCanello.NewsFeed.RssReader.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 using System.ServiceModel.Syndication;
@@ -16,7 +17,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var feed = SyndicationFeed.Load(xml);
 
             var publisher = new InMemoryEntryPublisher();
-            var service = new EntryService(new EntryReader(EmptyNonStandardEnricherEvaluator.Instance), publisher);
+            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher);
 
             await service.ProcessEntriesFromRSSAsync(feedId, feed);
 

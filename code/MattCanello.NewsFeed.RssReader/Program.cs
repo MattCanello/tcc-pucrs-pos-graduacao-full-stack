@@ -1,11 +1,22 @@
 using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.SystemTextJson;
-using MattCanello.NewsFeed.RssReader.Factories;
-using MattCanello.NewsFeed.RssReader.Filters;
-using MattCanello.NewsFeed.RssReader.Infrastructure;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Profiles;
-using MattCanello.NewsFeed.RssReader.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Profiles;
+using MattCanello.NewsFeed.RssReader.Domain.Services;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
+using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Providers;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Providers;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -52,13 +63,13 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 
             services
-                .AddScoped<IChannelPublisher, DaprChannelPublisher>()
-                .AddSingleton<IChannelReader, ChannelReader>()
+                .AddScoped<IChannelUpdatedPublisher, DaprChannelUpdatedPublisher>()
+                .AddSingleton<IChannelFactory, ChannelFactory>()
                 .AddScoped<IChannelService, ChannelService>();
 
             services
-                .AddScoped<IEntryPublisher, DaprEntryPublisher>()
-                .AddSingleton<IEntryReader, EntryReader>()
+                .AddScoped<INewEntryFoundPublisher, DaprNewEntryFoundPublisher>()
+                .AddSingleton<IEntryFactory, EntryFactory>()
                 .AddScoped<IEntryService, EntryService>();
 
             services

@@ -1,5 +1,5 @@
-﻿using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Models;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.Mocks

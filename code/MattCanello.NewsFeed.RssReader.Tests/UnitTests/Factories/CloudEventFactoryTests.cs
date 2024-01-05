@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using CloudNative.CloudEvents.Extensions;
-using MattCanello.NewsFeed.RssReader.Factories;
-using MattCanello.NewsFeed.RssReader.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
