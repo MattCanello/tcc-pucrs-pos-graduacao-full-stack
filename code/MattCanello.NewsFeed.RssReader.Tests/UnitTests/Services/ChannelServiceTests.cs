@@ -16,10 +16,10 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
-            var publisher = new InMemoryChannelPublisher();
+            var publisher = new InMemoryFeedConsumedPublisher();
             var service = new ChannelService(new ChannelFactory(), publisher);
 
-            await service.ProcessChannelUpdateFromRssAsync(feedId, feed);
+            await service.ProcessFeedConsumedAsync(feedId, feed);
 
             Assert.NotNull(publisher.PublishedChannels);
             var singleChannel = Assert.Single(publisher.PublishedChannels);

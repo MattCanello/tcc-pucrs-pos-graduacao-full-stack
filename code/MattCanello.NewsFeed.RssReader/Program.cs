@@ -67,7 +67,7 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 
             services
-                .AddScoped<IChannelUpdatedPublisher, DaprChannelUpdatedPublisher>()
+                .AddScoped<IFeedConsumedPublisher, DaprFeedConsumedPublisher>()
                 .AddSingleton<IChannelFactory, ChannelFactory>()
                 .AddScoped<IChannelService, ChannelService>();
 

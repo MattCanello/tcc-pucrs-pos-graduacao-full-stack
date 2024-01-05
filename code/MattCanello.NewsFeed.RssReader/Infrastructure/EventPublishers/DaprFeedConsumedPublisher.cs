@@ -6,14 +6,14 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 
 namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
 {
-    public sealed class DaprChannelUpdatedPublisher : IChannelUpdatedPublisher
+    public sealed class DaprFeedConsumedPublisher : IFeedConsumedPublisher
     {
         private readonly DaprClient _daprClient;
         private readonly ICloudEventFactory _cloudEventFactory;
         private readonly CloudEventFormatter _cloudEventFormatter;
         const string BindingName = "rsschannelstopic";
 
-        public DaprChannelUpdatedPublisher(DaprClient daprClient, ICloudEventFactory cloudEventFactory, CloudEventFormatter cloudEventFormatter)
+        public DaprFeedConsumedPublisher(DaprClient daprClient, ICloudEventFactory cloudEventFactory, CloudEventFormatter cloudEventFormatter)
         {
             _daprClient = daprClient;
             _cloudEventFactory = cloudEventFactory;
@@ -25,7 +25,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
 
-            var cloudEvent = _cloudEventFactory.CreateChannelUpdatedEvent(feedId, channel);
+            var cloudEvent = _cloudEventFactory.CreateFeedConsumedEvent(feedId, channel);
 
             var cloudEventData = _cloudEventFormatter.EncodeStructuredModeMessage(cloudEvent, out _);
 

@@ -43,10 +43,10 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
             if (response.IsNotModified || response.Feed is null)
                 return;
 
-            var processChannelTask = _channelService.ProcessChannelUpdateFromRssAsync(feedId, response.Feed, cancellationToken);
+            var feedConsumedTask = _channelService.ProcessFeedConsumedAsync(feedId, response.Feed, cancellationToken);
             var processEntriesTask = _entryService.ProcessEntriesFromRSSAsync(feedId, response.Feed, cancellationToken);
 
-            await Task.WhenAll(processChannelTask, processEntriesTask);
+            await Task.WhenAll(feedConsumedTask, processEntriesTask);
             await UpdateFeedFromResponseAsync(feed, response, cancellationToken);
         }
 

@@ -8,15 +8,15 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
     public sealed class ChannelService : IChannelService
     {
         private readonly IChannelFactory _channelFactory;
-        private readonly IChannelUpdatedPublisher _channelUpdatedPublisher;
+        private readonly IFeedConsumedPublisher _feedConsumedPublisher;
 
-        public ChannelService(IChannelFactory channelFactory, IChannelUpdatedPublisher channelUpdatedPublisher)
+        public ChannelService(IChannelFactory channelFactory, IFeedConsumedPublisher feedConsumedPublisher)
         {
             _channelFactory = channelFactory;
-            _channelUpdatedPublisher = channelUpdatedPublisher;
+            _feedConsumedPublisher = feedConsumedPublisher;
         }
 
-        public async Task ProcessChannelUpdateFromRssAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
+        public async Task ProcessFeedConsumedAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(syndicationFeed);
@@ -26,7 +26,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
             if (channel is null)
                 return;
 
-            await _channelUpdatedPublisher.PublishAsync(feedId, channel, cancellationToken);
+            await _feedConsumedPublisher.PublishAsync(feedId, channel, cancellationToken);
         }
     }
 }

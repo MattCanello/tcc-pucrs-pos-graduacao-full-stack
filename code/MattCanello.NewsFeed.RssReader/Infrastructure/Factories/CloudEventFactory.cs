@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public CloudEvent CreateNewEntryEvent(string feedId, Entry entry)
+        public CloudEvent CreateNewEntryFoundEvent(string feedId, Entry entry)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(entry);
@@ -23,7 +23,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             var cloudEvent = new CloudEvent(CloudEventsSpecVersion.V1_0)
             {
                 Data = entry,
-                Type = "mattcanello.newsfeed.newentry",
+                Type = "mattcanello.newsfeed.newentryfound",
                 Time = entry.PublishDate,
                 Id = entry.Id,
                 Subject = entry.Id,
@@ -36,7 +36,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             return cloudEvent;
         }
 
-        public CloudEvent CreateChannelUpdatedEvent(string feedId, Channel channel)
+        public CloudEvent CreateFeedConsumedEvent(string feedId, Channel channel)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
@@ -44,7 +44,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             var cloudEvent = new CloudEvent(CloudEventsSpecVersion.V1_0)
             {
                 Data = channel,
-                Type = "mattcanello.newsfeed.channelupdated",
+                Type = "mattcanello.newsfeed.feedconsumed",
                 Time = _dateTimeProvider.GetUtcNow(),
                 Id = feedId,
                 Subject = feedId,

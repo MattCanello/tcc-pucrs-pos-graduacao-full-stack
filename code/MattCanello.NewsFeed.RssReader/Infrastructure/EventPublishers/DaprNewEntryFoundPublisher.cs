@@ -25,7 +25,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(entry);
 
-            var cloudEvent = _cloudEventFactory.CreateNewEntryEvent(feedId, entry);
+            var cloudEvent = _cloudEventFactory.CreateNewEntryFoundEvent(feedId, entry);
 
             var cloudEventData = _cloudEventFormatter.EncodeStructuredModeMessage(cloudEvent, out _);
 

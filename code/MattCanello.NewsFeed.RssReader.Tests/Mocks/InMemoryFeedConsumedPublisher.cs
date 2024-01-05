@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace MattCanello.NewsFeed.RssReader.Tests.Mocks
 {
     [ExcludeFromCodeCoverage]
-    internal sealed class InMemoryChannelPublisher : IChannelUpdatedPublisher
+    internal sealed class InMemoryFeedConsumedPublisher : IFeedConsumedPublisher
     {
         private readonly ConcurrentDictionary<string, Channel> _publishedChannels = new ConcurrentDictionary<string, Channel>(StringComparer.OrdinalIgnoreCase);
 

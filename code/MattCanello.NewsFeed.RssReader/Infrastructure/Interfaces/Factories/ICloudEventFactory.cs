@@ -5,7 +5,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories
 {
     public interface ICloudEventFactory
     {
-        CloudEvent CreateNewEntryEvent(string feedId, Entry entry);
-        CloudEvent CreateChannelUpdatedEvent(string feedId, Channel channel);
+        CloudEvent CreateNewEntryFoundEvent(string feedId, Entry entry);
+        CloudEvent CreateFeedConsumedEvent(string feedId, Channel channel);
     }
 }

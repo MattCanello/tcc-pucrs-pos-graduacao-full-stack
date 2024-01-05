@@ -27,7 +27,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 new InMemoryFeedRepository(feed),
                 Util.Mapper,
                 _rssClient,
-                new ChannelService(new ChannelFactory(), new InMemoryChannelPublisher()),
+                new ChannelService(new ChannelFactory(), new InMemoryFeedConsumedPublisher()),
                 new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
                 );
 
@@ -44,7 +44,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 new InMemoryFeedRepository(),
                 Util.Mapper,
                 _rssClient,
-                new ChannelService(new ChannelFactory(), new InMemoryChannelPublisher()),
+                new ChannelService(new ChannelFactory(), new InMemoryFeedConsumedPublisher()),
                 new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
                 );
 
@@ -57,7 +57,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
             var feed = new Feed(feedId, url.ToString(), ETag, LastModifiedDate);
 
             var entryPublisher = new InMemoryEntryPublisher();
-            var channelPublisher = new InMemoryChannelPublisher();
+            var channelPublisher = new InMemoryFeedConsumedPublisher();
 
             var service = new RssApp(
                 new InMemoryFeedRepository(feed),
