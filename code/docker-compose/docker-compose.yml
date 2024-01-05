@@ -18,6 +18,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
+    volumes:
+      - 'zk_data:/var/lib/zookeeper/data'
+      - 'zk_txn_logs:/var/lib/zookeeper/log'
   
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -38,6 +41,8 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    volumes:
+      - 'kafka_data:/var/lib/kafka/data'
 
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
@@ -59,4 +64,13 @@ services:
 
 volumes:
   redis_data:
+    driver: local
+
+  zk_data:
+    driver: local
+
+  zk_txn_logs:
+    driver: local
+
+  kafka_data:
     driver: local
