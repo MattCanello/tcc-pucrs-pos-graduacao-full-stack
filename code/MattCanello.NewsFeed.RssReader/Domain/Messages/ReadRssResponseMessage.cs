@@ -5,7 +5,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Messages
     [Serializable]
     public sealed class ReadRssResponseMessage
     {
-        public static ReadRssResponseMessage NotModified = new ReadRssResponseMessage() { IsNotModified = true };
+        public static ReadRssResponseMessage NotModified => new ReadRssResponseMessage() { IsNotModified = true };
 
         private ReadRssResponseMessage() { }
 

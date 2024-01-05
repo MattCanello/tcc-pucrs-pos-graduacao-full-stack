@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Models
 {
     [Serializable]
     public sealed class Feed
     {
-        public Feed() { }
+        [JsonConstructor]
+        private Feed() { }
 
         public Feed(string feedId, string url, string? lastETag = null, DateTimeOffset? lastModifiedDate = null)
         {
