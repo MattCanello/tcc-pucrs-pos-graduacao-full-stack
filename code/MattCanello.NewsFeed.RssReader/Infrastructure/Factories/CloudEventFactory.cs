@@ -2,19 +2,11 @@
 using CloudNative.CloudEvents.Extensions;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Providers;
 
 namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
 {
     public sealed class CloudEventFactory : ICloudEventFactory
     {
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        public CloudEventFactory(IDateTimeProvider dateTimeProvider)
-        {
-            _dateTimeProvider = dateTimeProvider;
-        }
-
         public CloudEvent CreateNewEntryFoundEvent(string feedId, Entry entry)
         {
             ArgumentNullException.ThrowIfNull(feedId);
@@ -36,7 +28,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             return cloudEvent;
         }
 
-        public CloudEvent CreateFeedConsumedEvent(string feedId, Channel channel)
+        public CloudEvent CreateFeedConsumedEvent(string feedId, DateTimeOffset consumedDate, Channel channel)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
@@ -45,7 +37,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             {
                 Data = channel,
                 Type = "mattcanello.newsfeed.feedconsumed",
-                Time = _dateTimeProvider.GetUtcNow(),
+                Time = consumedDate,
                 Id = feedId,
                 Subject = feedId,
                 Source = new Uri($"/rss-reader/{feedId}", UriKind.Relative)

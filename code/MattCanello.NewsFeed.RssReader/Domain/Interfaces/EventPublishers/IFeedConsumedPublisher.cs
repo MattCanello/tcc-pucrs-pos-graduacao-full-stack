@@ -4,6 +4,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers
 {
     public interface IFeedConsumedPublisher
     {
-        Task PublishAsync(string feedId, Channel channel, CancellationToken cancellationToken = default);
+        Task PublishAsync(string feedId, DateTimeOffset consumedDate, Channel channel, CancellationToken cancellationToken = default);
     }
 }

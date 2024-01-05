@@ -20,12 +20,12 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
             _cloudEventFormatter = cloudEventFormatter;
         }
 
-        public async Task PublishAsync(string feedId, Channel channel, CancellationToken cancellationToken = default)
+        public async Task PublishAsync(string feedId, DateTimeOffset consumedDate, Channel channel, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
 
-            var cloudEvent = _cloudEventFactory.CreateFeedConsumedEvent(feedId, channel);
+            var cloudEvent = _cloudEventFactory.CreateFeedConsumedEvent(feedId, consumedDate, channel);
 
             var cloudEventData = _cloudEventFormatter.EncodeStructuredModeMessage(cloudEvent, out _);
 

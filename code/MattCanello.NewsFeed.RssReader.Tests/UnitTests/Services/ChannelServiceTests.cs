@@ -11,7 +11,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
     public sealed class ChannelServiceTests
     {
         [Theory, AutoData]
-        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId)
+        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId, DateTimeOffset consumedDate)
         {
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
@@ -19,7 +19,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var publisher = new InMemoryFeedConsumedPublisher();
             var service = new ChannelService(new ChannelFactory(), publisher);
 
-            await service.ProcessFeedConsumedAsync(feedId, feed);
+            await service.ProcessFeedConsumedAsync(feedId, consumedDate, feed);
 
             Assert.NotNull(publisher.PublishedChannels);
             var singleChannel = Assert.Single(publisher.PublishedChannels);

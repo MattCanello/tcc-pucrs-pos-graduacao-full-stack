@@ -18,8 +18,6 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Providers;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Providers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
@@ -63,9 +61,6 @@ namespace MattCanello.NewsFeed.RssReader
 
         private static void AddAppServices(this IServiceCollection services)
         {
-            services
-                .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
-
             services
                 .AddScoped<IFeedConsumedPublisher, DaprFeedConsumedPublisher>()
                 .AddSingleton<IChannelFactory, ChannelFactory>()

@@ -13,7 +13,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Mocks
         public IEnumerable<Channel> PublishedChannels => _publishedChannels.Values;
         public IEnumerable<string> PublishedFeedIds => _publishedChannels.Keys;
 
-        public Task PublishAsync(string feedId, Channel channel, CancellationToken cancellationToken = default)
+        public Task PublishAsync(string feedId, DateTimeOffset consumedDate, Channel channel, CancellationToken cancellationToken = default)
         {
             _publishedChannels.TryAdd(feedId, channel);
             return Task.CompletedTask;
