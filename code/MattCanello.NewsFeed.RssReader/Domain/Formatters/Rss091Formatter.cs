@@ -64,28 +64,8 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Formatters
                     }
                     reader.ReadEndElement(); // </image>
                 }
-                else if (reader.IsStartElement("item"))
-                {
-                    reader.ReadStartElement();
-                    var item = new SyndicationItem();
-                    while (reader.IsStartElement())
-                    {
-                        if (reader.IsStartElement("title"))
-                            item.Title = new TextSyndicationContent(reader.ReadElementContentAsString());
-                        else if (reader.IsStartElement("link"))
-                            item.Links.Add(new SyndicationLink(new Uri(reader.ReadElementContentAsString())));
-                        else if (reader.IsStartElement("description"))
-                            item.Summary = new TextSyndicationContent(reader.ReadElementContentAsString());
-                        else if (reader.IsStartElement("pubDate"))
-                            item.PublishDate = DateTimeOffset.Parse(reader.ReadElementContentAsString());
-                        else if (reader.IsStartElement("author"))
-                            item.Authors.Add(new SyndicationPerson(null, reader.ReadElementContentAsString(), null));
-                        else
-                            reader.Skip();
-                    }
-                    reader.ReadEndElement(); // </item>
-                    items.Add(item);
-                }
+                else if (reader.IsStartElement("item") && TryReadItem(reader, out var item))
+                    items.Add(item!);
                 else
                     reader.Skip();
             }
@@ -107,6 +87,38 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Formatters
         {
             feed = new SyndicationFeed();
             return feed;
+        }
+
+        private static bool TryReadItem(XmlReader reader, out SyndicationItem? item)
+        {
+            ArgumentNullException.ThrowIfNull(reader);
+
+            reader.ReadStartElement(); // <item>
+            item = new SyndicationItem();
+
+            while (reader.IsStartElement())
+            {
+                if (reader.IsStartElement("title"))
+                    item.Title = new TextSyndicationContent(reader.ReadElementContentAsString());
+                else if (reader.IsStartElement("link"))
+                {
+                    var link = reader.ReadElementContentAsString();
+                    item.Links.Add(new SyndicationLink(new Uri(link)));
+                    item.Id = link;
+                }
+                else if (reader.IsStartElement("description"))
+                    item.Summary = new TextSyndicationContent(reader.ReadElementContentAsString());
+                else if (reader.IsStartElement("pubDate"))
+                    item.PublishDate = DateTimeOffset.Parse(reader.ReadElementContentAsString());
+                else if (reader.IsStartElement("author"))
+                    item.Authors.Add(new SyndicationPerson(null, reader.ReadElementContentAsString(), null));
+                else
+                    reader.Skip();
+            }
+
+            reader.ReadEndElement(); // </item>
+
+            return !string.IsNullOrEmpty(item.Id);
         }
     }
 }

@@ -75,6 +75,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Formatters
 
             Assert.NotNull(singleItem.Title);
             Assert.Equal("stuff", singleItem.Title.Text);
+            Assert.Equal("http://bar", singleItem.Id);
 
             var singleLink = Assert.Single(singleItem.Links);
             Assert.NotNull(singleLink.Uri);
