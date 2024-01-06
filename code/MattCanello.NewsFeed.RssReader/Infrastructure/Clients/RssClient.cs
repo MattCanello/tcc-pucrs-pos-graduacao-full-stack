@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Formatters;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Messages;
 using System.Net;
 using System.Net.Http.Headers;
@@ -9,7 +10,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 {
     public sealed class RssClient : IRssClient
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient _httpClient;
 
         private static readonly IReadOnlyList<MediaTypeWithQualityHeaderValue> DefaultAcceptHeaders = new List<MediaTypeWithQualityHeaderValue>(5)
         {
@@ -22,7 +23,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 
         public RssClient(HttpClient httpClient)
         {
-            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            this._httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         public async Task<ReadRssResponseMessage> ReadAsync(ReadRssRequestMessage rssReaderRequest, CancellationToken cancellationToken = default)
@@ -34,7 +35,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
             AddDefaultAcceptHeaders(request);
             SetupCachingHeaders(request, rssReaderRequest);
 
-            using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             if (response.StatusCode == HttpStatusCode.NotModified)
                 return ReadRssResponseMessage.NotModified;
 
@@ -45,7 +46,8 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using var reader = XmlReader.Create(stream);
-            return new ReadRssResponseMessage(SyndicationFeed.Load(reader), response.Headers.ETag?.ToString(), response.Headers.Date);
+            var feed = GetSyndicationFeed(reader);
+            return new ReadRssResponseMessage(feed, response.Headers.ETag?.ToString(), response.Headers.Date);
         }
 
         private static void AddDefaultAcceptHeaders(HttpRequestMessage request)
@@ -67,6 +69,18 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 
             if (!string.IsNullOrEmpty(rssReaderRequest.ETag))
                 httpRequest.Headers.IfNoneMatch.ParseAdd(rssReaderRequest.ETag);
+        }
+
+        private static SyndicationFeed GetSyndicationFeed(XmlReader reader)
+        {
+            var rss091Formatter = new Rss091Formatter();
+            if (rss091Formatter.CanRead(reader))
+            {
+                rss091Formatter.ReadFrom(reader);
+                return rss091Formatter.Feed;
+            }
+
+            return SyndicationFeed.Load(reader);
         }
     }
 }

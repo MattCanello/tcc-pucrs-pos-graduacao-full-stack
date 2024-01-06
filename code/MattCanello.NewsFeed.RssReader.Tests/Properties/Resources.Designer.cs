@@ -61,6 +61,24 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;!DOCTYPE rss SYSTEM &quot;http://my.netscape.com/publish/formats/rss-0.91.dtd&quot;&gt;
+        ///&lt;rss version=&quot;0.91&quot;&gt;
+        ///	&lt;channel&gt;
+        ///		&lt;copyright&gt;Copyright 1997-1999 UserLand Software, Inc.&lt;/copyright&gt;
+        ///		&lt;pubDate&gt;Thu, 08 Jul 1999 07:00:00 GMT&lt;/pubDate&gt;
+        ///		&lt;lastBuildDate&gt;Thu, 08 Jul 1999 16:20:26 GMT&lt;/lastBuildDate&gt;
+        ///		&lt;docs&gt;http://my.userland.com/stories/storyReader$11&lt;/docs&gt;
+        ///		&lt;description&gt;News and commentary from the cross-platform scripting community.&lt;/description&gt;
+        ///		&lt;link&gt;http://www.scripting.com/&lt;/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string sample_rss_091 {
+            get {
+                return ResourceManager.GetString("sample-rss-091", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;rss xmlns:media=&quot;http://search.yahoo.com/mrss/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; version=&quot;2.0&quot;&gt;
         ///	&lt;channel&gt;

@@ -11,7 +11,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
     public sealed class EntryServiceTests
     {
         [Theory, AutoData]
-        public async Task ProcessEntriesFromRSSAsync__UsingTheGuardianUkSample_ShouldPublishEvent(string feedId)
+        public async Task ProcessEntriesFromRSSAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId)
         {
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
