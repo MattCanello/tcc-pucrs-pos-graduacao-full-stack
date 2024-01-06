@@ -50,7 +50,8 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher())
                 );
 
-            await Assert.ThrowsAsync<FeedNotFoundException>(() => service.ProcessFeedAsync(feedId));
+            var exception = await Assert.ThrowsAsync<FeedNotFoundException>(() => service.ProcessFeedAsync(feedId));
+            Assert.Equal(feedId, exception.FeedId);
         }
 
         [Theory, AutoData]

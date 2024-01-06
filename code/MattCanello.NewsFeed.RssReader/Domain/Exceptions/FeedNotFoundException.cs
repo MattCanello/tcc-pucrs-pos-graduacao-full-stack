@@ -2,11 +2,13 @@
 {
     public sealed class FeedNotFoundException : ApplicationException
     {
+        const string BaseMessage = "The provided feedId was not found.";
+
         public FeedNotFoundException()
-            : base("The provided feedId was not found.") { }
+            : base(BaseMessage) { }
 
         public FeedNotFoundException(string feedId)
-            : base($"The provided feedId was not found. The provided feedId was '{feedId}'.")
+            : base($"{BaseMessage} The provided feedId was '{feedId}'.")
         {
             FeedId = feedId;
         }
