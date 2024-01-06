@@ -16,7 +16,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
         private const string ETag = "W/\"hash963960047320543834b\"";
         private static readonly DateTimeOffset LastModifiedDate = DateTimeOffset.Parse("Mon, 01 Jan 2024 15:28:01 GMT");
 
-        private readonly IRssClient _rssClient = new RssClient(new HttpClient(new MockedRssHandler(Resources.sample_rss_the_guardian_uk, ETag, LastModifiedDate)));
+        private readonly IRssClient _rssClient = new RssClient(
+            new HttpClient(new MockedRssHandler(Resources.sample_rss_the_guardian_uk, ETag, LastModifiedDate)),
+            SingleSyndicationFeedLoaderEvaluator.Default);
 
         [Theory, AutoData]
         public async Task ProcessFeedAsync_OnFirstRequest_ShouldUpdateETagAndModifiedDate(Uri url, string feedId)

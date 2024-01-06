@@ -1,9 +1,8 @@
-﻿using MattCanello.NewsFeed.RssReader.Domain.Formatters;
-using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Messages;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using System.Net;
 using System.Net.Http.Headers;
-using System.ServiceModel.Syndication;
 using System.Xml;
 
 namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
@@ -11,6 +10,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
     public sealed class RssClient : IRssClient
     {
         private readonly HttpClient _httpClient;
+        private readonly ISyndicationFeedEvaluator _syndicationFeedEvaluator;
 
         private static readonly IReadOnlyList<MediaTypeWithQualityHeaderValue> DefaultAcceptHeaders = new List<MediaTypeWithQualityHeaderValue>(5)
         {
@@ -21,9 +21,10 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
             MediaTypeWithQualityHeaderValue.Parse("text/xml")
         };
 
-        public RssClient(HttpClient httpClient)
+        public RssClient(HttpClient httpClient, ISyndicationFeedEvaluator syndicationFeedEvaluator)
         {
-            this._httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _httpClient = httpClient;
+            _syndicationFeedEvaluator = syndicationFeedEvaluator;
         }
 
         public async Task<ReadRssResponseMessage> ReadAsync(ReadRssRequestMessage rssReaderRequest, CancellationToken cancellationToken = default)
@@ -46,7 +47,8 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using var reader = XmlReader.Create(stream);
-            var feed = GetSyndicationFeed(reader);
+
+            var feed = _syndicationFeedEvaluator.DetermineLoaderStrategy(reader).Load(reader);
             return new ReadRssResponseMessage(feed, response.Headers.ETag?.ToString(), response.Headers.Date);
         }
 
@@ -69,18 +71,6 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Clients
 
             if (!string.IsNullOrEmpty(rssReaderRequest.ETag))
                 httpRequest.Headers.IfNoneMatch.ParseAdd(rssReaderRequest.ETag);
-        }
-
-        private static SyndicationFeed GetSyndicationFeed(XmlReader reader)
-        {
-            var rss091Formatter = new Rss091Formatter();
-            if (rss091Formatter.CanRead(reader))
-            {
-                rss091Formatter.ReadFrom(reader);
-                return rss091Formatter.Feed;
-            }
-
-            return SyndicationFeed.Load(reader);
         }
     }
 }

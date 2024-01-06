@@ -1,7 +1,7 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace MattCanello.NewsFeed.RssReader.Domain.Formatters
+namespace MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091
 {
     public class Rss091Formatter : SyndicationFeedFormatter
     {

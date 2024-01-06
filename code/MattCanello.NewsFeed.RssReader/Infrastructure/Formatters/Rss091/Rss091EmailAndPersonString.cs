@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace MattCanello.NewsFeed.RssReader.Domain.Formatters
+namespace MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091
 {
     [Serializable]
     public sealed record Rss091EmailAndPersonString
@@ -34,7 +34,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Formatters
 
             var displayNameMatch = DisplayNameRegex.Match(emailAndName);
 
-            parsed = new Rss091EmailAndPersonString(emailMatch.Value, 
+            parsed = new Rss091EmailAndPersonString(emailMatch.Value,
                 displayNameMatch.Success ? displayNameMatch.Groups["DisplayName"].Value : null);
 
             return true;

@@ -14,11 +14,15 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -79,6 +83,12 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddSingleton<ICreateFeedHandler, CreateFeedHandler>();
+
+            services
+               .AddScoped<Rss091Formatter>()
+               .AddSingleton<DefaultSyndicationFeedLoader>()
+               .AddScoped<Rss091SyndicationFeedLoader>()
+               .AddScoped<ISyndicationFeedEvaluator, SyndicationFeedEvaluator>();
 
             services
                 .AddHttpClient()

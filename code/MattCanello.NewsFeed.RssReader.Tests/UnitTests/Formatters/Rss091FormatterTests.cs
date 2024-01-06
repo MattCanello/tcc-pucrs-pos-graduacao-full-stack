@@ -1,4 +1,4 @@
-﻿using MattCanello.NewsFeed.RssReader.Domain.Formatters;
+﻿using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 using System.Xml;
 

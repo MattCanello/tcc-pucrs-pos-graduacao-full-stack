@@ -1,5 +1,5 @@
 ﻿using AutoFixture.Xunit2;
-using MattCanello.NewsFeed.RssReader.Domain.Formatters;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Formatters
 {
