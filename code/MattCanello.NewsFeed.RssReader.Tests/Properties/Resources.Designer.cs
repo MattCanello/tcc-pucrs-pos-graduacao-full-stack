@@ -62,7 +62,6 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
-        ///&lt;!DOCTYPE rss SYSTEM &quot;http://my.netscape.com/publish/formats/rss-0.91.dtd&quot;&gt;
         ///&lt;rss version=&quot;0.91&quot;&gt;
         ///	&lt;channel&gt;
         ///		&lt;copyright&gt;Copyright 1997-1999 UserLand Software, Inc.&lt;/copyright&gt;
@@ -70,11 +69,52 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Properties {
         ///		&lt;lastBuildDate&gt;Thu, 08 Jul 1999 16:20:26 GMT&lt;/lastBuildDate&gt;
         ///		&lt;docs&gt;http://my.userland.com/stories/storyReader$11&lt;/docs&gt;
         ///		&lt;description&gt;News and commentary from the cross-platform scripting community.&lt;/description&gt;
-        ///		&lt;link&gt;http://www.scripting.com/&lt;/ [rest of string was truncated]&quot;;.
+        ///		&lt;link&gt;http://www.scripting.com/&lt;/link&gt;
+        ///		&lt;title&gt;Scripting News&lt;/title&gt;
+        ///		&lt;image&gt;
+        ///			&lt;link&gt;http://www.script [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string sample_rss_091 {
             get {
                 return ResourceManager.GetString("sample-rss-091", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot; ?&gt;
+        ///&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;//feeds.folha.uol.com.br/rss/style.xsl&quot; ?&gt;
+        ///
+        ///&lt;rss version=&quot;0.91&quot;&gt;
+        ///	&lt;channel&gt;
+        ///
+        ///		&lt;title&gt;Folha de S.Paulo - Tec - Principal&lt;/title&gt;
+        ///		&lt;link&gt;https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/&lt;/link&gt;
+        ///		&lt;description&gt;Primeiro jornal em tempo real em língua portuguesa&lt;/description&gt;
+        ///		&lt;language&gt;pt-br&lt;/language&gt;
+        ///		&lt;copyright&gt;Copyright Folha de S.Paulo. Todos os direitos reservados.&lt;/copyri [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string sample_rss_folha_spaulo_tec1 {
+            get {
+                return ResourceManager.GetString("sample-rss-folha-spaulo-tec1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot; ?&gt;
+        ///&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;//feeds.folha.uol.com.br/rss/style.xsl&quot; ?&gt;
+        ///
+        ///&lt;rss version=&quot;0.91&quot;&gt;
+        ///	&lt;channel&gt;
+        ///
+        ///		&lt;title&gt;Folha de S.Paulo - Tec - Principal&lt;/title&gt;
+        ///		&lt;link&gt;https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/&lt;/link&gt;
+        ///		&lt;description&gt;Primeiro jornal em tempo real em língua portuguesa&lt;/description&gt;
+        ///		&lt;language&gt;pt-br&lt;/language&gt;
+        ///		&lt;copyright&gt;Copyright Folha de S.Paulo. Todos os direitos reservados.&lt;/copyri [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string sample_rss_folha_spaulo_tec2 {
+            get {
+                return ResourceManager.GetString("sample-rss-folha-spaulo-tec2", resourceCulture);
             }
         }
         

@@ -111,7 +111,12 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091
                 else if (reader.IsStartElement("pubDate"))
                     item.PublishDate = DateTimeOffset.Parse(reader.ReadElementContentAsString());
                 else if (reader.IsStartElement("author"))
-                    item.Authors.Add(new SyndicationPerson(null, reader.ReadElementContentAsString(), null));
+                {
+                    var authorName = reader.ReadElementContentAsString();
+
+                    if (!string.IsNullOrEmpty(authorName))
+                        item.Authors.Add(new SyndicationPerson(null, authorName, null));
+                }
                 else
                     reader.Skip();
             }

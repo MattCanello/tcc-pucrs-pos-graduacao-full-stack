@@ -92,5 +92,54 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Formatters
 
             Assert.Throws<NotSupportedException>(() => formatter.WriteTo(null!));
         }
+
+        [Fact]
+        public void ReadFrom_FolhaSPauloTecSample1_ShouldNotProduceAuthorWhenItsEmpty()
+        {
+            var reader = XmlReader.Create(new StringReader(Resources.sample_rss_folha_spaulo_tec1), ReaderSettings);
+
+            var formatter = new Rss091Formatter();
+            formatter.ReadFrom(reader);
+
+            var feed = formatter.Feed;
+            Assert.NotNull(feed);
+
+            var singleItem = Assert.Single(feed.Items);
+            Assert.Empty(singleItem.Authors);
+        }
+
+        [Fact]
+        public void ReadFrom_FolhaSPauloTecSample2_ShouldProduceAuthorWhenItsNotEmpty()
+        {
+            var reader = XmlReader.Create(new StringReader(Resources.sample_rss_folha_spaulo_tec2), ReaderSettings);
+
+            var formatter = new Rss091Formatter();
+            formatter.ReadFrom(reader);
+
+            var feed = formatter.Feed;
+            Assert.NotNull(feed);
+
+            var singleItem = Assert.Single(feed.Items);
+            var singleAuthor = Assert.Single(singleItem.Authors);
+
+            Assert.Equal("Pedro S. Teixeira", singleAuthor.Name);
+            Assert.Null(singleAuthor.Uri);
+            Assert.Null(singleAuthor.Email);
+        }
+
+        [Fact]
+        public void ReadFrom_FolhaSPauloTecSample1_ShoudProducePubDate()
+        {
+            var reader = XmlReader.Create(new StringReader(Resources.sample_rss_folha_spaulo_tec1), ReaderSettings);
+
+            var formatter = new Rss091Formatter();
+            formatter.ReadFrom(reader);
+
+            var feed = formatter.Feed;
+            Assert.NotNull(feed);
+
+            var singleItem = Assert.Single(feed.Items);
+            Assert.Equal(DateTimeOffset.Parse("05 Jan 2024 15:56:00 -0300"), singleItem.PublishDate);
+        }
     }
 }
