@@ -69,6 +69,17 @@ services:
     build:
       context: ..
       dockerfile: MattCanello.NewsFeed.CronApi/Dockerfile
+      
+  mattcanello.newsfeed.cronapi-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "cron-api", "-app-port", "80", "--components-path", "./components" ]
+    depends_on:
+      - mattcanello.newsfeed.cronapi
+      - redis
+    restart: on-failure
+    network_mode: "service:mattcanello.newsfeed.cronapi"
+    volumes:
+      - "../dapr/components/:/components"
 
 volumes:
   redis_data:
