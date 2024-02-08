@@ -64,6 +64,12 @@ services:
     volumes:
       - "../dapr/components/:/components"
 
+  mattcanello.newsfeed.cronapi:
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedcronapi
+    build:
+      context: ..
+      dockerfile: MattCanello.NewsFeed.CronApi/Dockerfile
+
 volumes:
   redis_data:
     driver: local
