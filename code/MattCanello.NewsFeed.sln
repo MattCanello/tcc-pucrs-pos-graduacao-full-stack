@@ -17,6 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", 
 		dapr\components\statestore.yaml = dapr\components\statestore.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RssReader", "RssReader", "{AFB28009-58BF-4CF8-8CF0-B4A8C5A6A0E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cron", "Cron", "{2924D66D-0BCC-4D43-852D-8DEDA5390E03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.CronApi", "MattCanello.NewsFeed.CronApi\MattCanello.NewsFeed.CronApi.csproj", "{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.CronApi.Tests", "MattCanello.NewsFeed.CronApi.Tests\MattCanello.NewsFeed.CronApi.Tests.csproj", "{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +43,24 @@ Global
 		{AA904D92-FEF1-4282-8FC1-C23E03306DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA904D92-FEF1-4282-8FC1-C23E03306DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA904D92-FEF1-4282-8FC1-C23E03306DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BC7F8698-0524-4999-9CF3-DC11DFDB2901} = {AFB28009-58BF-4CF8-8CF0-B4A8C5A6A0E6}
+		{AA904D92-FEF1-4282-8FC1-C23E03306DF5} = {AFB28009-58BF-4CF8-8CF0-B4A8C5A6A0E6}
 		{05F41E28-E4C4-4966-9F92-1F3F23D92B2F} = {D03D8E47-AD18-4B46-80F9-87B707619186}
+		{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32} = {2924D66D-0BCC-4D43-852D-8DEDA5390E03}
+		{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4} = {2924D66D-0BCC-4D43-852D-8DEDA5390E03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}
