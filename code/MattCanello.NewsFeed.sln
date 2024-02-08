@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{D03D8E47-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{05F41E28-E4C4-4966-9F92-1F3F23D92B2F}"
 	ProjectSection(SolutionItems) = preProject
+		dapr\components\cron.yaml = dapr\components\cron.yaml
 		dapr\components\outputbindings.yaml = dapr\components\outputbindings.yaml
 		dapr\components\statestore.yaml = dapr\components\statestore.yaml
 	EndProjectSection

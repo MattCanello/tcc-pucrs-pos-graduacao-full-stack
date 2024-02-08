@@ -1,0 +1,659 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/0
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "0 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/1
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "1 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/2
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "2 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/3
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "3 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/4
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "4 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/5
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "5 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/6
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "6 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/7
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "7 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/8
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "8 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/9
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "9 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/10
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "10 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/11
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "11 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/12
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "12 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/13
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "13 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/14
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "14 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/15
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "15 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/16
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "16 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/17
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "17 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/18
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "18 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/19
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "19 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/20
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "20 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/21
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "21 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/22
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "22 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/23
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "23 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/24
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "24 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/25
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "25 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/26
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "26 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/27
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "27 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/28
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "28 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/29
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "29 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/30
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "30 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/31
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "31 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/32
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "32 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/33
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "33 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/34
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "34 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/35
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "35 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/36
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "36 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/37
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "37 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/38
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "38 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/39
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "39 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/40
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "40 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/41
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "41 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/42
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "42 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/43
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "43 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/44
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "44 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/45
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "45 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/46
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "46 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/47
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "47 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/48
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "48 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/49
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "49 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/50
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "50 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/51
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "51 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/52
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "52 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/53
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "53 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/54
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "54 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/55
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "55 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/56
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "56 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/57
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "57 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/58
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "58 * * ? * *"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: api/cron/publish/59
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "59 * * ? * *"
