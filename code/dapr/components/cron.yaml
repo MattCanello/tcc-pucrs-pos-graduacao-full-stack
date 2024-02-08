@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/0
+  name: publish?slot=0
 spec:
   type: bindings.cron
   version: v1
@@ -16,7 +16,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/1
+  name: publish?slot=1
 spec:
   type: bindings.cron
   version: v1
@@ -31,7 +31,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/2
+  name: publish?slot=2
 spec:
   type: bindings.cron
   version: v1
@@ -46,7 +46,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/3
+  name: publish?slot=3
 spec:
   type: bindings.cron
   version: v1
@@ -61,7 +61,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/4
+  name: publish?slot=4
 spec:
   type: bindings.cron
   version: v1
@@ -76,7 +76,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/5
+  name: publish?slot=5
 spec:
   type: bindings.cron
   version: v1
@@ -91,7 +91,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/6
+  name: publish?slot=6
 spec:
   type: bindings.cron
   version: v1
@@ -106,7 +106,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/7
+  name: publish?slot=7
 spec:
   type: bindings.cron
   version: v1
@@ -121,7 +121,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/8
+  name: publish?slot=8
 spec:
   type: bindings.cron
   version: v1
@@ -136,7 +136,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/9
+  name: publish?slot=9
 spec:
   type: bindings.cron
   version: v1
@@ -151,7 +151,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/10
+  name: publish?slot=10
 spec:
   type: bindings.cron
   version: v1
@@ -166,7 +166,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/11
+  name: publish?slot=11
 spec:
   type: bindings.cron
   version: v1
@@ -181,7 +181,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/12
+  name: publish?slot=12
 spec:
   type: bindings.cron
   version: v1
@@ -196,7 +196,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/13
+  name: publish?slot=13
 spec:
   type: bindings.cron
   version: v1
@@ -211,7 +211,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/14
+  name: publish?slot=14
 spec:
   type: bindings.cron
   version: v1
@@ -226,7 +226,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/15
+  name: publish?slot=15
 spec:
   type: bindings.cron
   version: v1
@@ -241,7 +241,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/16
+  name: publish?slot=16
 spec:
   type: bindings.cron
   version: v1
@@ -256,7 +256,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/17
+  name: publish?slot=17
 spec:
   type: bindings.cron
   version: v1
@@ -271,7 +271,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/18
+  name: publish?slot=18
 spec:
   type: bindings.cron
   version: v1
@@ -286,7 +286,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/19
+  name: publish?slot=19
 spec:
   type: bindings.cron
   version: v1
@@ -301,7 +301,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/20
+  name: publish?slot=20
 spec:
   type: bindings.cron
   version: v1
@@ -316,7 +316,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/21
+  name: publish?slot=21
 spec:
   type: bindings.cron
   version: v1
@@ -331,7 +331,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/22
+  name: publish?slot=22
 spec:
   type: bindings.cron
   version: v1
@@ -346,7 +346,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/23
+  name: publish?slot=23
 spec:
   type: bindings.cron
   version: v1
@@ -361,7 +361,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/24
+  name: publish?slot=24
 spec:
   type: bindings.cron
   version: v1
@@ -376,7 +376,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/25
+  name: publish?slot=25
 spec:
   type: bindings.cron
   version: v1
@@ -391,7 +391,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/26
+  name: publish?slot=26
 spec:
   type: bindings.cron
   version: v1
@@ -406,7 +406,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/27
+  name: publish?slot=27
 spec:
   type: bindings.cron
   version: v1
@@ -421,7 +421,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/28
+  name: publish?slot=28
 spec:
   type: bindings.cron
   version: v1
@@ -436,7 +436,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/29
+  name: publish?slot=29
 spec:
   type: bindings.cron
   version: v1
@@ -451,7 +451,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/30
+  name: publish?slot=30
 spec:
   type: bindings.cron
   version: v1
@@ -466,7 +466,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/31
+  name: publish?slot=31
 spec:
   type: bindings.cron
   version: v1
@@ -481,7 +481,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/32
+  name: publish?slot=32
 spec:
   type: bindings.cron
   version: v1
@@ -496,7 +496,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/33
+  name: publish?slot=33
 spec:
   type: bindings.cron
   version: v1
@@ -511,7 +511,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/34
+  name: publish?slot=34
 spec:
   type: bindings.cron
   version: v1
@@ -526,7 +526,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/35
+  name: publish?slot=35
 spec:
   type: bindings.cron
   version: v1
@@ -541,7 +541,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/36
+  name: publish?slot=36
 spec:
   type: bindings.cron
   version: v1
@@ -556,7 +556,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/37
+  name: publish?slot=37
 spec:
   type: bindings.cron
   version: v1
@@ -571,7 +571,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/38
+  name: publish?slot=38
 spec:
   type: bindings.cron
   version: v1
@@ -586,7 +586,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/39
+  name: publish?slot=39
 spec:
   type: bindings.cron
   version: v1
@@ -601,7 +601,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/40
+  name: publish?slot=40
 spec:
   type: bindings.cron
   version: v1
@@ -616,7 +616,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/41
+  name: publish?slot=41
 spec:
   type: bindings.cron
   version: v1
@@ -631,7 +631,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/42
+  name: publish?slot=42
 spec:
   type: bindings.cron
   version: v1
@@ -646,7 +646,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/43
+  name: publish?slot=43
 spec:
   type: bindings.cron
   version: v1
@@ -661,7 +661,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/44
+  name: publish?slot=44
 spec:
   type: bindings.cron
   version: v1
@@ -676,7 +676,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/45
+  name: publish?slot=45
 spec:
   type: bindings.cron
   version: v1
@@ -691,7 +691,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/46
+  name: publish?slot=46
 spec:
   type: bindings.cron
   version: v1
@@ -706,7 +706,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/47
+  name: publish?slot=47
 spec:
   type: bindings.cron
   version: v1
@@ -721,7 +721,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/48
+  name: publish?slot=48
 spec:
   type: bindings.cron
   version: v1
@@ -736,7 +736,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/49
+  name: publish?slot=49
 spec:
   type: bindings.cron
   version: v1
@@ -751,7 +751,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/50
+  name: publish?slot=50
 spec:
   type: bindings.cron
   version: v1
@@ -766,7 +766,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/51
+  name: publish?slot=51
 spec:
   type: bindings.cron
   version: v1
@@ -781,7 +781,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/52
+  name: publish?slot=52
 spec:
   type: bindings.cron
   version: v1
@@ -796,7 +796,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/53
+  name: publish?slot=53
 spec:
   type: bindings.cron
   version: v1
@@ -811,7 +811,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/54
+  name: publish?slot=54
 spec:
   type: bindings.cron
   version: v1
@@ -826,7 +826,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/55
+  name: publish?slot=55
 spec:
   type: bindings.cron
   version: v1
@@ -841,7 +841,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/56
+  name: publish?slot=56
 spec:
   type: bindings.cron
   version: v1
@@ -856,7 +856,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/57
+  name: publish?slot=57
 spec:
   type: bindings.cron
   version: v1
@@ -871,7 +871,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/58
+  name: publish?slot=58
 spec:
   type: bindings.cron
   version: v1
@@ -886,7 +886,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: api/cron/publish/59
+  name: publish?slot=59
 spec:
   type: bindings.cron
   version: v1
