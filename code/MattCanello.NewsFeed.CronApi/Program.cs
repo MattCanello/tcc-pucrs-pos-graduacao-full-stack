@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,10 @@ namespace MattCanello.NewsFeed.CronApi
             services
                 .AddScoped<IFeedRepository, DaprFeedRepository>()
                 .AddScoped<ISlotRepository, DaprSlotRepository>();
+
+            services
+                .AddScoped<ICronPublishApp, CronPublishApp>()
+                .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
