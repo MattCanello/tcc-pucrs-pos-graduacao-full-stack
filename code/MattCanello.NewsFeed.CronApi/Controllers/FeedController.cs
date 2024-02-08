@@ -27,7 +27,7 @@ namespace MattCanello.NewsFeed.CronApi.Controllers
             var result = await _registerFeedHandler.RegisterFeedAsync(command, cancellationToken);
 
             var createdAtActionRouteValues = new { slot = result.Slot, feedId = result.Feed.FeedId };
-            return CreatedAtAction(actionName: nameof(SlotController.GetFeed), controllerName: nameof(SlotController), routeValues: createdAtActionRouteValues, result.Feed);
+            return CreatedAtAction(actionName: "GetFeed", controllerName: "Slot", routeValues: createdAtActionRouteValues, result.Feed);
         }
     }
 }

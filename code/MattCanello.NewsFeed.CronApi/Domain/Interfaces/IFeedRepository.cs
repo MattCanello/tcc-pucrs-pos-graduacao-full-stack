@@ -6,7 +6,7 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Interfaces
     {
         Task<IReadOnlySet<string>> GetFeedIdsAsync(byte slot, CancellationToken cancellationToken = default);
 
-        Task<Feed> GetFeedAsync(byte slot, string feedId, CancellationToken cancellationToken = default);
+        Task<Feed?> GetFeedAsync(byte slot, string feedId, CancellationToken cancellationToken = default);
 
         Task PlaceFeedAsync(byte slot, Feed feed, CancellationToken cancellationToken = default);
     }

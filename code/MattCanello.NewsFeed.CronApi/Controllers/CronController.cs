@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.CronApi.Controllers
 {
@@ -9,7 +10,7 @@ namespace MattCanello.NewsFeed.CronApi.Controllers
     {
         [HttpPost("publish/{slot}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Publish(byte slot)
+        public IActionResult Publish([Range(0, 59)] byte slot)
         {
             SlotOutOfRangeException.ThrowIfOutOfRange(slot);
 
