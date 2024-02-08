@@ -4,7 +4,7 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Interfaces
 {
     public interface ISlotRepository
     {
-        Task<byte> GetCurrentSlotAsync();
-        Task SetCurrentSlotAsync(byte slot);
+        Task<byte> GetCurrentSlotAsync(CancellationToken cancellationToken = default);
+        Task SetCurrentSlotAsync(byte slot, CancellationToken cancellationToken = default);
     }
 }

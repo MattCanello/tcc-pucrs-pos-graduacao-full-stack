@@ -2,6 +2,6 @@
 {
     public interface ISlotCounterService
     {
-        Task<byte> GetNextSlotAsync();
+        Task<byte> GetNextSlotAsync(CancellationToken cancellationToken = default);
     }
 }
