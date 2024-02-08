@@ -8,6 +8,10 @@ spec:
   metadata:
   - name: schedule
     value: "0 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -19,6 +23,10 @@ spec:
   metadata:
   - name: schedule
     value: "1 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -30,6 +38,10 @@ spec:
   metadata:
   - name: schedule
     value: "2 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -41,6 +53,10 @@ spec:
   metadata:
   - name: schedule
     value: "3 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -52,6 +68,10 @@ spec:
   metadata:
   - name: schedule
     value: "4 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -63,6 +83,10 @@ spec:
   metadata:
   - name: schedule
     value: "5 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -74,6 +98,10 @@ spec:
   metadata:
   - name: schedule
     value: "6 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -85,6 +113,10 @@ spec:
   metadata:
   - name: schedule
     value: "7 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -96,6 +128,10 @@ spec:
   metadata:
   - name: schedule
     value: "8 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -107,6 +143,10 @@ spec:
   metadata:
   - name: schedule
     value: "9 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -118,6 +158,10 @@ spec:
   metadata:
   - name: schedule
     value: "10 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -129,6 +173,10 @@ spec:
   metadata:
   - name: schedule
     value: "11 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -140,6 +188,10 @@ spec:
   metadata:
   - name: schedule
     value: "12 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -151,6 +203,10 @@ spec:
   metadata:
   - name: schedule
     value: "13 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -162,6 +218,10 @@ spec:
   metadata:
   - name: schedule
     value: "14 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -173,6 +233,10 @@ spec:
   metadata:
   - name: schedule
     value: "15 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -184,6 +248,10 @@ spec:
   metadata:
   - name: schedule
     value: "16 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -195,6 +263,10 @@ spec:
   metadata:
   - name: schedule
     value: "17 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -206,6 +278,10 @@ spec:
   metadata:
   - name: schedule
     value: "18 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -217,6 +293,10 @@ spec:
   metadata:
   - name: schedule
     value: "19 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -228,6 +308,10 @@ spec:
   metadata:
   - name: schedule
     value: "20 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -239,6 +323,10 @@ spec:
   metadata:
   - name: schedule
     value: "21 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -250,6 +338,10 @@ spec:
   metadata:
   - name: schedule
     value: "22 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -261,6 +353,10 @@ spec:
   metadata:
   - name: schedule
     value: "23 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -272,6 +368,10 @@ spec:
   metadata:
   - name: schedule
     value: "24 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -283,6 +383,10 @@ spec:
   metadata:
   - name: schedule
     value: "25 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -294,6 +398,10 @@ spec:
   metadata:
   - name: schedule
     value: "26 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -305,6 +413,10 @@ spec:
   metadata:
   - name: schedule
     value: "27 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -316,6 +428,10 @@ spec:
   metadata:
   - name: schedule
     value: "28 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -327,6 +443,10 @@ spec:
   metadata:
   - name: schedule
     value: "29 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -338,6 +458,10 @@ spec:
   metadata:
   - name: schedule
     value: "30 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -349,6 +473,10 @@ spec:
   metadata:
   - name: schedule
     value: "31 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -360,6 +488,10 @@ spec:
   metadata:
   - name: schedule
     value: "32 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -371,6 +503,10 @@ spec:
   metadata:
   - name: schedule
     value: "33 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -382,6 +518,10 @@ spec:
   metadata:
   - name: schedule
     value: "34 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -393,6 +533,10 @@ spec:
   metadata:
   - name: schedule
     value: "35 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -404,6 +548,10 @@ spec:
   metadata:
   - name: schedule
     value: "36 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -415,6 +563,10 @@ spec:
   metadata:
   - name: schedule
     value: "37 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -426,6 +578,10 @@ spec:
   metadata:
   - name: schedule
     value: "38 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -437,6 +593,10 @@ spec:
   metadata:
   - name: schedule
     value: "39 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -448,6 +608,10 @@ spec:
   metadata:
   - name: schedule
     value: "40 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -459,6 +623,10 @@ spec:
   metadata:
   - name: schedule
     value: "41 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -470,6 +638,10 @@ spec:
   metadata:
   - name: schedule
     value: "42 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -481,6 +653,10 @@ spec:
   metadata:
   - name: schedule
     value: "43 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -492,6 +668,10 @@ spec:
   metadata:
   - name: schedule
     value: "44 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -503,6 +683,10 @@ spec:
   metadata:
   - name: schedule
     value: "45 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -514,6 +698,10 @@ spec:
   metadata:
   - name: schedule
     value: "46 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -525,6 +713,10 @@ spec:
   metadata:
   - name: schedule
     value: "47 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -536,6 +728,10 @@ spec:
   metadata:
   - name: schedule
     value: "48 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -547,6 +743,10 @@ spec:
   metadata:
   - name: schedule
     value: "49 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -558,6 +758,10 @@ spec:
   metadata:
   - name: schedule
     value: "50 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -569,6 +773,10 @@ spec:
   metadata:
   - name: schedule
     value: "51 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -580,6 +788,10 @@ spec:
   metadata:
   - name: schedule
     value: "52 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -591,6 +803,10 @@ spec:
   metadata:
   - name: schedule
     value: "53 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -602,6 +818,10 @@ spec:
   metadata:
   - name: schedule
     value: "54 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -613,6 +833,10 @@ spec:
   metadata:
   - name: schedule
     value: "55 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -624,6 +848,10 @@ spec:
   metadata:
   - name: schedule
     value: "56 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -635,6 +863,10 @@ spec:
   metadata:
   - name: schedule
     value: "57 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -646,6 +878,10 @@ spec:
   metadata:
   - name: schedule
     value: "58 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -657,3 +893,7 @@ spec:
   metadata:
   - name: schedule
     value: "59 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
