@@ -1,6 +1,6 @@
-﻿using MattCanello.NewsFeed.RssReader.Enrichers;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Services;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Enrichers;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 using System.ServiceModel.Syndication;
@@ -19,8 +19,8 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Enrichers
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
-            var reader = new EntryReader(evaluator);
-            var entries = reader.FromRSS(feed);
+            var factory = new EntryFactory(evaluator);
+            var entries = factory.FromRSS(feed);
 
             Assert.NotNull(entries);
             var singleEntry = Assert.Single(entries);

@@ -1,8 +1,28 @@
-using MattCanello.NewsFeed.RssReader.Filters;
-using MattCanello.NewsFeed.RssReader.Infrastructure;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Profiles;
-using MattCanello.NewsFeed.RssReader.Services;
+using CloudNative.CloudEvents;
+using CloudNative.CloudEvents.SystemTextJson;
+using MattCanello.NewsFeed.RssReader.Domain.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Profiles;
+using MattCanello.NewsFeed.RssReader.Domain.Services;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
+using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -25,6 +45,7 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddMapperProfiles();
 
             builder.Services.AddDapr();
+            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -45,13 +66,13 @@ namespace MattCanello.NewsFeed.RssReader
         private static void AddAppServices(this IServiceCollection services)
         {
             services
-                .AddScoped<IChannelPublisher, ChannelPublisher>()
-                .AddSingleton<IChannelReader, ChannelReader>()
+                .AddScoped<IFeedConsumedPublisher, DaprFeedConsumedPublisher>()
+                .AddSingleton<IChannelFactory, ChannelFactory>()
                 .AddScoped<IChannelService, ChannelService>();
 
             services
-                .AddScoped<IEntryPublisher, EntryPublisher>()
-                .AddSingleton<IEntryReader, EntryReader>()
+                .AddScoped<INewEntryFoundPublisher, DaprNewEntryFoundPublisher>()
+                .AddSingleton<IEntryFactory, EntryFactory>()
                 .AddScoped<IEntryService, EntryService>();
 
             services
@@ -61,9 +82,18 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddSingleton<IFeedRepository, DaprFeedRepository>();
 
             services
+                .AddSingleton<ICreateFeedHandler, CreateFeedHandler>();
+
+            services
+               .AddScoped<Rss091Formatter>()
+               .AddSingleton<DefaultSyndicationFeedLoader>()
+               .AddScoped<Rss091SyndicationFeedLoader>()
+               .AddScoped<ISyndicationFeedEvaluator, SyndicationFeedEvaluator>();
+
+            services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<IRssService, RssService>();
+                .AddScoped<IRssApp, RssApp>();
         }
 
         private static void AddDapr(this IServiceCollection services)
@@ -98,6 +128,19 @@ namespace MattCanello.NewsFeed.RssReader
             {
                 config.AddProfile<FeedProfile>();
             });
+        }
+
+        private static void AddCloudEvents(this IServiceCollection services)
+        {
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
+                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
+                {
+                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+                    {
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                    }, new JsonDocumentOptions());
+                });
         }
     }
 }

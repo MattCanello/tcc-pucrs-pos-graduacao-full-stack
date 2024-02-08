@@ -1,4 +1,4 @@
-﻿using MattCanello.NewsFeed.RssReader.Interfaces;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.Mocks

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="//feeds.folha.uol.com.br/rss/style.xsl" ?>
+
+<rss version="0.91">
+	<channel>
+
+		<title>Folha de S.Paulo - Tec - Principal</title>
+		<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/</link>
+		<description>Primeiro jornal em tempo real em língua portuguesa</description>
+		<language>pt-br</language>
+		<copyright>Copyright Folha de S.Paulo. Todos os direitos reservados.</copyright>
+		<docs>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/folha/conheca/arquivo_e_copyright.shtml</docs>
+		<webMaster>webmaster@grupofolha.com.br (Webmaster Folha de S.Paulo)</webMaster>
+		<categorySlug>tec/</categorySlug>
+
+		<image>
+			<title>Folha de S.Paulo - Tec - Principal</title>
+			<url>https://f.i.uol.com.br/folha/furniture/5.2/images/lgo-folha_de_spaulo-167x31.gif</url>
+			<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/</link>
+			<width>88</width>
+			<height>31</height>
+			<description>Primeiro jornal em tempo real em língua portuguesa</description>
+		</image>
+		
+		<item>
+			<title>OpenAI oferece até US$ 5 milhões por ano a veículos de imprensa para garantir legalidade do ChatGPT</title>
+			<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/2024/01/openai-oferece-ate-us-5-milhoes-por-ano-a-veiculos-de-imprensa-para-garantir-legalidade-do-chatgpt.shtml</link>
+			<author>Pedro S. Teixeira</author>
+			<description>
+				A criadora do &lt;a href=&quot;https://www1.folha.uol.com.br/folha-topicos/chatgpt/&quot;&gt;ChatGPT&lt;/a&gt;, &lt;a href=&quot;https://www1.folha.uol.com.br/folha-topicos/openai/&quot;&gt;OpenAI&lt;/a&gt;, tem oferecido entre US$ 1 milhão (R$ 4,9 milhões) e US$ 5 milhões (R$ 24,6 milhões) por ano a veículos de imprensa americanos para treinar o ChatGPT com textos e imagens noticiosas, &lt;a href=&quot;https://www.theinformation.com/articles/openai-offers-publishers-as-little-as-1-million-a-year&quot; target=&quot;_blank&quot;&gt;de acordo com o site especializado The Information.&lt;/a&gt;
+				&lt;a href=&quot;https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/2024/01/openai-oferece-ate-us-5-milhoes-por-ano-a-veiculos-de-imprensa-para-garantir-legalidade-do-chatgpt.shtml&quot;&gt;Leia mais&lt;/a&gt; (01/04/2024 - 18h48)
+			</description>
+			<pubDate>04 Jan 2024 18:48:00 -0300</pubDate>
+		</item>
+	</channel>
+</rss>

@@ -1,4 +1,6 @@
-﻿using MattCanello.NewsFeed.RssReader.Services;
+﻿using AutoFixture.Xunit2;
+using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 using System.ServiceModel.Syndication;
@@ -8,21 +10,24 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
 {
     public sealed class ChannelServiceTests
     {
-        [Fact]
-        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent()
+        [Theory, AutoData]
+        public async Task ProcessChannelUpdateFromRssAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId, DateTimeOffset consumedDate)
         {
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
-            var publisher = new InMemoryChannelPublisher();
-            var service = new ChannelService(new ChannelReader(), publisher);
+            var publisher = new InMemoryFeedConsumedPublisher();
+            var service = new ChannelService(new ChannelFactory(), publisher);
 
-            await service.ProcessChannelUpdateFromRssAsync(feed);
+            await service.ProcessFeedConsumedAsync(feedId, consumedDate, feed);
 
             Assert.NotNull(publisher.PublishedChannels);
             var singleChannel = Assert.Single(publisher.PublishedChannels);
 
             Assert.NotNull(singleChannel);
+
+            var singleFeedId = Assert.Single(publisher.PublishedFeedIds);
+            Assert.Same(feedId, singleFeedId);
         }
     }
 }

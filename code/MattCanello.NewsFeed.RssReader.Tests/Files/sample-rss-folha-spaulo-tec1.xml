@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="//feeds.folha.uol.com.br/rss/style.xsl" ?>
+
+<rss version="0.91">
+	<channel>
+
+		<title>Folha de S.Paulo - Tec - Principal</title>
+		<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/</link>
+		<description>Primeiro jornal em tempo real em língua portuguesa</description>
+		<language>pt-br</language>
+		<copyright>Copyright Folha de S.Paulo. Todos os direitos reservados.</copyright>
+		<docs>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/folha/conheca/arquivo_e_copyright.shtml</docs>
+		<webMaster>webmaster@grupofolha.com.br (Webmaster Folha de S.Paulo)</webMaster>
+		<categorySlug>tec/</categorySlug>
+
+		<image>
+			<title>Folha de S.Paulo - Tec - Principal</title>
+			<url>https://f.i.uol.com.br/folha/furniture/5.2/images/lgo-folha_de_spaulo-167x31.gif</url>
+			<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://www1.folha.uol.com.br/tec/</link>
+			<width>88</width>
+			<height>31</height>
+			<description>Primeiro jornal em tempo real em língua portuguesa</description>
+		</image>
+
+		<item>
+			<title>Chefe antitruste da UE se reunirá com CEOs de big techs na próxima semana</title>
+			<link>https://redir.folha.com.br/redir/online/tec/rss091/*https://aovivo.folha.uol.com.br/mercado/2024/01/02/6359-dolar-empresas-e-bolsas-acompanhe-ao-vivo-o-mercado.shtml#post437908</link>
+			<author></author>
+			<description>
+				A chefe antitruste da União Europeia, Margrethe Vestager, se reunirá com os presidentes-executivos da Apple, Alphabet (dona do Google), Broadcom e Nvidia nos Estados Unidos na próxima semana, afirmou o órgão europeu nesta sexta-feira (5).
+				&lt;a href=&quot;https://redir.folha.com.br/redir/online/tec/rss091/*https://aovivo.folha.uol.com.br/mercado/2024/01/02/6359-dolar-empresas-e-bolsas-acompanhe-ao-vivo-o-mercado.shtml#post437908&quot;&gt;Leia mais&lt;/a&gt; (01/05/2024 - 15h56)
+			</description>
+			<pubDate>05 Jan 2024 15:56:00 -0300</pubDate>
+		</item>
+	</channel>
+</rss>

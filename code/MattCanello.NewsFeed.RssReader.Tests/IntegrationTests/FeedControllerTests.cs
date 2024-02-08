@@ -1,8 +1,9 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using MattCanello.NewsFeed.RssReader.Controllers;
-using MattCanello.NewsFeed.RssReader.Events;
-using MattCanello.NewsFeed.RssReader.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,11 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
     public sealed class FeedControllerTests
     {
         [Theory(DisplayName = "Cadastro de Feed válido"), AutoData]
-        public async Task Create_WhenDataIsValid_ShouldCreateFeed(CreateFeedMessage createFeedMessage)
+        public async Task Create_WhenDataIsValid_ShouldCreateFeed(CreateFeedCommand createFeedMessage)
         {
-            var controller = new FeedController(new InMemoryFeedRepository(), Util.Mapper);
+            var repository = new InMemoryFeedRepository();
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Create(createFeedMessage);
 
@@ -31,7 +34,6 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
                 .Subject;
 
             feed.FeedId.Should().Be(createFeedMessage.FeedId);
-            feed.ChannelId.Should().Be(createFeedMessage.ChannelId);
             feed.Url.Should().Be(createFeedMessage.Url);
 
             feed.LastETag.Should().BeNull();
@@ -41,7 +43,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
         [Fact(DisplayName = "Cadastro de Feed null")]
         public async Task Create_WhenMessageIsNull_ShouldReturnBadRequest()
         {
-            var controller = new FeedController(new InMemoryFeedRepository(), Util.Mapper);
+            var repository = new InMemoryFeedRepository();
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Create(null!);
 
@@ -54,7 +58,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
         [Theory(DisplayName = "Obtenção de Feed não existente"), AutoData]
         public async Task Get_WhenFeedDoesNotExist_ShouldReturnNotFound(string feedId)
         {
-            var controller = new FeedController(new InMemoryFeedRepository(), Util.Mapper);
+            var repository = new InMemoryFeedRepository();
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Get(feedId);
 
@@ -67,7 +73,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
         [Theory(DisplayName = "Obtenção de Feed existente"), AutoData]
         public async Task Get_WhenFeedExists_ShouldReturnExpectedFeed(Feed feed)
         {
-            var controller = new FeedController(new InMemoryFeedRepository(feed), Util.Mapper);
+            var repository = new InMemoryFeedRepository(feed);
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Get(feed.FeedId);
 
@@ -89,7 +97,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
         [Theory(DisplayName = "Exclusão de Feed existente"), AutoData]
         public async Task Delete_WhenFeedExists_ShouldReturnNoContent(Feed feed)
         {
-            var controller = new FeedController(new InMemoryFeedRepository(feed), Util.Mapper);
+            var repository = new InMemoryFeedRepository(feed);
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Delete(feed.FeedId);
 
@@ -102,7 +112,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.IntegrationTests
         [Theory(DisplayName = "Exclusão de Feed inexistente"), AutoData]
         public async Task Delete_WhenFeedDoesNotExist_ShouldReturnNoContent(string feedId)
         {
-            var controller = new FeedController(new InMemoryFeedRepository(), Util.Mapper);
+            var repository = new InMemoryFeedRepository();
+            var handler = new CreateFeedHandler(repository, Util.Mapper);
+            var controller = new FeedController(repository, handler);
 
             var result = await controller.Delete(feedId);
 

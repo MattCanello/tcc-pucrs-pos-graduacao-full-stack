@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using MattCanello.NewsFeed.RssReader.Events;
-using MattCanello.NewsFeed.RssReader.Interfaces;
-using MattCanello.NewsFeed.RssReader.Models;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Commands;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
@@ -11,12 +11,12 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
     public class FeedController : ControllerBase
     {
         private readonly IFeedRepository _feedRepository;
-        private readonly IMapper _mapper;
+        private readonly ICreateFeedHandler _createFeedHandler;
 
-        public FeedController(IFeedRepository feedRepository, IMapper mapper)
+        public FeedController(IFeedRepository feedRepository, ICreateFeedHandler createFeedHandler)
         {
             _feedRepository = feedRepository;
-            _mapper = mapper;
+            _createFeedHandler = createFeedHandler;
         }
 
         [HttpGet("{feedId}")]
@@ -35,14 +35,12 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
-        public async Task<IActionResult> Create(CreateFeedMessage message)
+        public async Task<IActionResult> Create(CreateFeedCommand command)
         {
-            if (message is null)
+            if (command is null)
                 return BadRequest();
 
-            var feed = _mapper.Map<Feed>(message);
-            await _feedRepository.UpdateAsync(feed.FeedId, feed);
-
+            var feed = await _createFeedHandler.CreateFeedAsync(command);
             return CreatedAtAction(nameof(Get), new { feedId = feed.FeedId }, feed);
         }
 
