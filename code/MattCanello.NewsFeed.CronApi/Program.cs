@@ -1,5 +1,4 @@
 using MattCanello.NewsFeed.CronApi.Domain.Applications;
-using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
@@ -9,7 +8,6 @@ using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -43,8 +41,6 @@ namespace MattCanello.NewsFeed.CronApi
             app.UseAuthorization();
 
             app.MapControllers();
-
-            app.MapCronEndpoint();
 
             app.Run();
         }
@@ -90,18 +86,6 @@ namespace MattCanello.NewsFeed.CronApi
                 {
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                 });
-            });
-        }
-
-        private static void MapCronEndpoint(this WebApplication app)
-        {
-            app.MapPost("/publish", async ([FromQuery] byte slot, [FromServices] ICronPublishApp cronPublishApp) =>
-            {
-                SlotOutOfRangeException.ThrowIfOutOfRange(slot);
-
-                await cronPublishApp!.PublishSlotAsync(slot);
-
-                return Results.NoContent();
             });
         }
     }
