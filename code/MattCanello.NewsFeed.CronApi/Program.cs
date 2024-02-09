@@ -1,3 +1,5 @@
+using CloudNative.CloudEvents.SystemTextJson;
+using CloudNative.CloudEvents;
 using MattCanello.NewsFeed.CronApi.Domain.Applications;
 using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
@@ -11,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 
 namespace MattCanello.NewsFeed.CronApi
 {
@@ -26,6 +30,7 @@ namespace MattCanello.NewsFeed.CronApi
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDapr();
+            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -96,6 +101,19 @@ namespace MattCanello.NewsFeed.CronApi
 
                 return Results.NoContent();
             });
+        }
+
+        private static void AddCloudEvents(this IServiceCollection services)
+        {
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
+                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
+                {
+                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+                    {
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                    }, new JsonDocumentOptions());
+                });
         }
     }
 }
