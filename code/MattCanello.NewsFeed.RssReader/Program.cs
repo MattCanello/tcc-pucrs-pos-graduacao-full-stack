@@ -18,6 +18,7 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
@@ -37,6 +38,7 @@ namespace MattCanello.NewsFeed.RssReader
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -45,7 +47,6 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddMapperProfiles();
 
             builder.Services.AddDapr();
-            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -115,6 +116,9 @@ namespace MattCanello.NewsFeed.RssReader
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
 
                 options.Filters.Add<HttpExceptionFilter>();
+
+                var cloudEventFormatter = services.BuildServiceProvider().GetRequiredService<CloudEventJsonInputFormatter>();
+                options.InputFormatters.Insert(0, cloudEventFormatter);
             })
             .AddJsonOptions(options =>
             {
@@ -140,7 +144,8 @@ namespace MattCanello.NewsFeed.RssReader
                     {
                         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                     }, new JsonDocumentOptions());
-                });
+                })
+                .AddSingleton<CloudEventJsonInputFormatter>();
         }
     }
 }

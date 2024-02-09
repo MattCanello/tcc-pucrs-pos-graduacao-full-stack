@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{05F41E28-E4C4-4966-9F92-1F3F23D92B2F}"
 	ProjectSection(SolutionItems) = preProject
 		dapr\components\cron.yaml = dapr\components\cron.yaml
+		dapr\components\inputbinding.yaml = dapr\components\inputbinding.yaml
 		dapr\components\outputbindings.yaml = dapr\components\outputbindings.yaml
 		dapr\components\statestore.yaml = dapr\components\statestore.yaml
 	EndProjectSection
@@ -22,9 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RssReader", "RssReader", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cron", "Cron", "{2924D66D-0BCC-4D43-852D-8DEDA5390E03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.CronApi", "MattCanello.NewsFeed.CronApi\MattCanello.NewsFeed.CronApi.csproj", "{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.CronApi", "MattCanello.NewsFeed.CronApi\MattCanello.NewsFeed.CronApi.csproj", "{9CAF27E8-7B7D-4F42-BA1D-2381C6DB1E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.CronApi.Tests", "MattCanello.NewsFeed.CronApi.Tests\MattCanello.NewsFeed.CronApi.Tests.csproj", "{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.CronApi.Tests", "MattCanello.NewsFeed.CronApi.Tests\MattCanello.NewsFeed.CronApi.Tests.csproj", "{7805AD64-8DE7-4D1A-8DB2-58E4FD4160F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

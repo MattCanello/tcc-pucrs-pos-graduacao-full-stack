@@ -1,0 +1,24 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: processrss
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "rss-publish-commands"
+  - name: clientID
+    value: "rss-reader"
+  - name: consumerGroup
+    value: "rss-reader"
+scopes:
+  - rss-reader
