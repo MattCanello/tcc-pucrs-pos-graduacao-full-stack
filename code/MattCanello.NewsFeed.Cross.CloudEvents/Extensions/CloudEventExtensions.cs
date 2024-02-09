@@ -1,6 +1,6 @@
 ﻿using CloudNative.CloudEvents;
 
-namespace MattCanello.NewsFeed.RssReader.Infrastructure.Extensions
+namespace MattCanello.NewsFeed.Cross.CloudEvents.Extensions
 {
     public static class CloudEventExtensions
     {

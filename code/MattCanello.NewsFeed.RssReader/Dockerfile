@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["MattCanello.NewsFeed.Cross.CloudEvents/MattCanello.NewsFeed.Cross.CloudEvents.csproj", "MattCanello.NewsFeed.Cross.CloudEvents/"]
 COPY ["MattCanello.NewsFeed.RssReader/MattCanello.NewsFeed.RssReader.csproj", "MattCanello.NewsFeed.RssReader/"]
 RUN dotnet restore "./MattCanello.NewsFeed.RssReader/./MattCanello.NewsFeed.RssReader.csproj"
 COPY . .

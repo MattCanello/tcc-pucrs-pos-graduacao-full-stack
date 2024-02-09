@@ -4,7 +4,7 @@ using Microsoft.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 
-namespace MattCanello.NewsFeed.RssReader.Infrastructure.Formatters
+namespace MattCanello.NewsFeed.Cross.CloudEvents.Formatters
 {
     public class CloudEventJsonInputFormatter : TextInputFormatter
     {

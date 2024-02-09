@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using CloudNative.CloudEvents;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Extensions;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 
-namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Extensions
+namespace MattCanello.NewsFeed.Cross.CloudEvents.Tests.UnitTests.Extensions
 {
     public class CloudEventExtensionsTests
     {

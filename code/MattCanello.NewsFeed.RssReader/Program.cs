@@ -1,5 +1,5 @@
-using CloudNative.CloudEvents;
-using CloudNative.CloudEvents.SystemTextJson;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
+using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
@@ -18,7 +18,6 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
@@ -95,6 +94,9 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
                 .AddScoped<IRssApp, RssApp>();
+
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
         }
 
         private static void AddDapr(this IServiceCollection services)
@@ -132,20 +134,6 @@ namespace MattCanello.NewsFeed.RssReader
             {
                 config.AddProfile<FeedProfile>();
             });
-        }
-
-        private static void AddCloudEvents(this IServiceCollection services)
-        {
-            services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
-                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
-                {
-                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                    {
-                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                    }, new JsonDocumentOptions());
-                })
-                .AddSingleton<CloudEventJsonInputFormatter>();
         }
     }
 }

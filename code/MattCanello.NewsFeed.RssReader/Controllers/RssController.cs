@@ -1,6 +1,6 @@
 ﻿using CloudNative.CloudEvents;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
-using MattCanello.NewsFeed.RssReader.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
