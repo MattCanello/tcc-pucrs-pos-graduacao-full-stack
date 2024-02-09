@@ -37,5 +37,25 @@ namespace MattCanello.NewsFeed.Cross.CloudEvents.Tests.UnitTests.Extensions
 
             Assert.Equal(providedFeedId, feedId);
         }
+
+        [Theory, AutoData]
+        public void SetFeedId_GivenANullEvent_ShouldNotThrowException(string feedId)
+        {
+            CloudEvent? cloudEvent = null;
+
+            cloudEvent!.SetFeedId(feedId);
+        }
+
+        [Theory, AutoData]
+        public void SetFeedId_GivenAValidInput_ShouldSetFeedId(string feedId)
+        {
+            var cloudEvent = new CloudEvent();
+
+            cloudEvent.SetFeedId(feedId);
+
+            var readFeedId = cloudEvent.GetFeedId();
+
+            Assert.Equal(feedId, readFeedId);
+        }
     }
 }

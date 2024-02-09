@@ -1,5 +1,6 @@
 ﻿using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.Extensions;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 
@@ -23,7 +24,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             };
 
             cloudEvent.SetPartitionKey(feedId);
-            cloudEvent.SetAttributeFromString("feedid", feedId);
+            cloudEvent.SetFeedId(feedId);
 
             return cloudEvent;
         }

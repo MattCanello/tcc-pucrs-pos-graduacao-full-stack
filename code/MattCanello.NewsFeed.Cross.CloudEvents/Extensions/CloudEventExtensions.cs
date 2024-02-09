@@ -22,5 +22,13 @@ namespace MattCanello.NewsFeed.Cross.CloudEvents.Extensions
 
             return feedId as string;
         }
+
+        public static void SetFeedId(this CloudEvent cloudEvent, string feedId)
+        {
+            if (cloudEvent is null)
+                return;
+
+            cloudEvent.SetAttributeFromString("feedid", feedId);
+        }
     }
 }
