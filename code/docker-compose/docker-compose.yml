@@ -76,6 +76,7 @@ services:
     depends_on:
       - mattcanello.newsfeed.cronapi
       - redis
+      - kafka
     restart: on-failure
     network_mode: "service:mattcanello.newsfeed.cronapi"
     volumes:
