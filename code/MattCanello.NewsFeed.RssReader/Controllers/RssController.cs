@@ -15,17 +15,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
             _rssService = rssService;
         }
 
-        [Obsolete]
-        [HttpPost("api/rss/{feedId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Process(string feedId, CancellationToken cancellationToken = default)
-        {
-            await _rssService.ProcessFeedAsync(feedId, cancellationToken);
-            return NoContent();
-        }
-
-        [HttpPost("processrss")]
+        [HttpPost("process")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Process(CloudEvent cloudEvent, CancellationToken cancellationToken = default)
