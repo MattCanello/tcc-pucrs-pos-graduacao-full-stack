@@ -1,5 +1,6 @@
 ﻿using CloudNative.CloudEvents;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
@@ -32,7 +33,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
             if (cloudEvent is null)
                 return BadRequest();
 
-            var feedId = cloudEvent.Subject;
+            var feedId = cloudEvent.GetFeedId();
             if (string.IsNullOrEmpty(feedId))
                 return BadRequest();
 
