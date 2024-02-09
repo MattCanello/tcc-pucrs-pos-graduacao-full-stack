@@ -1,6 +1,7 @@
 ﻿using CloudNative.CloudEvents;
 using CloudNative.CloudEvents.Extensions;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 
 namespace MattCanello.NewsFeed.CronApi.Infrastructure.Factories
 {
@@ -21,7 +22,7 @@ namespace MattCanello.NewsFeed.CronApi.Infrastructure.Factories
             };
 
             cloudEvent.SetPartitionKey(feedId);
-            cloudEvent.SetAttributeFromString("feedid", feedId);
+            cloudEvent.SetFeedId(feedId);
 
             return cloudEvent;
         }

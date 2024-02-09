@@ -15,4 +15,8 @@
 		<PackageReference Include="CloudNative.CloudEvents.SystemTextJson" Version="2.7.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\MattCanello.NewsFeed.Cross.CloudEvents\MattCanello.NewsFeed.Cross.CloudEvents.csproj" />
+	</ItemGroup>
+
 </Project>

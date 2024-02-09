@@ -1,20 +1,19 @@
-using CloudNative.CloudEvents.SystemTextJson;
-using CloudNative.CloudEvents;
 using MattCanello.NewsFeed.CronApi.Domain.Applications;
 using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
-using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 
 namespace MattCanello.NewsFeed.CronApi
 {
@@ -25,12 +24,12 @@ namespace MattCanello.NewsFeed.CronApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDapr();
-            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -63,6 +62,9 @@ namespace MattCanello.NewsFeed.CronApi
             services
                 .AddScoped<ICronPublishApp, CronPublishApp>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
+
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
@@ -101,19 +103,6 @@ namespace MattCanello.NewsFeed.CronApi
 
                 return Results.NoContent();
             });
-        }
-
-        private static void AddCloudEvents(this IServiceCollection services)
-        {
-            services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
-                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
-                {
-                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                    {
-                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                    }, new JsonDocumentOptions());
-                });
         }
     }
 }
