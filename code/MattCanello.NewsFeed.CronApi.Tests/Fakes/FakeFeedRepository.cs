@@ -13,13 +13,9 @@ namespace MattCanello.NewsFeed.CronApi.Tests.Fakes
 
         public Task<Feed?> GetFeedAsync(byte slot, string feedId, CancellationToken cancellationToken = default)
         {
-            if (!_feeds.TryGetValue(slot, out var feeds))
-                return Task.FromResult<Feed?>(null);
+            var feed = GetFeed(slot, feedId);
 
-            if (!feeds.TryGetValue(feedId, out var feed))
-                return Task.FromResult<Feed?>(null);
-
-            return Task.FromResult<Feed?>(feed);
+            return Task.FromResult(feed);
         }
 
         public Task<IReadOnlySet<string>> GetFeedIdsAsync(byte slot, CancellationToken cancellationToken = default)
@@ -37,6 +33,29 @@ namespace MattCanello.NewsFeed.CronApi.Tests.Fakes
 
             _feeds[slot].Add(feed.FeedId, feed);
             return Task.CompletedTask;
+        }
+
+        public Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastUpdateDate, CancellationToken cancellationToken = default)
+        {
+            var feed = GetFeed(slot, feedId);
+
+            if (feed is null)
+                return Task.CompletedTask;
+
+            feed.LastExecutionDate = lastUpdateDate;
+
+            return Task.CompletedTask;
+        }
+
+        private Feed? GetFeed(byte slot, string feedId)
+        {
+            if (!_feeds.TryGetValue(slot, out var feeds))
+                return null;
+
+            if (!feeds.TryGetValue(feedId, out var feed))
+                return null;
+
+            return feed;
         }
     }
 }

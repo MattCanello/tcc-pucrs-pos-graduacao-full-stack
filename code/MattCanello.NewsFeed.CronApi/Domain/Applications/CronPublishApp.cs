@@ -18,6 +18,7 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Applications
         {
             SlotOutOfRangeException.ThrowIfOutOfRange(slot);
 
+            var executionDate = DateTimeOffset.UtcNow;
             var feedIds = await _feedRepository.GetFeedIdsAsync(slot, cancellationToken);
 
             if (feedIds is null || feedIds.Count == 0)
@@ -27,13 +28,20 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Applications
 
             foreach (var feedId in feedIds)
             {
-                var enqueueTask = _cronFeedEnqueuer.EnqueueFeedToProcessAsync(feedId, cancellationToken);
-                enqueueTasks.Add(enqueueTask);
+                var task = EnqueueAndUpdateFeedAsync(slot, feedId, executionDate, cancellationToken);
+
+                enqueueTasks.Add(task);
             }
 
             await Task.WhenAll(enqueueTasks);
 
             return feedIds.Count;
+        }
+
+        private async Task EnqueueAndUpdateFeedAsync(byte slot, string feedId, DateTimeOffset executionDate, CancellationToken cancellationToken = default)
+        {
+            await _cronFeedEnqueuer.EnqueueFeedToProcessAsync(feedId, cancellationToken);
+            await _feedRepository.UpdateLastExecutionDateAsync(slot, feedId, executionDate, cancellationToken);
         }
     }
 }

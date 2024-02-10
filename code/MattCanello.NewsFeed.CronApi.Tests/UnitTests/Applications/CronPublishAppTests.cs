@@ -55,5 +55,29 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
             var result = await app.PublishSlotAsync(slotToPublish);
             Assert.Equal(0, result);
         }
+
+
+        [Theory, AutoData]
+        public async Task PublishSlotAsync_GivenOneFeedId_OnCorrectSlot_ShouldUpdateLastExecutionDate(Feed feed)
+        {
+            feed.LastExecutionDate = null;
+
+            const byte slot = 0;
+            var feedRepository = new FakeFeedRepository(new Dictionary<byte, IDictionary<string, Feed>>(capacity: 1)
+            {
+                {
+                    slot,
+                    new Dictionary<string, Feed>() { { feed.FeedId, feed } }
+                }
+            });
+
+            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer());
+
+            var now = DateTimeOffset.UtcNow;
+            await app.PublishSlotAsync(slot);
+
+            Assert.NotNull(feed.LastExecutionDate);
+            Assert.Equal(now.DateTime, feed.LastExecutionDate.Value.DateTime, TimeSpan.FromSeconds(1));
+        }
     }
 }
