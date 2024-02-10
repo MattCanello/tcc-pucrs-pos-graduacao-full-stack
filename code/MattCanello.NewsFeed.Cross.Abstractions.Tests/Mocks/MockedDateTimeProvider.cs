@@ -6,6 +6,7 @@ namespace MattCanello.NewsFeed.Cross.Abstractions.Tests.Mocks
     {
         private readonly DateTimeOffset _now;
 
+        public MockedDateTimeProvider() : this(DateTimeOffset.UtcNow) { }
         public MockedDateTimeProvider(DateTimeOffset now) => _now = now;
 
         public DateTimeOffset GetUtcNow() => _now;

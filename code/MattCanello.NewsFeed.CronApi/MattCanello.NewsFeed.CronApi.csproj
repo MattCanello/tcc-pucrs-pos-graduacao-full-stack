@@ -16,6 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Abstractions\MattCanello.NewsFeed.Cross.Abstractions.csproj" />
 	  <ProjectReference Include="..\MattCanello.NewsFeed.Cross.CloudEvents\MattCanello.NewsFeed.Cross.CloudEvents.csproj" />
 	</ItemGroup>
 

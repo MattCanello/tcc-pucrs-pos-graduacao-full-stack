@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using CloudNative.CloudEvents.Extensions;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
+using MattCanello.NewsFeed.Cross.Abstractions.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Factories
 {
@@ -9,19 +10,20 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Factories
         [Fact]
         public void CreateProcessRssEvent_GivenNullFeedId_ShouldThrowException()
         {
-            var factory = new CloudEventFactory();
+            var factory = new CloudEventFactory(new MockedDateTimeProvider());
             Assert.Throws<ArgumentNullException>(() => factory.CreateProcessRssEvent(null!));
         }
 
         [Theory, AutoData]
         public void CreateProcessRssEvent_GivenValidFeedId_ShouldProduceExcepectedEvent(string feedId)
         {
-            var factory = new CloudEventFactory();
+            var now = DateTimeOffset.UtcNow;
+            var factory = new CloudEventFactory(new MockedDateTimeProvider(now));
 
             var cloudEvent = factory.CreateProcessRssEvent(feedId);
 
             Assert.NotNull(cloudEvent.Time);
-            Assert.Equal(DateTimeOffset.UtcNow.DateTime, cloudEvent.Time.Value.DateTime, TimeSpan.FromSeconds(1));
+            Assert.Equal(now, cloudEvent.Time.Value);
             
             Assert.NotNull(cloudEvent.Source);
             Assert.Equal($"/cron-api/{feedId}", cloudEvent.Source.ToString());

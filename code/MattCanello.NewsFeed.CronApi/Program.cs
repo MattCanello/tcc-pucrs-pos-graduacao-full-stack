@@ -7,6 +7,8 @@ using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
+using MattCanello.NewsFeed.Cross.Abstractions;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
@@ -47,6 +49,9 @@ namespace MattCanello.NewsFeed.CronApi
 
         private static void AddAppServices(this IServiceCollection services)
         {
+            services
+                .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
+
             services
                 .AddScoped<IRegisterFeedHandler, RegisterFeedHandler>()
                 .AddScoped<ISlotCounterService, SequentialSlotCounterService>();

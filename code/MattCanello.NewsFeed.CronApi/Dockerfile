@@ -9,6 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MattCanello.NewsFeed.CronApi/MattCanello.NewsFeed.CronApi.csproj", "MattCanello.NewsFeed.CronApi/"]
 COPY ["MattCanello.NewsFeed.Cross.CloudEvents/MattCanello.NewsFeed.Cross.CloudEvents.csproj", "MattCanello.NewsFeed.Cross.CloudEvents/"]
+COPY ["MattCanello.NewsFeed.Cross.Abstractions/MattCanello.NewsFeed.Cross.Abstractions.csproj", "MattCanello.NewsFeed.Cross.Abstractions/"]
 RUN dotnet restore "./MattCanello.NewsFeed.CronApi/./MattCanello.NewsFeed.CronApi.csproj"
 COPY . .
 WORKDIR "/src/MattCanello.NewsFeed.CronApi"

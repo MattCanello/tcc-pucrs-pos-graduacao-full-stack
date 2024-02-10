@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.CronApi.Domain.Exceptions;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 
 namespace MattCanello.NewsFeed.CronApi.Domain.Applications
 {
@@ -7,18 +8,20 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Applications
     {
         private readonly IFeedRepository _feedRepository;
         private readonly ICronFeedEnqueuer _cronFeedEnqueuer;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public CronPublishApp(IFeedRepository feedRepository, ICronFeedEnqueuer cronFeedEnqueuer)
+        public CronPublishApp(IFeedRepository feedRepository, ICronFeedEnqueuer cronFeedEnqueuer, IDateTimeProvider dateTimeProvider)
         {
             _feedRepository = feedRepository;
             _cronFeedEnqueuer = cronFeedEnqueuer;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<int> PublishSlotAsync(byte slot, CancellationToken cancellationToken = default)
         {
             SlotOutOfRangeException.ThrowIfOutOfRange(slot);
 
-            var executionDate = DateTimeOffset.UtcNow;
+            var executionDate = _dateTimeProvider.GetUtcNow();
             var feedIds = await _feedRepository.GetFeedIdsAsync(slot, cancellationToken);
 
             if (feedIds is null || feedIds.Count == 0)

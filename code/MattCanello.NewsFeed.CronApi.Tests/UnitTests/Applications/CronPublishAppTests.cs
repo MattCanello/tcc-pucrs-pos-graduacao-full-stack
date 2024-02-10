@@ -2,6 +2,7 @@
 using MattCanello.NewsFeed.CronApi.Domain.Applications;
 using MattCanello.NewsFeed.CronApi.Domain.Models;
 using MattCanello.NewsFeed.CronApi.Tests.Fakes;
+using MattCanello.NewsFeed.Cross.Abstractions.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
 {
@@ -13,7 +14,7 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
             const byte slot = 0;
             var feedRepository = new FakeFeedRepository(new Dictionary<byte, IDictionary<string, Feed>>(capacity: 0));
 
-            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer());
+            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer(), new MockedDateTimeProvider());
 
             var result = await app.PublishSlotAsync(slot);
             Assert.Equal(0, result);
@@ -31,7 +32,7 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
                 }
             });
 
-            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer());
+            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer(), new MockedDateTimeProvider());
 
             var result = await app.PublishSlotAsync(slot);
             Assert.Equal(1, result);
@@ -50,7 +51,7 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
                 }
             });
 
-            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer());
+            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer(), new MockedDateTimeProvider());
 
             var result = await app.PublishSlotAsync(slotToPublish);
             Assert.Equal(0, result);
@@ -71,13 +72,13 @@ namespace MattCanello.NewsFeed.CronApi.Tests.UnitTests.Applications
                 }
             });
 
-            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer());
-
             var now = DateTimeOffset.UtcNow;
+            var app = new CronPublishApp(feedRepository, new FakeCronFeedEnqueuer(), new MockedDateTimeProvider(now));
+
             await app.PublishSlotAsync(slot);
 
             Assert.NotNull(feed.LastExecutionDate);
-            Assert.Equal(now.DateTime, feed.LastExecutionDate.Value.DateTime, TimeSpan.FromSeconds(1));
+            Assert.Equal(now, feed.LastExecutionDate.Value);
         }
     }
 }
