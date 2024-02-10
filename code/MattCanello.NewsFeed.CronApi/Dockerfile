@@ -11,7 +11,7 @@ COPY ["./code/MattCanello.NewsFeed.CronApi/MattCanello.NewsFeed.CronApi.csproj",
 COPY ["./code/MattCanello.NewsFeed.Cross.CloudEvents/MattCanello.NewsFeed.Cross.CloudEvents.csproj", "MattCanello.NewsFeed.Cross.CloudEvents/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Abstractions/MattCanello.NewsFeed.Cross.Abstractions.csproj", "MattCanello.NewsFeed.Cross.Abstractions/"]
 RUN dotnet restore "./MattCanello.NewsFeed.CronApi/./MattCanello.NewsFeed.CronApi.csproj"
-COPY . .
+COPY "./code" .
 WORKDIR "/src/MattCanello.NewsFeed.CronApi"
 RUN dotnet build "./MattCanello.NewsFeed.CronApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
