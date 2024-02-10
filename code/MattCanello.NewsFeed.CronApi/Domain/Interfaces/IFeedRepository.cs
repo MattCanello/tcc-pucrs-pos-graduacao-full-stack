@@ -10,6 +10,6 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Interfaces
 
         Task PlaceFeedAsync(byte slot, Feed feed, CancellationToken cancellationToken = default);
 
-        Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastUpdateDate, CancellationToken cancellationToken = default);
+        Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastExecutionDate, CancellationToken cancellationToken = default);
     }
 }

@@ -35,14 +35,14 @@ namespace MattCanello.NewsFeed.CronApi.Tests.Fakes
             return Task.CompletedTask;
         }
 
-        public Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastUpdateDate, CancellationToken cancellationToken = default)
+        public Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastExecutionDate, CancellationToken cancellationToken = default)
         {
             var feed = GetFeed(slot, feedId);
 
             if (feed is null)
                 return Task.CompletedTask;
 
-            feed.LastExecutionDate = lastUpdateDate;
+            feed.LastExecutionDate = lastExecutionDate;
 
             return Task.CompletedTask;
         }

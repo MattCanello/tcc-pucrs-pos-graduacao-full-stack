@@ -71,7 +71,7 @@ namespace MattCanello.NewsFeed.CronApi.Infrastructure.Repositories
         private static string GetSlotKey(byte slot) => $"s{slot:00}";
         private static string GetFeedKey(byte slot, string feedId) => $"s{slot:00}/{feedId}";
 
-        public async Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastUpdateDate, CancellationToken cancellationToken = default)
+        public async Task UpdateLastExecutionDateAsync(byte slot, string feedId, DateTimeOffset lastExecutionDate, CancellationToken cancellationToken = default)
         {
             SlotOutOfRangeException.ThrowIfOutOfRange(slot);
             ArgumentNullException.ThrowIfNull(feedId);
@@ -81,7 +81,7 @@ namespace MattCanello.NewsFeed.CronApi.Infrastructure.Repositories
             if (feed is null)
                 return;
 
-            feed.LastExecutionDate = lastUpdateDate;
+            feed.LastExecutionDate = lastExecutionDate;
 
             var feedKey = GetFeedKey(slot, feedId);
 
