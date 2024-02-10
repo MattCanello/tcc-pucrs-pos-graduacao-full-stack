@@ -1,0 +1,899 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=0
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "0 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=1
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "1 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=2
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "2 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=3
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "3 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=4
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "4 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=5
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "5 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=6
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "6 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=7
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "7 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=8
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "8 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=9
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "9 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=10
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "10 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=11
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "11 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=12
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "12 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=13
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "13 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=14
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "14 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=15
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "15 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=16
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "16 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=17
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "17 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=18
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "18 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=19
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "19 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=20
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "20 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=21
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "21 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=22
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "22 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=23
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "23 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=24
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "24 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=25
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "25 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=26
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "26 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=27
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "27 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=28
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "28 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=29
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "29 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=30
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "30 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=31
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "31 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=32
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "32 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=33
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "33 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=34
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "34 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=35
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "35 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=36
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "36 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=37
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "37 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=38
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "38 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=39
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "39 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=40
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "40 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=41
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "41 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=42
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "42 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=43
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "43 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=44
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "44 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=45
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "45 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=46
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "46 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=47
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "47 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=48
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "48 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=49
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "49 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=50
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "50 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=51
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "51 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=52
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "52 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=53
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "53 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=54
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "54 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=55
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "55 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=56
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "56 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=57
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "57 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=58
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "58 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: publish?slot=59
+spec:
+  type: bindings.cron
+  version: v1
+  metadata:
+  - name: schedule
+    value: "59 * * ? * *"
+  - name: direction
+    value: "input"
+scopes:
+  - cron-api

@@ -35,3 +35,22 @@ spec:
     value: "rss-channels"
   - name: clientID
     value: "rss-reader"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: rsspublishcommands
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: direction
+    value: "output"
+  - name: publishTopic
+    value: "rss-publish-commands"
+  - name: clientID
+    value: "cron-api"
