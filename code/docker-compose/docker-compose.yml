@@ -49,8 +49,8 @@ services:
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
-      context: .
-      dockerfile: ../MattCanello.NewsFeed.RssReader/Dockerfile
+      context: ..
+      dockerfile: ./MattCanello.NewsFeed.RssReader/Dockerfile
 
   mattcanello.newsfeed.rssreader-dapr:
     image: "daprio/daprd:latest"
@@ -68,7 +68,7 @@ services:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedcronapi
     build:
       context: ..
-      dockerfile: MattCanello.NewsFeed.CronApi/Dockerfile
+      dockerfile: ./MattCanello.NewsFeed.CronApi/Dockerfile
       
   mattcanello.newsfeed.cronapi-dapr:
     image: "daprio/daprd:latest"
