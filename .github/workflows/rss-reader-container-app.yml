@@ -36,3 +36,4 @@ jobs:
         containerAppName: ${{ env.CONTAINER_APP_NAME }}
         containerAppEnvironment: ${{ env.CONTAINER_APP_ENVIRONMENT_NAME }}
         resourceGroup: ${{ env.RESOURCE_GROUP }}
+        dockerfilePath: code/MattCanello.NewsFeed.RssReader/Dockerfile
