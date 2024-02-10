@@ -1,5 +1,5 @@
-using CloudNative.CloudEvents;
-using CloudNative.CloudEvents.SystemTextJson;
+using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
+using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
@@ -37,6 +37,7 @@ namespace MattCanello.NewsFeed.RssReader
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -45,7 +46,6 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddMapperProfiles();
 
             builder.Services.AddDapr();
-            builder.Services.AddCloudEvents();
             builder.Services.AddAppServices();
 
             var app = builder.Build();
@@ -94,6 +94,9 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
                 .AddScoped<IRssApp, RssApp>();
+
+            services
+                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
         }
 
         private static void AddDapr(this IServiceCollection services)
@@ -115,6 +118,9 @@ namespace MattCanello.NewsFeed.RssReader
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
 
                 options.Filters.Add<HttpExceptionFilter>();
+
+                var cloudEventFormatter = services.BuildServiceProvider().GetRequiredService<CloudEventJsonInputFormatter>();
+                options.InputFormatters.Insert(0, cloudEventFormatter);
             })
             .AddJsonOptions(options =>
             {
@@ -128,19 +134,6 @@ namespace MattCanello.NewsFeed.RssReader
             {
                 config.AddProfile<FeedProfile>();
             });
-        }
-
-        private static void AddCloudEvents(this IServiceCollection services)
-        {
-            services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>()
-                .AddSingleton<CloudEventFormatter, JsonEventFormatter>((s) =>
-                {
-                    return new JsonEventFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                    {
-                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                    }, new JsonDocumentOptions());
-                });
         }
     }
 }

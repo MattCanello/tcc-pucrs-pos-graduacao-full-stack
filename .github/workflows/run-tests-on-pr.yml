@@ -4,7 +4,7 @@ on:
     types: [ opened, edited, reopened, ready_for_review ]
 
 jobs:
-  RssReader:
+  Solution:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout source code
@@ -14,8 +14,8 @@ jobs:
       with:
         dotnet-version: 6.x
     - name: Restore
-      run: dotnet restore ./code/MattCanello.NewsFeed.RssReader.Tests/MattCanello.NewsFeed.RssReader.Tests.csproj
+      run: dotnet restore ./code/MattCanello.NewsFeed.sln
     - name: Build
-      run: dotnet build ./code/MattCanello.NewsFeed.RssReader.Tests/MattCanello.NewsFeed.RssReader.Tests.csproj --no-restore
+      run: dotnet build ./code/MattCanello.NewsFeed.sln --no-restore
     - name: Test
-      run: dotnet test ./code/MattCanello.NewsFeed.RssReader.Tests/MattCanello.NewsFeed.RssReader.Tests.csproj
+      run: dotnet test ./code/MattCanello.NewsFeed.sln
