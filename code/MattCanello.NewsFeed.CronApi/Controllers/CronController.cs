@@ -14,10 +14,10 @@ namespace MattCanello.NewsFeed.CronApi.Controllers
             _cronPublishApp = cronPublishApp;
         }
 
-        [HttpPost("publish")]
+        [HttpPost("publish-{slot}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Publish([FromQuery] byte slot = 0, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Publish([FromRoute] byte slot = 0, CancellationToken cancellationToken = default)
         {
             SlotOutOfRangeException.ThrowIfOutOfRange(slot);
 
