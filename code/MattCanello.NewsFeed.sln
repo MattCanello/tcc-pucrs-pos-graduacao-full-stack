@@ -33,9 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.CloudEvents.Tests", "MattCanello.NewsFeed.Cross.CloudEvents.Tests\MattCanello.NewsFeed.Cross.CloudEvents.Tests.csproj", "{FED7EDAD-B9DE-4E0C-A5AD-2CC9BBBFF25C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Cross.Abstractions", "MattCanello.NewsFeed.Cross.Abstractions\MattCanello.NewsFeed.Cross.Abstractions.csproj", "{5B5AB603-BBBE-4AC4-9045-62C6BB511EEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.Abstractions", "MattCanello.NewsFeed.Cross.Abstractions\MattCanello.NewsFeed.Cross.Abstractions.csproj", "{5B5AB603-BBBE-4AC4-9045-62C6BB511EEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Cross.Abstractions.Tests", "MattCanello.NewsFeed.Cross.Abstractions.Tests\MattCanello.NewsFeed.Cross.Abstractions.Tests.csproj", "{8FC8E1D4-9348-4519-AC49-283BF3883E6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.Abstractions.Tests", "MattCanello.NewsFeed.Cross.Abstractions.Tests\MattCanello.NewsFeed.Cross.Abstractions.Tests.csproj", "{8FC8E1D4-9348-4519-AC49-283BF3883E6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Cross.Telemetry", "MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj", "{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{8FC8E1D4-9348-4519-AC49-283BF3883E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FC8E1D4-9348-4519-AC49-283BF3883E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FC8E1D4-9348-4519-AC49-283BF3883E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{FED7EDAD-B9DE-4E0C-A5AD-2CC9BBBFF25C} = {F56011FB-A028-4A2D-B272-325E080268F7}
 		{5B5AB603-BBBE-4AC4-9045-62C6BB511EEC} = {F56011FB-A028-4A2D-B272-325E080268F7}
 		{8FC8E1D4-9348-4519-AC49-283BF3883E6E} = {F56011FB-A028-4A2D-B272-325E080268F7}
+		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39} = {F56011FB-A028-4A2D-B272-325E080268F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}
