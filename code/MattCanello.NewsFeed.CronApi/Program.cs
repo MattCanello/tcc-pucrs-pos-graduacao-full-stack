@@ -11,6 +11,7 @@ using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -79,6 +80,7 @@ namespace MattCanello.NewsFeed.CronApi
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
 
                 options.Filters.Add<HttpExceptionFilter>();
+                options.Filters.Add<ActionLoggingFilter>();
             })
             .AddJsonOptions(options =>
             {
