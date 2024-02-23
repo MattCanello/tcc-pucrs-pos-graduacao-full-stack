@@ -97,7 +97,8 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<IRssApp, RssApp>();
+                .AddScoped<RssApp>()
+                .AddScoped<IRssApp, RssAppLog>();
 
             services
                 .AddSingleton<ICloudEventFactory, CloudEventFactory>();
