@@ -1,3 +1,5 @@
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Monitor.OpenTelemetry.Exporter;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
@@ -24,6 +26,9 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -47,6 +52,31 @@ namespace MattCanello.NewsFeed.RssReader
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+
+            var otel = builder.Services.AddOpenTelemetry();
+
+            var appInsightsConnStr = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+            if (!string.IsNullOrEmpty(appInsightsConnStr))
+            {
+                otel.UseAzureMonitor();
+            }
+
+            otel.ConfigureResource(resource => resource
+                .AddService(serviceName: builder.Environment.ApplicationName));
+
+            otel.WithMetrics(metrics => metrics
+                .AddAspNetCoreInstrumentation()
+                .AddMeter("Microsoft.AspNetCore.Hosting")
+                .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+                .AddConsoleExporter());
+
+            otel.WithTracing(tracing =>
+            {
+                tracing.AddAspNetCoreInstrumentation();
+                tracing.AddHttpClientInstrumentation();
+                tracing.AddConsoleExporter();
+                tracing.AddAzureMonitorTraceExporter();
+            });
 
             var app = builder.Build();
 

@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 # Custom
 *launchSettings.json
+/code/docker-compose/docker-compose.override.yml

@@ -51,6 +51,10 @@ services:
     build:
       context: ..
       dockerfile: ./MattCanello.NewsFeed.RssReader/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
 
   mattcanello.newsfeed.rssreader-dapr:
     image: "daprio/daprd:latest"
@@ -69,6 +73,10 @@ services:
     build:
       context: ..
       dockerfile: ./MattCanello.NewsFeed.CronApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
       
   mattcanello.newsfeed.cronapi-dapr:
     image: "daprio/daprd:latest"
