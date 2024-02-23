@@ -10,6 +10,7 @@ using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -31,6 +32,8 @@ namespace MattCanello.NewsFeed.CronApi
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+
+            builder.AddDefaultTelemetry();
 
             var app = builder.Build();
 

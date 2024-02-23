@@ -1,5 +1,6 @@
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
+using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
@@ -47,6 +48,8 @@ namespace MattCanello.NewsFeed.RssReader
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+
+            builder.AddDefaultTelemetry();
 
             var app = builder.Build();
 
