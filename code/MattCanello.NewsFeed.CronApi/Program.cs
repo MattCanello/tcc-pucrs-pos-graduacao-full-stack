@@ -65,7 +65,8 @@ namespace MattCanello.NewsFeed.CronApi
                 .AddScoped<ISlotRepository, DaprSlotRepository>();
 
             services
-                .AddScoped<ICronPublishApp, CronPublishApp>()
+                .AddScoped<CronPublishApp>()
+                .AddScoped<ICronPublishApp, CronPublishAppLog>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
 
             services
