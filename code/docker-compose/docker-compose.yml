@@ -46,13 +46,24 @@ services:
     volumes:
       - 'kafka_data:/var/lib/kafka/data'
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "4317:4317"
+      - "16686:16686"
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
+
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
       context: ..
       dockerfile: ./MattCanello.NewsFeed.RssReader/Dockerfile
+    depends_on:
+      - jaeger
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - OTLP_ENDPOINT_URL=http://jaeger:4317/
     ports:
       - "80"
 
@@ -73,8 +84,11 @@ services:
     build:
       context: ..
       dockerfile: ./MattCanello.NewsFeed.CronApi/Dockerfile
+    depends_on:
+      - jaeger
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - OTLP_ENDPOINT_URL=http://jaeger:4317/
     ports:
       - "80"
       

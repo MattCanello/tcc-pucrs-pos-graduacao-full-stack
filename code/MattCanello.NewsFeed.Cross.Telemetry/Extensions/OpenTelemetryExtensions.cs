@@ -38,6 +38,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
                     metrics.AddConsoleExporter();
             });
 
+            var tracingOtlpEndpoint = builder.Configuration
+                .GetOpenTelemetryEndpointUrl();
+
             otel.WithTracing(tracing =>
             {
                 tracing.AddAspNetCoreInstrumentation();
@@ -48,6 +51,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
 
                 if (hasAppInsights)
                     tracing.AddAzureMonitorTraceExporter();
+
+                if (tracingOtlpEndpoint != null)
+                    tracing.AddOtlpExporter(options => options.Endpoint = new Uri(tracingOtlpEndpoint));
             });
 
             return otel;
