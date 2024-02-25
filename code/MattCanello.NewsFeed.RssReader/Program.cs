@@ -1,6 +1,7 @@
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
 using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
@@ -96,7 +97,8 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<IRssApp, RssApp>();
+                .AddScoped<RssApp>()
+                .AddScoped<IRssApp, RssAppLog>();
 
             services
                 .AddSingleton<ICloudEventFactory, CloudEventFactory>();
@@ -121,6 +123,7 @@ namespace MattCanello.NewsFeed.RssReader
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
 
                 options.Filters.Add<HttpExceptionFilter>();
+                options.Filters.Add<ActionLoggingFilter>();
 
                 var cloudEventFormatter = services.BuildServiceProvider().GetRequiredService<CloudEventJsonInputFormatter>();
                 options.InputFormatters.Insert(0, cloudEventFormatter);

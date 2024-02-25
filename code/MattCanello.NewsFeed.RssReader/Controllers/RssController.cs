@@ -25,6 +25,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
                 return BadRequest();
 
             var feedId = command.FeedId;
+
             if (string.IsNullOrEmpty(feedId))
                 return BadRequest();
 
