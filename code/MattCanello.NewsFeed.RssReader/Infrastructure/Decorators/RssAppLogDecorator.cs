@@ -1,6 +1,7 @@
 ﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Responses;
 
-namespace MattCanello.NewsFeed.RssReader.Domain.Application.Decorators
+namespace MattCanello.NewsFeed.RssReader.Infrastructure.Decorators
 {
     public sealed class RssAppLogDecorator : IRssApp
     {
@@ -13,15 +14,17 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application.Decorators
             _logger = logger;
         }
 
-        public async Task ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)
+        public async Task<ProcessRssResponse> ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)
         {
             using var state = _logger.BeginScope(new { feedId });
 
             _logger.LogInformation("Starting processing feed '{feedId}'", feedId);
 
-            await _rssApp.ProcessFeedAsync(feedId, cancellationToken);
+            var response = await _rssApp.ProcessFeedAsync(feedId, cancellationToken);
 
-            _logger.LogInformation("Finished processing feed '{feedId}'", feedId);
+            _logger.LogInformation("Finished processing feed '{feedId}' with {response.PublishedEntriesCount} entries published", feedId, response.PublishedEntriesCount);
+
+            return response;
         }
     }
 }

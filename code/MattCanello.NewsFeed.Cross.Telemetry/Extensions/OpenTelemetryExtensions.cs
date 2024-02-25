@@ -12,7 +12,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
 {
     public static class OpenTelemetryExtensions
     {
-        public static OpenTelemetryBuilder? AddDefaultTelemetry(this WebApplicationBuilder builder)
+        public static OpenTelemetryBuilder? AddDefaultTelemetry(this WebApplicationBuilder builder, 
+            Action<MeterProviderBuilder>? configureMetrics = null, 
+            Action<TracerProviderBuilder>? configureTracing = null)
         {
             var otel = builder.Services.AddOpenTelemetry();
             var isDev = builder.Environment.IsDevelopment();
@@ -33,6 +35,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
                     .AddMeter("Microsoft.AspNetCore.Hosting")
                     .AddMeter("Microsoft.AspNetCore.Server.Kestrel");
 
+                configureMetrics
+                    ?.Invoke(metrics);
+
                 if (isDev)
                     metrics.AddConsoleExporter();
             });
@@ -41,6 +46,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
             {
                 tracing.AddAspNetCoreInstrumentation();
                 tracing.AddHttpClientInstrumentation();
+
+                configureTracing
+                    ?.Invoke(tracing);
 
                 if (isDev)
                     tracing.AddConsoleExporter();

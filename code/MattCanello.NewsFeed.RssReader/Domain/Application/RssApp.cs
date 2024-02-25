@@ -6,6 +6,7 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Messages;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Responses;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Application
 {
@@ -27,7 +28,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
             _entryService = entryService;
         }
 
-        public async Task ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)
+        public async Task<ProcessRssResponse> ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
@@ -41,16 +42,17 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
                 .ReadAsync(requestMessage, cancellationToken);
 
             if (response.IsNotModified || response.Feed is null)
-                return;
+                return ProcessRssResponse.NotModified;
 
             var responseDate = response.ResponseDate ?? DateTimeOffset.UtcNow;
 
-            await _entryService.ProcessEntriesFromRSSAsync(feedId, response.Feed, cancellationToken);
+            var publishedEntriesCount = await _entryService.ProcessEntriesFromRSSAsync(feedId, response.Feed, cancellationToken);
 
             var feedConsumedTask = _channelService.ProcessFeedConsumedAsync(feedId, responseDate, response.Feed, cancellationToken);
             var updateFeedTask = UpdateFeedFromResponseAsync(feed, response, cancellationToken);
 
             await Task.WhenAll(feedConsumedTask, updateFeedTask);
+            return new ProcessRssResponse(publishedEntriesCount);
         }
 
         private async Task UpdateFeedFromResponseAsync(Feed feed, ReadRssResponseMessage response, CancellationToken cancellationToken = default)
