@@ -27,6 +27,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
             otel.ConfigureResource(resource => resource
                 .AddService(serviceName: builder.Environment.ApplicationName));
 
+            var tracingOtlpEndpoint = builder.Configuration
+                .GetOpenTelemetryEndpointUrl();
+
             otel.WithMetrics(metrics =>
             {
                 metrics
@@ -36,10 +39,15 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
 
                 if (isDev)
                     metrics.AddConsoleExporter();
-            });
 
-            var tracingOtlpEndpoint = builder.Configuration
-                .GetOpenTelemetryEndpointUrl();
+                if (hasAppInsights)
+                    metrics.AddAzureMonitorMetricExporter();
+
+                if (tracingOtlpEndpoint != null)
+                    metrics.AddOtlpExporter(options => options.Endpoint = new Uri(tracingOtlpEndpoint));
+
+                metrics.AddPrometheusExporter();
+            });
 
             otel.WithTracing(tracing =>
             {

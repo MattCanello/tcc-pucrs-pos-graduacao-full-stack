@@ -49,6 +49,8 @@ namespace MattCanello.NewsFeed.CronApi
 
             app.MapHealthChecks("/app/health");
 
+            app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
             app.Run();
         }
 

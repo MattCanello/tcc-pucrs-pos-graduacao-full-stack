@@ -67,6 +67,8 @@ namespace MattCanello.NewsFeed.RssReader
 
             app.MapHealthChecks("/app/health");
 
+            app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
             app.Run();
         }
 
