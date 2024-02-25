@@ -1,16 +1,16 @@
 ﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 
-namespace MattCanello.NewsFeed.RssReader.Domain.Application
+namespace MattCanello.NewsFeed.RssReader.Domain.Application.Decorators
 {
-    public sealed class RssAppLog : IRssApp
+    public sealed class RssAppLogDecorator : IRssApp
     {
         private readonly ILogger _logger;
-        private readonly RssApp _rssApp;
+        private readonly IRssApp _rssApp;
 
-        public RssAppLog(ILogger<RssAppLog> logger, RssApp rssApp)
+        public RssAppLogDecorator(IRssApp rssApp, ILogger<RssAppLogDecorator> logger)
         {
-            _logger = logger;
             _rssApp = rssApp;
+            _logger = logger;
         }
 
         public async Task ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)

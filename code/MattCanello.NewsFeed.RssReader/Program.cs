@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Application.Decorators;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
@@ -97,8 +98,8 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<RssApp>()
-                .AddScoped<IRssApp, RssAppLog>();
+                .AddScoped<IRssApp, RssApp>()
+                .Decorate<IRssApp, RssAppLogDecorator>();
 
             services
                 .AddSingleton<ICloudEventFactory, CloudEventFactory>();
