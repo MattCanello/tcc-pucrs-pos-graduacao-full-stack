@@ -27,10 +27,16 @@ namespace MattCanello.NewsFeed.CronApi.Domain.Applications
             if (feedIds is null || feedIds.Count == 0)
                 return 0;
 
+            var enqueueTasks = new List<Task>(capacity: feedIds.Count);
+
             foreach (var feedId in feedIds)
             {
-                await EnqueueAndUpdateFeedAsync(slot, feedId, executionDate, cancellationToken);
+                var task = EnqueueAndUpdateFeedAsync(slot, feedId, executionDate, cancellationToken);
+
+                enqueueTasks.Add(task);
             }
+
+            await Task.WhenAll(enqueueTasks);
 
             return feedIds.Count;
         }
