@@ -1,7 +1,7 @@
-﻿using CloudNative.CloudEvents;
-using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Commands;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
 {
@@ -16,14 +16,15 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
         }
 
         [HttpPost("process")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Process(CloudEvent cloudEvent, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Process([FromBody, Required] ProcessRssFeedCommand command, CancellationToken cancellationToken = default)
         {
-            if (cloudEvent is null)
+            if (command is null)
                 return BadRequest();
 
-            var feedId = cloudEvent.GetFeedId();
+            var feedId = command.FeedId;
 
             if (string.IsNullOrEmpty(feedId))
                 return BadRequest();
