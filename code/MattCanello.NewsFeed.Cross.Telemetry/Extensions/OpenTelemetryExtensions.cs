@@ -1,5 +1,6 @@
 ﻿using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using MattCanello.NewsFeed.Cross.Telemetry.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,8 +18,8 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
             var otel = builder.Services.AddOpenTelemetry();
             var isDev = builder.Environment.IsDevelopment();
 
-            var appInsightsConnStr = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-            var hasAppInsights = !string.IsNullOrEmpty(appInsightsConnStr);
+            var hasAppInsights = EnvironmentVariables
+                .HasApplicationInsightsConnectionString(out string? appInsightsConnStr);
 
             if (hasAppInsights)
                 otel.UseAzureMonitor();
