@@ -37,7 +37,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.Abstractions.Tests", "MattCanello.NewsFeed.Cross.Abstractions.Tests\MattCanello.NewsFeed.Cross.Abstractions.Tests.csproj", "{8FC8E1D4-9348-4519-AC49-283BF3883E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Cross.Telemetry", "MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj", "{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Cross.Telemetry", "MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj", "{A02511D5-C94C-4DB4-A24C-33D7B23E5B39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ops", "ops", "{940F6BE0-BE79-4617-A65D-72117434884C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{841314F4-3A3C-4D18-899D-C55443F57C65}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose\prometheus\prometheus.yml = docker-compose\prometheus\prometheus.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{0B373B22-EF40-4858-B393-FBAA44373311}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose\grafana\datasource.yml = docker-compose\grafana\datasource.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +112,8 @@ Global
 		{5B5AB603-BBBE-4AC4-9045-62C6BB511EEC} = {F56011FB-A028-4A2D-B272-325E080268F7}
 		{8FC8E1D4-9348-4519-AC49-283BF3883E6E} = {F56011FB-A028-4A2D-B272-325E080268F7}
 		{A02511D5-C94C-4DB4-A24C-33D7B23E5B39} = {F56011FB-A028-4A2D-B272-325E080268F7}
+		{841314F4-3A3C-4D18-899D-C55443F57C65} = {940F6BE0-BE79-4617-A65D-72117434884C}
+		{0B373B22-EF40-4858-B393-FBAA44373311} = {940F6BE0-BE79-4617-A65D-72117434884C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}
