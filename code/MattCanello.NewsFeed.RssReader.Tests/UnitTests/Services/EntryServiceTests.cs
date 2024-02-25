@@ -19,12 +19,13 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var publisher = new InMemoryEntryPublisher();
             var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher);
 
-            await service.ProcessEntriesFromRSSAsync(feedId, feed);
+            var publishedEntriesCount = await service.ProcessEntriesFromRSSAsync(feedId, feed);
 
             Assert.NotNull(publisher.PublishedEntries);
             var singleEntry = Assert.Single(publisher.PublishedEntries);
 
             Assert.NotNull(singleEntry);
+            Assert.Equal(1, publishedEntriesCount);
         }
     }
 }

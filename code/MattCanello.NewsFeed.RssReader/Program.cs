@@ -16,6 +16,7 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Decorators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
@@ -25,6 +26,7 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -51,7 +53,9 @@ namespace MattCanello.NewsFeed.RssReader
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
 
-            builder.AddDefaultTelemetry();
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.PublishedEntriesCount.Name),
+                tracing => tracing.AddSource(ActivitySources.RssApp.Name));
 
             var app = builder.Build();
 
@@ -100,8 +104,9 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<RssApp>()
-                .AddScoped<IRssApp, RssAppLog>();
+                .AddScoped<IRssApp, RssApp>()
+                .Decorate<IRssApp, RssAppLogDecorator>()
+                .Decorate<IRssApp, RssAppMetricsDecorator>();
 
             services
                 .AddSingleton<ICloudEventFactory, CloudEventFactory>();

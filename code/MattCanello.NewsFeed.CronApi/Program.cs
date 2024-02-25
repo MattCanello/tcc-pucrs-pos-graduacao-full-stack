@@ -2,9 +2,11 @@ using MattCanello.NewsFeed.CronApi.Domain.Applications;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Telemetry;
 using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
@@ -33,7 +35,9 @@ namespace MattCanello.NewsFeed.CronApi
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
 
-            builder.AddDefaultTelemetry();
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.PublishedSlotsCount.Name),
+                tracing => tracing.AddSource(ActivitySources.CronPublishApp.Name));
 
             var app = builder.Build();
 
@@ -66,8 +70,9 @@ namespace MattCanello.NewsFeed.CronApi
                 .AddScoped<ISlotRepository, DaprSlotRepository>();
 
             services
-                .AddScoped<CronPublishApp>()
-                .AddScoped<ICronPublishApp, CronPublishAppLog>()
+                .AddScoped<ICronPublishApp, CronPublishApp>()
+                .Decorate<ICronPublishApp, CronPublishAppLogDecorator>()
+                .Decorate<ICronPublishApp, CronPublishAppMetricsDecorator>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
         }
 

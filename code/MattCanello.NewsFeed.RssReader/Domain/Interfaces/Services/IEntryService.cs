@@ -4,6 +4,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services
 {
     public interface IEntryService
     {
-        Task ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
+        Task<int> ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
     }
 }
