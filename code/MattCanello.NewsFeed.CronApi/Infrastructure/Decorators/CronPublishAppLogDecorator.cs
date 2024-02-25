@@ -1,13 +1,13 @@
 ﻿using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 
-namespace MattCanello.NewsFeed.CronApi.Domain.Applications
+namespace MattCanello.NewsFeed.CronApi.Infrastructure.Decorators
 {
-    public sealed class CronPublishAppLog : ICronPublishApp
+    public sealed class CronPublishAppLogDecorator : ICronPublishApp
     {
         private readonly ILogger _logger;
-        private readonly CronPublishApp _innerApp;
+        private readonly ICronPublishApp _innerApp;
 
-        public CronPublishAppLog(CronPublishApp innerApp, ILogger<ICronPublishApp> logger)
+        public CronPublishAppLogDecorator(ICronPublishApp innerApp, ILogger<ICronPublishApp> logger)
         {
             _innerApp = innerApp;
             _logger = logger;

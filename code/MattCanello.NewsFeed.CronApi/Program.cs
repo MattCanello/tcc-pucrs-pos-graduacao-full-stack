@@ -2,6 +2,7 @@ using MattCanello.NewsFeed.CronApi.Domain.Applications;
 using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
@@ -63,8 +64,8 @@ namespace MattCanello.NewsFeed.CronApi
                 .AddScoped<ISlotRepository, DaprSlotRepository>();
 
             services
-                .AddScoped<CronPublishApp>()
-                .AddScoped<ICronPublishApp, CronPublishAppLog>()
+                .AddScoped<ICronPublishApp, CronPublishApp>()
+                .Decorate<ICronPublishApp, CronPublishAppLogDecorator>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
         }
 
