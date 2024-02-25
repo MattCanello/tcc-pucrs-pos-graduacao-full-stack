@@ -33,6 +33,7 @@ namespace MattCanello.NewsFeed.CronApi
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+            builder.Services.ConfigureHealthChecks();
 
             builder.AddDefaultTelemetry(
                 metrics => metrics.AddMeter(Metrics.PublishedSlotsCount.Name),
@@ -49,6 +50,8 @@ namespace MattCanello.NewsFeed.CronApi
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapHealthChecks("/app/health");
 
             app.Run();
         }
