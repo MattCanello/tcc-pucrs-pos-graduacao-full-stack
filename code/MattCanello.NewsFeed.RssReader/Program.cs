@@ -49,6 +49,7 @@ namespace MattCanello.NewsFeed.RssReader
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+            builder.Services.ConfigureHealthChecks();
 
             builder.AddDefaultTelemetry();
 
@@ -63,6 +64,8 @@ namespace MattCanello.NewsFeed.RssReader
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapHealthChecks("/app/health");
 
             app.Run();
         }
