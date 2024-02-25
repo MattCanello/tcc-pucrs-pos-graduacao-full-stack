@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Decorators
 
         public async Task<ProcessRssResponse> ProcessFeedAsync(string feedId, CancellationToken cancellationToken = default)
         {
-            var count = Metrics.PublishedEntriesCount.CreateCounter<int>("entries-count", "Entry", "Published entries count'");
+            var count = Metrics.PublishedEntriesCount.CreateCounter<int>("entries-count", "Entry", "Published entries count");
 
             using var activity = ActivitySources.RssApp.StartActivity("ProcessFeedActivity");
 
