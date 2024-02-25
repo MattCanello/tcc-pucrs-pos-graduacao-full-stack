@@ -41,6 +41,9 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
 
                 if (isDev)
                     metrics.AddConsoleExporter();
+
+                if (hasAppInsights)
+                    metrics.AddAzureMonitorMetricExporter();
             });
 
             otel.WithTracing(tracing =>
