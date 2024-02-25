@@ -1,33 +1,34 @@
-﻿using CloudNative.CloudEvents;
-using Dapr.Client;
+﻿using Dapr.Client;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
-using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
+using System.Text.Json;
 
 namespace MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers
 {
     public sealed class DaprCronFeedEnqueuer : ICronFeedEnqueuer
     {
         private readonly DaprClient _daprClient;
-        private readonly ICloudEventFactory _cloudEventFactory;
-        private readonly CloudEventFormatter _cloudEventFormatter;
         const string BindingName = "rsspublishcommands";
 
-        public DaprCronFeedEnqueuer(DaprClient daprClient, ICloudEventFactory cloudEventFactory, CloudEventFormatter cloudEventFormatter)
+        public DaprCronFeedEnqueuer(DaprClient daprClient)
         {
             _daprClient = daprClient;
-            _cloudEventFactory = cloudEventFactory;
-            _cloudEventFormatter = cloudEventFormatter;
         }
 
         public async Task EnqueueFeedToProcessAsync(string feedId, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
-            var cloudEvent = _cloudEventFactory.CreateProcessRssEvent(feedId);
+            using var dataStream = new MemoryStream();
 
-            var cloudEventData = _cloudEventFormatter.EncodeStructuredModeMessage(cloudEvent, out _);
+            using var writer = new Utf8JsonWriter(dataStream);
 
-            var bindingRequest = CreateBindingRequest(feedId, cloudEventData);
+            JsonSerializer.Serialize(writer, new { feedId });
+
+            dataStream.Position = 0;
+
+            ReadOnlyMemory<byte> simpleData = dataStream.ToArray();
+
+            var bindingRequest = CreateBindingRequest(feedId, simpleData);
 
             await _daprClient.InvokeBindingAsync(bindingRequest, cancellationToken);
         }

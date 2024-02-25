@@ -3,9 +3,7 @@ using MattCanello.NewsFeed.CronApi.Domain.Handlers;
 using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
-using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
-using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
@@ -66,9 +64,6 @@ namespace MattCanello.NewsFeed.CronApi
             services
                 .AddScoped<ICronPublishApp, CronPublishApp>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
-
-            services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
