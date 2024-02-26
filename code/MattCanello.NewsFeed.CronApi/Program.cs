@@ -4,7 +4,9 @@ using MattCanello.NewsFeed.CronApi.Domain.Interfaces;
 using MattCanello.NewsFeed.CronApi.Domain.Services;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.CronApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Telemetry;
 using MattCanello.NewsFeed.Cross.Abstractions;
@@ -73,6 +75,7 @@ namespace MattCanello.NewsFeed.CronApi
                 .AddScoped<ICronPublishApp, CronPublishApp>()
                 .Decorate<ICronPublishApp, CronPublishAppLogDecorator>()
                 .Decorate<ICronPublishApp, CronPublishAppMetricsDecorator>()
+                .AddSingleton<IBindingRequestFactory, BindingRequestFactory>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
         }
 
