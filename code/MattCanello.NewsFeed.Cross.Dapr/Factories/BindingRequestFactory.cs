@@ -10,6 +10,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Factories
         {
             ArgumentNullException.ThrowIfNull(data);
             ArgumentNullException.ThrowIfNull(bindingName);
+            ArgumentNullException.ThrowIfNull(operation);
 
             using var dataStream = new MemoryStream();
 
