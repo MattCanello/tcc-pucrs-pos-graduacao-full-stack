@@ -14,12 +14,18 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Extensions
         {
             services.AddSingleton<IBindingRequestFactory, BindingRequestFactory>();
 
+            services.AddSingleton((sp) => new JsonSerializerOptions(JsonSerializerDefaults.Web)
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+            });
+
             services.AddDaprClient((builder) =>
             {
-                builder.UseJsonSerializationOptions(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                });
+                var jsonSerializerOptions = services
+                    .BuildServiceProvider()
+                    .GetService<JsonSerializerOptions>();
+
+                builder.UseJsonSerializationOptions(jsonSerializerOptions);
             });
         }
     }

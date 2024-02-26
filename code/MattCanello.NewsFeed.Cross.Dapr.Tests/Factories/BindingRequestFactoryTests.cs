@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using MattCanello.NewsFeed.Cross.Dapr.Factories;
+using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
 {
@@ -8,7 +9,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
         [Theory, AutoData]
         public void CreateBindingRequest_GivenNullData_ShouldThrowException(string bindingName)
         {
-            var factory = new BindingRequestFactory();
+            var factory = new BindingRequestFactory(new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             Assert.Throws<ArgumentNullException>(() => factory.CreateBindingRequest(null!, bindingName));
         }
@@ -16,7 +17,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
         [Theory, AutoData]
         public void CreateBindingRequest_GivenNullBindingName_ShouldThrowException(object data)
         {
-            var factory = new BindingRequestFactory();
+            var factory = new BindingRequestFactory(new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             Assert.Throws<ArgumentNullException>(() => factory.CreateBindingRequest(data, null!));
         }
@@ -24,7 +25,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
         [Theory, AutoData]
         public void CreateBindingRequest_GivenNullOperation_ShouldThrowException(object data, string bindingName)
         {
-            var factory = new BindingRequestFactory();
+            var factory = new BindingRequestFactory(new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             Assert.Throws<ArgumentNullException>(() => factory.CreateBindingRequest(data, bindingName, null!));
         }
@@ -32,7 +33,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
         [Theory, AutoData]
         public void CreateBindingRequest_GivenExplicitOperation_ShouldRespectGivenOperation(object data, string bindingName, string operation)
         {
-            var factory = new BindingRequestFactory();
+            var factory = new BindingRequestFactory(new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             var bindingRequest = factory.CreateBindingRequest(data, bindingName, operation);
 
@@ -42,7 +43,7 @@ namespace MattCanello.NewsFeed.Cross.Dapr.Tests.Factories
         [Theory, AutoData]
         public void CreateBindingRequest_GivenNoExplicitOperation_ShouldBeCreate(object data, string bindingName)
         {
-            var factory = new BindingRequestFactory();
+            var factory = new BindingRequestFactory(new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             var bindingRequest = factory.CreateBindingRequest(data, bindingName);
 
