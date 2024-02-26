@@ -1,5 +1,4 @@
-﻿using CloudNative.CloudEvents;
-using Dapr.Client;
+﻿using Dapr.Client;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
@@ -8,16 +7,14 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
 {
     public sealed class DaprFeedConsumedPublisher : IFeedConsumedPublisher
     {
-        private readonly DaprClient _daprClient;
-        private readonly ICloudEventFactory _cloudEventFactory;
-        private readonly CloudEventFormatter _cloudEventFormatter;
         const string BindingName = "rsschannelstopic";
+        private readonly IEventFactory _eventFactory;
+        private readonly DaprClient _daprClient;
 
-        public DaprFeedConsumedPublisher(DaprClient daprClient, ICloudEventFactory cloudEventFactory, CloudEventFormatter cloudEventFormatter)
+        public DaprFeedConsumedPublisher(DaprClient daprClient, IEventFactory eventFactory)
         {
             _daprClient = daprClient;
-            _cloudEventFactory = cloudEventFactory;
-            _cloudEventFormatter = cloudEventFormatter;
+            _eventFactory = eventFactory;
         }
 
         public async Task PublishAsync(string feedId, DateTimeOffset consumedDate, Channel channel, CancellationToken cancellationToken = default)
@@ -25,26 +22,9 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(channel);
 
-            var cloudEvent = _cloudEventFactory.CreateFeedConsumedEvent(feedId, consumedDate, channel);
-
-            var cloudEventData = _cloudEventFormatter.EncodeStructuredModeMessage(cloudEvent, out _);
-
-            var bindingRequest = CreateBindingRequest(feedId, cloudEventData);
+            var bindingRequest = _eventFactory.CreateFeedConsumedEvent(feedId, consumedDate, channel, BindingName);
 
             await _daprClient.InvokeBindingAsync(bindingRequest, cancellationToken);
-        }
-
-        public static BindingRequest CreateBindingRequest(string feedId, ReadOnlyMemory<byte> data)
-        {
-            var bindingRequest = new BindingRequest(BindingName, operation: "create")
-            {
-                Data = data
-            };
-
-            bindingRequest.Metadata["partitionKey"] = feedId;
-            bindingRequest.Metadata["PartitionKey"] = feedId;
-
-            return bindingRequest;
         }
     }
 }

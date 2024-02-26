@@ -1,5 +1,4 @@
-using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
-using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
+using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
@@ -29,7 +28,6 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.RssReader
@@ -41,7 +39,6 @@ namespace MattCanello.NewsFeed.RssReader
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -109,18 +106,7 @@ namespace MattCanello.NewsFeed.RssReader
                 .Decorate<IRssApp, RssAppMetricsDecorator>();
 
             services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
-        }
-
-        private static void AddDapr(this IServiceCollection services)
-        {
-            services.AddDaprClient((builder) =>
-            {
-                builder.UseJsonSerializationOptions(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                });
-            });
+                .AddSingleton<IEventFactory, EventFactory>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
@@ -132,9 +118,6 @@ namespace MattCanello.NewsFeed.RssReader
 
                 options.Filters.Add<HttpExceptionFilter>();
                 options.Filters.Add<ActionLoggingFilter>();
-
-                var cloudEventFormatter = services.BuildServiceProvider().GetRequiredService<CloudEventJsonInputFormatter>();
-                options.InputFormatters.Insert(0, cloudEventFormatter);
             })
             .AddJsonOptions(options =>
             {

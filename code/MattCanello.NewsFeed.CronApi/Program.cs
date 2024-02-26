@@ -11,12 +11,11 @@ using MattCanello.NewsFeed.CronApi.Infrastructure.Repositories;
 using MattCanello.NewsFeed.CronApi.Infrastructure.Telemetry;
 using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
-using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
+using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.CronApi
@@ -28,7 +27,6 @@ namespace MattCanello.NewsFeed.CronApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -74,8 +72,10 @@ namespace MattCanello.NewsFeed.CronApi
             services
                 .AddScoped<ICronPublishApp, CronPublishApp>()
                 .Decorate<ICronPublishApp, CronPublishAppLogDecorator>()
-                .Decorate<ICronPublishApp, CronPublishAppMetricsDecorator>()
-                .AddSingleton<IBindingRequestFactory, BindingRequestFactory>()
+                .Decorate<ICronPublishApp, CronPublishAppMetricsDecorator>();
+
+            services
+                .AddSingleton<IEventFactory, EventFactory>()
                 .AddScoped<ICronFeedEnqueuer, DaprCronFeedEnqueuer>();
         }
 
@@ -92,17 +92,6 @@ namespace MattCanello.NewsFeed.CronApi
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
-            });
-        }
-
-        private static void AddDapr(this IServiceCollection services)
-        {
-            services.AddDaprClient((builder) =>
-            {
-                builder.UseJsonSerializationOptions(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                });
             });
         }
     }

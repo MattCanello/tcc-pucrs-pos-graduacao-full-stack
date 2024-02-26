@@ -9,9 +9,9 @@ namespace MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers
         const string BindingName = "rsspublishcommands";
 
         private readonly DaprClient _daprClient;
-        private readonly IBindingRequestFactory _bindingRequestFactory;
+        private readonly IEventFactory _bindingRequestFactory;
 
-        public DaprCronFeedEnqueuer(DaprClient daprClient, IBindingRequestFactory bindingRequestFactory)
+        public DaprCronFeedEnqueuer(DaprClient daprClient, IEventFactory bindingRequestFactory)
         {
             _daprClient = daprClient;
             _bindingRequestFactory = bindingRequestFactory;
@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.CronApi.Infrastructure.Enqueuers
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
-            var bindingRequest = _bindingRequestFactory.CreateFeedEnqueueBindingRequest(feedId, BindingName);
+            var bindingRequest = _bindingRequestFactory.CreateProcessRssEvent(feedId, BindingName);
 
             await _daprClient.InvokeBindingAsync(bindingRequest, cancellationToken);
         }
