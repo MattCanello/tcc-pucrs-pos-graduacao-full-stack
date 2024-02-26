@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["./code/MattCanello.NewsFeed.CronApi/MattCanello.NewsFeed.CronApi.csproj", "MattCanello.NewsFeed.CronApi/"]
-COPY ["./code/MattCanello.NewsFeed.Cross.CloudEvents/MattCanello.NewsFeed.Cross.CloudEvents.csproj", "MattCanello.NewsFeed.Cross.CloudEvents/"]
+COPY ["./code/MattCanello.NewsFeed.Cross.Dapr/MattCanello.NewsFeed.Cross.Dapr.csproj", "MattCanello.NewsFeed.Cross.Dapr/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Abstractions/MattCanello.NewsFeed.Cross.Abstractions.csproj", "MattCanello.NewsFeed.Cross.Abstractions/"]
 RUN dotnet restore "./MattCanello.NewsFeed.CronApi/./MattCanello.NewsFeed.CronApi.csproj"
 COPY "./code" .
