@@ -1,3 +1,6 @@
+using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Services;
+
 namespace MattCanello.NewsFeed.SearchApi
 {
     public class Program
@@ -12,6 +15,8 @@ namespace MattCanello.NewsFeed.SearchApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<IIndexService, ElasticSearchIndexService>();
 
             var app = builder.Build();
 
