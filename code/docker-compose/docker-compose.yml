@@ -59,6 +59,11 @@ services:
       - elasticsearch-data:/var/lib/elasticsearch/data
     networks:
       - elastic
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
       
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.2
@@ -75,6 +80,21 @@ services:
     networks:
       - elastic
 
+  elasticsearch-setup:
+    image: curlimages/curl:8.6.0
+    networks:
+      - elastic
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: '../MattCanello.NewsFeed.SearchApi/Templates'
+        target: '/data'
+    restart: on-failure
+    command: >
+     -X PUT -H "Accept:application/json" -H "Content-Type:application/json" --data "@/data/entries-index-template.json" http://elasticsearch:9200/_index_template/entries
+      
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
@@ -118,6 +138,18 @@ services:
     network_mode: "service:mattcanello.newsfeed.cronapi"
     volumes:
       - "../dapr/components/:/components"
+
+  mattcanello.newsfeed.searchapi:
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedsearchapi
+    build:
+      context: ..
+      dockerfile: ./MattCanello.NewsFeed.SearchApi/Dockerfile
+    depends_on:
+      - elasticsearch
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
 
 volumes:
   redis_data:
