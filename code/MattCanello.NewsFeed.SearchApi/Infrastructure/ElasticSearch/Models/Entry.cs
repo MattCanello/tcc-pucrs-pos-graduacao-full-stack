@@ -1,7 +1,7 @@
 ﻿namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Models
 {
     [Serializable]
-    public sealed record EntryElasticSearchModel
+    public sealed record Entry
     {
         public string? EntryId { get; set; }
 
@@ -19,9 +19,9 @@
 
         public ISet<Author>? Authors { get; set; }
 
-        public sealed record Category(string? Name);
+        public sealed record Category(string? Name = null);
 
-        public sealed record Thumbanil(string? Url, int? Width = null, string? Credit = null);
+        public sealed record Thumbanil(string? Url = null, int? Width = null, string? Credit = null);
 
         public sealed record Author(string? Name = null, string? Email = null, string? Url = null);
     }

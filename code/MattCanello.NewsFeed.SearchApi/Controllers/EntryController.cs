@@ -27,7 +27,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var entryId = await _indexService.IndexAsync(command, cancellationToken);
 
-            return CreatedAtAction(nameof(GetById), new { entryId });
+            return CreatedAtAction(nameof(GetById), new { entryId }, command.Entry);
         }
 
         [HttpGet("{entryId}")]

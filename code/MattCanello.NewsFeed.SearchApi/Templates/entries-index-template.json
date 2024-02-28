@@ -9,7 +9,7 @@
         "enabled": true
       },
       "properties": {
-        "entry_id": {
+        "entryId": {
           "type": "keyword"
         },
         "title": {
@@ -21,7 +21,7 @@
         "description": {
           "type": "keyword"
         },
-        "publish_date": {
+        "publishDate": {
           "type": "date",
           "format": "strict_date_optional_time_nanos"
         },
@@ -64,5 +64,5 @@
       }
     }
   },
-  "version": 1
+  "version": 2
 }

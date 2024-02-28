@@ -6,17 +6,17 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles
     {
         public ElasticSearchModelProfile()
         {
-            CreateMap<Domain.Models.Category, ElasticSearch.Models.EntryElasticSearchModel.Category>()
+            CreateMap<Domain.Models.Category, ElasticSearch.Models.Entry.Category>()
                 .ForMember(dest => dest.Name, o => o.MapFrom(source => source.CategoryName))
                 .ReverseMap();
 
-            CreateMap<Domain.Models.Author, ElasticSearch.Models.EntryElasticSearchModel.Author>()
+            CreateMap<Domain.Models.Author, ElasticSearch.Models.Entry.Author>()
                 .ReverseMap();
 
-            CreateMap<Domain.Models.Thumbnail, ElasticSearch.Models.EntryElasticSearchModel.Thumbanil>()
+            CreateMap<Domain.Models.Thumbnail, ElasticSearch.Models.Entry.Thumbanil>()
                 .ReverseMap();
 
-            CreateMap<Domain.Models.Entry, ElasticSearch.Models.EntryElasticSearchModel>()
+            CreateMap<Domain.Models.Entry, ElasticSearch.Models.Entry>()
                 .ForMember(dest => dest.EntryId, o => o.MapFrom(source => source.Id))
                 .ReverseMap();
         }

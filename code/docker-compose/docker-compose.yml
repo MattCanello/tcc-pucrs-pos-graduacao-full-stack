@@ -148,8 +148,11 @@ services:
       - elasticsearch
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "80"
+    networks:
+      - elastic
 
 volumes:
   redis_data:
