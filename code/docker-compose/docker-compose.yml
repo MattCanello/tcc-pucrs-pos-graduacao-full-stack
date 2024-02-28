@@ -46,6 +46,35 @@ services:
     volumes:
       - 'kafka_data:/var/lib/kafka/data'
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - node.name=es01
+      - discovery.type=single-node
+      - cluster.name=news-feed
+    volumes:
+      - elasticsearch-data:/var/lib/elasticsearch/data
+    networks:
+      - elastic
+      
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    ports:
+      - 5601:5601
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+    restart: 'unless-stopped'
+    networks:
+      - elastic
+
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
@@ -102,3 +131,13 @@ volumes:
 
   kafka_data:
     driver: local
+
+  elasticsearch-data:
+    driver: local
+
+  kibana-data:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge  
