@@ -19,10 +19,16 @@
 
         public ISet<Author>? Authors { get; set; }
 
-        public sealed record Category(string? Name = null);
+        [Serializable]
+        public sealed record Category()
+        {
+            public string? Name { get; set; }
+        }
 
+        [Serializable]
         public sealed record Thumbanil(string? Url = null, int? Width = null, string? Credit = null);
 
+        [Serializable]
         public sealed record Author(string? Name = null, string? Email = null, string? Url = null);
     }
 }
