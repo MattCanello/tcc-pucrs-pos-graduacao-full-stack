@@ -1,9 +1,12 @@
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.Services;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MattCanello.NewsFeed.SearchApi
 {
-    public class Program
+    [ExcludeFromCodeCoverage]
+    static class Program
     {
         public static void Main(string[] args)
         {
@@ -16,7 +19,8 @@ namespace MattCanello.NewsFeed.SearchApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IIndexService, ElasticSearchIndexService>();
+            builder.Services.AddMapperProfiles();
+            builder.Services.AddAppServices();
 
             var app = builder.Build();
 
@@ -33,6 +37,20 @@ namespace MattCanello.NewsFeed.SearchApi
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void AddAppServices(this IServiceCollection services)
+        {
+            services
+                .AddScoped<IIndexService, ElasticSearchIndexService>();
+        }
+
+        private static void AddMapperProfiles(this IServiceCollection services)
+        {
+            services.AddAutoMapper((config) =>
+            {
+                config.AddProfile<ElasticSearchModelProfile>();
+            });
         }
     }
 }

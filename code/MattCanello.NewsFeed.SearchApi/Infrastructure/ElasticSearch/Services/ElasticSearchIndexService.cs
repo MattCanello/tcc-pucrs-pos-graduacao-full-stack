@@ -1,7 +1,7 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Services
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
 {
     public sealed class ElasticSearchIndexService : IIndexService
     {
