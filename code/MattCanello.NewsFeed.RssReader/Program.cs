@@ -1,5 +1,6 @@
-using MattCanello.NewsFeed.Cross.CloudEvents.Extensions;
-using MattCanello.NewsFeed.Cross.CloudEvents.Formatters;
+using MattCanello.NewsFeed.Cross.Dapr.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
@@ -14,6 +15,7 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Decorators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Factories;
@@ -23,9 +25,9 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.RssReader
@@ -37,7 +39,6 @@ namespace MattCanello.NewsFeed.RssReader
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddCloudEvents();
             builder.Services.AddDefaultControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +48,11 @@ namespace MattCanello.NewsFeed.RssReader
 
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
+            builder.Services.ConfigureHealthChecks();
+
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.PublishedEntriesCount.Name),
+                tracing => tracing.AddSource(ActivitySources.RssApp.Name));
 
             var app = builder.Build();
 
@@ -59,6 +65,8 @@ namespace MattCanello.NewsFeed.RssReader
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapHealthChecks("/app/health");
 
             app.Run();
         }
@@ -93,21 +101,12 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddHttpClient()
                 .AddScoped<IRssClient, RssClient>()
-                .AddScoped<IRssApp, RssApp>();
+                .AddScoped<IRssApp, RssApp>()
+                .Decorate<IRssApp, RssAppLogDecorator>()
+                .Decorate<IRssApp, RssAppMetricsDecorator>();
 
             services
-                .AddSingleton<ICloudEventFactory, CloudEventFactory>();
-        }
-
-        private static void AddDapr(this IServiceCollection services)
-        {
-            services.AddDaprClient((builder) =>
-            {
-                builder.UseJsonSerializationOptions(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                });
-            });
+                .AddSingleton<IEventFactory, EventFactory>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
@@ -118,9 +117,7 @@ namespace MattCanello.NewsFeed.RssReader
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
 
                 options.Filters.Add<HttpExceptionFilter>();
-
-                var cloudEventFormatter = services.BuildServiceProvider().GetRequiredService<CloudEventJsonInputFormatter>();
-                options.InputFormatters.Insert(0, cloudEventFormatter);
+                options.Filters.Add<ActionLoggingFilter>();
             })
             .AddJsonOptions(options =>
             {

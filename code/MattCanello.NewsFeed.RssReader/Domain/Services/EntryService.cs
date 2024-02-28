@@ -16,7 +16,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
             _newEntryFoundPublisher = newEntryFoundPublisher;
         }
 
-        public async Task ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
+        public async Task<int> ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
@@ -28,6 +28,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
             }
 
             await Task.WhenAll(publishTasks);
+            return publishTasks.Count;
         }
     }
 }
