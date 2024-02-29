@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
         [HttpPost("index")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Entry))]
         public async Task<IActionResult> Index([FromBody, Required] IndexEntryCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
