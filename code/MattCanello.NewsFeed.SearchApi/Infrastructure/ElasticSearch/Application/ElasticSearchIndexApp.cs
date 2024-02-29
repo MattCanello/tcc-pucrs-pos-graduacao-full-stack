@@ -4,13 +4,13 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
 {
-    public sealed class ElasticSearchIndexService : IIndexService
+    public sealed class ElasticSearchIndexApp : IIndexApp
     {
         private readonly IElasticSearchRepository _elasticSearchRepository;
         private readonly IElasticModelFactory _elasticModelFactory;
         private readonly IIndexNameBuilder _indexNameBuilder;
 
-        public ElasticSearchIndexService(IElasticSearchRepository elasticSearchRepository, IElasticModelFactory elasticModelFactory, IIndexNameBuilder indexNameBuilder)
+        public ElasticSearchIndexApp(IElasticSearchRepository elasticSearchRepository, IElasticModelFactory elasticModelFactory, IIndexNameBuilder indexNameBuilder)
         {
             _elasticSearchRepository = elasticSearchRepository;
             _elasticModelFactory = elasticModelFactory;

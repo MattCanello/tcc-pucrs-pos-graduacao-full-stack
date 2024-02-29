@@ -20,7 +20,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
 
             services
                 .AddScoped<IIndexNameBuilder, IndexNameBuilder>()
-                .AddScoped<IIndexService, ElasticSearchIndexService>();
+                .AddScoped<IIndexApp, ElasticSearchIndexApp>();
 
             services
                 .AddSingleton<IElasticModelFactory, ElasticModelFactory>();

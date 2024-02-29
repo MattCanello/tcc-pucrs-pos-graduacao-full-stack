@@ -2,7 +2,7 @@
 
 namespace MattCanello.NewsFeed.SearchApi.Domain.Interfaces
 {
-    public interface IIndexService
+    public interface IIndexApp
     {
         Task<string> IndexAsync(IndexEntryCommand command, CancellationToken cancellationToken = default);
     }
