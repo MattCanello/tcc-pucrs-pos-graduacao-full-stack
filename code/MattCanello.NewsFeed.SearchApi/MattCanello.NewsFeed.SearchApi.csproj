@@ -12,7 +12,14 @@
     <PackageReference Include="Dapr.AspNetCore" Version="1.12.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="NEST" Version="7.17.5" />
+    <PackageReference Include="Scrutor.AspNetCore" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Abstractions\MattCanello.NewsFeed.Cross.Abstractions.csproj" />
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Dapr\MattCanello.NewsFeed.Cross.Dapr.csproj" />
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj" />
   </ItemGroup>
 
 </Project>

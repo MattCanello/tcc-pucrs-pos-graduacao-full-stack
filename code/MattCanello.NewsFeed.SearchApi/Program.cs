@@ -1,5 +1,14 @@
+using MattCanello.NewsFeed.Cross.Dapr.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
+using MattCanello.NewsFeed.Cross.Telemetry.Filters;
+using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace MattCanello.NewsFeed.SearchApi
 {
@@ -10,18 +19,20 @@ namespace MattCanello.NewsFeed.SearchApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddDefaultControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDapr();
             builder.Services.AddAppServices();
+            builder.Services.ConfigureHealthChecks();
+
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.IndexedDocuments.Name),
+                tracing => tracing.AddSource(ActivitySources.IndexApp.Name));
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -30,8 +41,9 @@ namespace MattCanello.NewsFeed.SearchApi
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            app.MapHealthChecks("/app/health");
 
             app.Run();
         }
@@ -40,6 +52,26 @@ namespace MattCanello.NewsFeed.SearchApi
         {
             services
                 .UseElasticSearch();
+
+            services
+                .Decorate<IIndexApp, IndexAppLogDecorator>()
+                .Decorate<IIndexApp, IndexAppMetricsDecorator>();
+        }
+
+        private static void AddDefaultControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+
+                options.Filters.Add<HttpExceptionFilter>();
+                options.Filters.Add<ActionLoggingFilter>();
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            });
         }
     }
 }
