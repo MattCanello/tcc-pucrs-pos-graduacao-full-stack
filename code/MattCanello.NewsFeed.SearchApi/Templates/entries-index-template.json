@@ -9,6 +9,9 @@
         "enabled": true
       },
       "properties": {
+        "feedId": {
+          "type": "keyword"
+        },
         "entryId": {
           "type": "keyword"
         },

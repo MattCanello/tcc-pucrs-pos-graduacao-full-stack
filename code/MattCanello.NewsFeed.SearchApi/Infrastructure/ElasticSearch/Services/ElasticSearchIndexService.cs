@@ -27,6 +27,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
             ArgumentNullException.ThrowIfNull(command);
 
             var elasticModel = _mapper.Map<ElasticSearch.Models.Entry>(command.Entry);
+            elasticModel.FeedId = command.FeedId;
 
             var indexName = GetIndexName(command.FeedId!);
 

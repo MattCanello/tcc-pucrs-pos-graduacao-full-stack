@@ -3,6 +3,8 @@
     [Serializable]
     public sealed record Entry
     {
+        public string? FeedId { get; set; }
+
         public string? EntryId { get; set; }
 
         public string? Title { get; set; }
