@@ -19,6 +19,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddScoped<IIndexService, ElasticSearchIndexService>();
 
             services
+                .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
+
+            services
                 .AddSingleton<IElasticClient>((sp) =>
                 {
                     var elasticUrl = Environment.GetEnvironmentVariable("ELASTICSEARCH_URL");

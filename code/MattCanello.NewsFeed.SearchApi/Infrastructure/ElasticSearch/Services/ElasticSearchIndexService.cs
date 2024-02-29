@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MattCanello.NewsFeed.SearchApi.Domain.Commands;
+﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
@@ -9,13 +8,13 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
     public sealed class ElasticSearchIndexService : IIndexService
     {
         private readonly IElasticClient _elasticClient;
-        private readonly IMapper _mapper;
+        private readonly IElasticModelFactory _elasticModelFactory;
         private readonly IElasticSearchExceptionFactory _exceptionFactory;
 
-        public ElasticSearchIndexService(IElasticClient elasticClient, IMapper mapper, IElasticSearchExceptionFactory exceptionFactory)
+        public ElasticSearchIndexService(IElasticClient elasticClient, IElasticModelFactory elasticModelFactory, IElasticSearchExceptionFactory exceptionFactory)
         {
             _elasticClient = elasticClient;
-            _mapper = mapper;
+            _elasticModelFactory = elasticModelFactory;
             _exceptionFactory = exceptionFactory;
         }
 
@@ -26,8 +25,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
         {
             ArgumentNullException.ThrowIfNull(command);
 
-            var elasticModel = _mapper.Map<ElasticSearch.Models.Entry>(command.Entry);
-            elasticModel.FeedId = command.FeedId;
+            var elasticModel = _elasticModelFactory.CreateElasticModel(command);
 
             var indexName = GetIndexName(command.FeedId!);
 
