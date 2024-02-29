@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Filters
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception is IndexException indexException)
-                _logger.LogCritical(indexException, "Unable to index an entry");
+                _logger.LogCritical(indexException, "Unable to index a document on '{indexName}'", indexException.IndexName);
 
             base.OnActionExecuted(context);
         }

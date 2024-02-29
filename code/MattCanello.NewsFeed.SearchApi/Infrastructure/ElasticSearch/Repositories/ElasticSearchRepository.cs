@@ -30,6 +30,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 return indexResponse.Id;
 
             throw new IndexException(
+                indexName.Name,
                 indexResponse.ServerError?.Error?.Reason,
                 indexResponse.OriginalException);
         }

@@ -26,7 +26,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var entryId = await _indexApp.IndexAsync(command, cancellationToken);
 
-            return CreatedAtAction(nameof(EntryController.GetById), nameof(EntryController), new { entryId }, command.Entry);
+            return CreatedAtAction("GetById", "Entry", new { entryId }, command.Entry);
         }
     }
 }

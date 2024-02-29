@@ -8,7 +8,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
         private readonly ILogger _logger;
         private readonly IIndexApp _innerApp;
 
-        public IndexAppLogDecorator(ILogger logger, IIndexApp innerApp)
+        public IndexAppLogDecorator(ILogger<IndexAppLogDecorator> logger, IIndexApp innerApp)
         {
             _logger = logger;
             _innerApp = innerApp;

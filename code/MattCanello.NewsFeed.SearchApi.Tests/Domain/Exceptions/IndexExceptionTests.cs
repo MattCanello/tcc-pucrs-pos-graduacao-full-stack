@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
         [Theory, AutoData]
         public void Constructor_GivenMessage_ShouldPersistMessage(string message)
         {
-            var exception = new IndexException(message);
+            var exception = new IndexException(message, innerException: null);
 
             Assert.Equal(message, exception.Message);
         }
@@ -37,6 +37,14 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
             var exception = new IndexException();
 
             Assert.Equal(DefaultExceptionMessage, exception.Message);
+        }
+
+        [Theory, AutoData]
+        public void Constructor_GivenIndexName_ShouldPersistData(string indexName)
+        {
+            var exception = new IndexException(indexName, message: null, innerException: null);
+
+            Assert.Equal(indexName, exception.IndexName);
         }
     }
 }
