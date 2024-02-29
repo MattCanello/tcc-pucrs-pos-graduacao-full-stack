@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.SearchApi.Controllers
 {
-    [Route("api/entry")]
     [ApiController]
     public class EntryController : ControllerBase
     {
@@ -17,7 +16,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             _indexService = indexService;
         }
 
-        [HttpPost("")]
+        [HttpPost("index")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Index([FromBody, Required] IndexEntryCommand command, CancellationToken cancellationToken = default)
@@ -30,7 +29,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             return CreatedAtAction(nameof(GetById), new { entryId }, command.Entry);
         }
 
-        [HttpGet("{entryId}")]
+        [HttpGet("api/entry/{entryId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entry))]
         public Task<IActionResult> GetById([FromRoute, Required]string entryId, CancellationToken cancellationToken = default)
