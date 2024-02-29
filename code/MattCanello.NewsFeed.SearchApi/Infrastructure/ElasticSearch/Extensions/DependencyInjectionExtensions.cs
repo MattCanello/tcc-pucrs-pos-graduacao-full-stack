@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
 using Nest;
 using System.Diagnostics.CodeAnalysis;
@@ -25,6 +26,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
 
             services
+                .AddSingleton<IElasticSearchRepository, ElasticSearchRepository>()
                 .AddSingleton<IElasticClient>((sp) =>
                 {
                     var elasticUrl = Environment.GetEnvironmentVariable("ELASTICSEARCH_URL");
