@@ -10,15 +10,14 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
     {
         private readonly IElasticClient _elasticClient;
         private readonly IElasticModelFactory _elasticModelFactory;
+        private readonly IIndexNameBuilder _indexNameBuilder;
 
-        public ElasticSearchIndexService(IElasticClient elasticClient, IElasticModelFactory elasticModelFactory)
+        public ElasticSearchIndexService(IElasticClient elasticClient, IElasticModelFactory elasticModelFactory, IIndexNameBuilder indexNameBuilder)
         {
             _elasticClient = elasticClient;
             _elasticModelFactory = elasticModelFactory;
+            _indexNameBuilder = indexNameBuilder;
         }
-
-        private static string GetIndexName(string feedId)
-            => $"entries-{feedId}";
 
         public async Task<string> IndexAsync(IndexEntryCommand command, CancellationToken cancellationToken = default)
         {
@@ -26,7 +25,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
 
             var elasticModel = _elasticModelFactory.CreateElasticModel(command);
 
-            var indexName = GetIndexName(command.FeedId!);
+            var indexName = _indexNameBuilder
+                .WithFeedId(command.FeedId!)
+                .Build();
 
             var indexResponse = await _elasticClient.IndexAsync(new IndexRequest<ElasticSearch.Models.Entry>(index: indexName)
             {

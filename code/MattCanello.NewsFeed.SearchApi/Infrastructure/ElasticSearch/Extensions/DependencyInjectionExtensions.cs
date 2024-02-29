@@ -1,4 +1,5 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
@@ -17,6 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddAutoMapper((config) => config.AddProfile<ElasticSearchModelProfile>());
 
             services
+                .AddScoped<IIndexNameBuilder, IndexNameBuilder>()
                 .AddScoped<IIndexService, ElasticSearchIndexService>();
 
             services
