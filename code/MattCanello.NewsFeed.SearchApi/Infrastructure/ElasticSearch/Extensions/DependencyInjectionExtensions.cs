@@ -4,9 +4,11 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
 using Nest;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
 {
+    [ExcludeFromCodeCoverage]
     static class DependencyInjectionExtensions
     {
         public static void UseElasticSearch(this IServiceCollection services)
@@ -15,7 +17,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddAutoMapper((config) => config.AddProfile<ElasticSearchModelProfile>());
 
             services
-                .AddSingleton<IElasticSearchExceptionFactory, ElasticSearchExceptionFactory>()
                 .AddScoped<IIndexService, ElasticSearchIndexService>();
 
             services
