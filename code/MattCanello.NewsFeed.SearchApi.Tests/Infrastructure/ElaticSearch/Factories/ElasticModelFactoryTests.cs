@@ -1,5 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
+using MattCanello.NewsFeed.Cross.Abstractions;
+using MattCanello.NewsFeed.Cross.Abstractions.Tests.Mocks;
 using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
@@ -14,7 +16,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Facto
         [Fact]
         public void CreateElasticModel_GivenNullCommand_ShouldThrowException()
         {
-            var factory = new ElasticModelFactory(_defaultMapper);
+            var factory = new ElasticModelFactory(_defaultMapper, new SystemDateTimeProvider());
 
             Assert.Throws<ArgumentNullException>(() => factory.CreateElasticModel(null!));
         }
@@ -22,7 +24,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Facto
         [Theory, AutoData]
         public void CreateElasticModel_GivenNullEntryCommand_ShouldThrowException(IndexEntryCommand command)
         {
-            var factory = new ElasticModelFactory(_defaultMapper);
+            var factory = new ElasticModelFactory(_defaultMapper, new SystemDateTimeProvider());
 
             command.Entry = null;
 
@@ -32,7 +34,9 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Facto
         [Theory, AutoData]
         public void CreateElasticModel_GivenValidCommand_MustHaveSameData(IndexEntryCommand command)
         {
-            var factory = new ElasticModelFactory(_defaultMapper);
+            var dateTimeNow = DateTimeOffset.UtcNow;
+
+            var factory = new ElasticModelFactory(_defaultMapper, new MockedDateTimeProvider(dateTimeNow));
 
             var entry = factory.CreateElasticModel(command);
 
@@ -42,6 +46,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Facto
             Assert.Equal(command.Entry.Url, entry.Url);
             Assert.Equal(command.Entry.Description, entry.Description);
             Assert.Equal(command.Entry.PublishDate, entry.PublishDate);
+            Assert.Equal(dateTimeNow, entry.IndexDate);
 
             Assert.NotNull(entry.Authors);
             Assert.NotNull(entry.Categories);

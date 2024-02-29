@@ -28,6 +28,10 @@
           "type": "date",
           "format": "strict_date_optional_time_nanos"
         },
+        "indexDate": {
+          "type": "date",
+          "format": "strict_date_optional_time_nanos"
+        },
         "categories": {
           "type": "nested",
           "properties": {
@@ -67,5 +71,5 @@
       }
     }
   },
-  "version": 2
+  "version": 3
 }

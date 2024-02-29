@@ -1,9 +1,11 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
+using MattCanello.NewsFeed.Cross.Abstractions;
 using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
 using MattCanello.NewsFeed.SearchApi.Tests.Mocks;
@@ -12,8 +14,9 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
 {
     public sealed class ElasticSearchIndexAppTests
     {
-        private readonly IMapper _defaultMapper = new MapperConfiguration((config) => config.AddProfile<ElasticSearchModelProfile>())
-            .CreateMapper();
+        private readonly IElasticModelFactory _defaultElasticModelFactory = new ElasticModelFactory(
+            new MapperConfiguration((config) => config.AddProfile<ElasticSearchModelProfile>()) .CreateMapper(),
+            new SystemDateTimeProvider());
 
         [Fact]
         public async Task IndexAsync_GivenNullCommand_ShouldThrowException()
@@ -32,7 +35,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
 
             var app = new ElasticSearchIndexApp(
                 mockedRepository,
-                new ElasticModelFactory(_defaultMapper),
+                _defaultElasticModelFactory,
                 new IndexNameBuilder()
                 );
 
@@ -50,7 +53,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
         {
             var app = new ElasticSearchIndexApp(
                 new FailMockedElasticSearchRepository(),
-                new ElasticModelFactory(_defaultMapper),
+                _defaultElasticModelFactory,
                 new IndexNameBuilder()
                 );
 

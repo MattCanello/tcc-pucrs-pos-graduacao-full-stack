@@ -15,6 +15,8 @@
 
         public DateTimeOffset PublishDate { get; set; }
 
+        public DateTimeOffset IndexDate { get; set; }
+
         public ISet<Category>? Categories { get; set; }
 
         public IReadOnlyList<Thumbanil>? Thumbnails { get; set; }

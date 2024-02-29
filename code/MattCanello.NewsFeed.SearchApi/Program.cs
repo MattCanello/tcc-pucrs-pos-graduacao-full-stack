@@ -1,3 +1,5 @@
+using MattCanello.NewsFeed.Cross.Abstractions;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
@@ -50,6 +52,9 @@ namespace MattCanello.NewsFeed.SearchApi
 
         private static void AddAppServices(this IServiceCollection services)
         {
+            services
+                .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
+
             services
                 .UseElasticSearch();
 

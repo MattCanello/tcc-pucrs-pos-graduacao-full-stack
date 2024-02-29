@@ -19,6 +19,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles
             CreateMap<Domain.Models.Entry, ElasticSearch.Models.Entry>()
                 .ForMember(dest => dest.EntryId, o => o.MapFrom(source => source.Id))
                 .ForMember(dest => dest.FeedId, o => o.Ignore())
+                .ForMember(dest => dest.IndexDate, o => o.Ignore())
                 .ReverseMap();
         }
     }
