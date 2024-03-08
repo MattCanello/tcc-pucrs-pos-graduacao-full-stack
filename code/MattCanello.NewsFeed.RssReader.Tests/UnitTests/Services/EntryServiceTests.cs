@@ -19,7 +19,10 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var publisher = new InMemoryEntryPublisher();
             var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher);
 
-            var publishedEntriesCount = await service.ProcessEntriesFromRSSAsync(feedId, feed);
+            var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feedId, feed, null);
+            Assert.NotNull(publishedEntriesResponse);
+
+            var publishedEntriesCount = publishedEntriesResponse.PublishedCount;
 
             Assert.NotNull(publisher.PublishedEntries);
             var singleEntry = Assert.Single(publisher.PublishedEntries);

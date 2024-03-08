@@ -38,29 +38,32 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
             var requestMessage = _mapper
                 .Map<ReadRssRequestMessage>(feed);
 
-            var response = await _rssClient
+            var readResponse = await _rssClient
                 .ReadAsync(requestMessage, cancellationToken);
 
-            if (response.IsNotModified || response.Feed is null)
+            if (readResponse.IsNotModified || readResponse.Feed is null)
                 return ProcessRssResponse.NotModified;
 
-            var responseDate = response.ResponseDate ?? DateTimeOffset.UtcNow;
+            var responseDate = readResponse.ResponseDate ?? DateTimeOffset.UtcNow;
 
-            var publishedEntriesCount = await _entryService.ProcessEntriesFromRSSAsync(feedId, response.Feed, cancellationToken);
+            var publishedEntriesResponse = await _entryService
+                .ProcessEntriesFromRSSAsync(feedId, readResponse.Feed, feed.LastPublishedEntryDate, cancellationToken);
 
-            var feedConsumedTask = _channelService.ProcessFeedConsumedAsync(feedId, responseDate, response.Feed, cancellationToken);
-            var updateFeedTask = UpdateFeedFromResponseAsync(feed, response, cancellationToken);
+            var feedConsumedTask = _channelService.ProcessFeedConsumedAsync(feedId, responseDate, readResponse.Feed, cancellationToken);
+            var updateFeedTask = UpdateFeedFromResponseAsync(feed, readResponse, publishedEntriesResponse, cancellationToken);
 
             await Task.WhenAll(feedConsumedTask, updateFeedTask);
-            return new ProcessRssResponse(publishedEntriesCount);
+            return new ProcessRssResponse(publishedEntriesResponse.PublishedCount);
         }
 
-        private async Task UpdateFeedFromResponseAsync(Feed feed, ReadRssResponseMessage response, CancellationToken cancellationToken = default)
+        private async Task UpdateFeedFromResponseAsync(Feed feed, ReadRssResponseMessage readResponse, PublishRssEntriesResponse publishResponse, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feed);
-            ArgumentNullException.ThrowIfNull(response);
+            ArgumentNullException.ThrowIfNull(readResponse);
+            ArgumentNullException.ThrowIfNull(publishResponse);
 
-            feed.SetAsModified(response.ETag, response.ResponseDate);
+            feed.SetAsModified(readResponse.ETag, readResponse.ResponseDate, publishResponse.MostRecentPublishDate);
+
             await _feedRepository.UpdateAsync(feed.FeedId, feed, cancellationToken);
         }
     }
