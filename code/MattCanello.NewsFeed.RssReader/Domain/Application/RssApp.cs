@@ -46,8 +46,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
 
             var responseDate = readResponse.ResponseDate ?? DateTimeOffset.UtcNow;
 
-            var publishedEntriesResponse = await _entryService
-                .ProcessEntriesFromRSSAsync(feedId, readResponse.Feed, feed.LastPublishedEntryDate, cancellationToken);
+            var publishedEntriesResponse = await _entryService.ProcessEntriesFromRSSAsync(feed, readResponse.Feed, cancellationToken);
 
             var feedConsumedTask = _channelService.ProcessFeedConsumedAsync(feedId, responseDate, readResponse.Feed, cancellationToken);
             var updateFeedTask = UpdateFeedFromResponseAsync(feed, readResponse, publishedEntriesResponse, cancellationToken);

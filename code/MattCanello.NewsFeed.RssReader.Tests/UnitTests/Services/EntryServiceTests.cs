@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Tests.Mocks;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
@@ -11,15 +12,15 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
     public sealed class EntryServiceTests
     {
         [Theory, AutoData]
-        public async Task ProcessEntriesFromRSSAsync_UsingTheGuardianUkSample_ShouldPublishEvent(string feedId)
+        public async Task ProcessEntriesFromRSSAsync_UsingTheGuardianUkSample_ShouldPublishEvent(Feed feed)
         {
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
-            var feed = SyndicationFeed.Load(xml);
+            var rss = SyndicationFeed.Load(xml);
 
             var publisher = new InMemoryEntryPublisher();
-            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher);
+            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher, new NoEntryPublishPolicy());
 
-            var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feedId, feed, null);
+            var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feed, rss);
             Assert.NotNull(publishedEntriesResponse);
 
             var publishedEntriesCount = publishedEntriesResponse.PublishedCount;

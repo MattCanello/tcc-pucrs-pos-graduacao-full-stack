@@ -10,8 +10,10 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Policies;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Policies;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
@@ -107,6 +109,9 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddSingleton<IEventFactory, EventFactory>();
+
+            services
+                .AddSingleton<IPublishEntryPolicy, ForwardOnlyPublishEntryPolicy>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
