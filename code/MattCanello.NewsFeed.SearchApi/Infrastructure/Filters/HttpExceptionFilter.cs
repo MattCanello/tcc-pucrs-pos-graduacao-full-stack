@@ -1,9 +1,11 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Filters
 {
+    [ExcludeFromCodeCoverage]
     public sealed class HttpExceptionFilter : ActionFilterAttribute
     {
         private readonly ILogger _logger;
