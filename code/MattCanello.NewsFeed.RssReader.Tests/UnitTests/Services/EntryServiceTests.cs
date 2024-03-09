@@ -31,5 +31,25 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             Assert.NotNull(singleEntry);
             Assert.Equal(1, publishedEntriesCount);
         }
+
+        [Theory, AutoData]
+        public async Task ProcessEntriesFromRSSAsync_GivenAPolicyThatPreventsPublishing_ShouldNotPublishAnyEvent(Feed feed)
+        {
+            using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
+            var rss = SyndicationFeed.Load(xml);
+
+            var publisher = new InMemoryEntryPublisher();
+            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher, new PublishEntryMockedPolicy(false));
+
+            var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feed, rss);
+            Assert.NotNull(publishedEntriesResponse);
+
+            var publishedEntriesCount = publishedEntriesResponse.PublishedCount;
+
+            Assert.NotNull(publisher.PublishedEntries);
+            Assert.Empty(publisher.PublishedEntries);
+
+            Assert.Equal(0, publishedEntriesCount);
+        }
     }
 }
