@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
+﻿using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 using System.Collections.Concurrent;
 
@@ -24,6 +25,17 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             LastProducedId = id;
 
             return Task.FromResult(id);
+        }
+
+        public Task<TElasticModel> GetAsync<TElasticModel>(IndexName indexName, string id, CancellationToken cancellationToken = default) 
+            where TElasticModel : class, new()
+        {
+            var key = new Key(indexName.Name, id);
+
+            if (_data.TryGetValue(key, out var elasticModel))
+                return Task.FromResult((TElasticModel)Convert.ChangeType(elasticModel, typeof(TElasticModel)));
+
+            throw new EntryNotFoundException(id);
         }
 
         private sealed record Key(string IndexName, string Id);

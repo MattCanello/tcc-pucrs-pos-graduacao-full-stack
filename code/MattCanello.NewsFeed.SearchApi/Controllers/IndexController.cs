@@ -24,9 +24,9 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var entryId = await _indexApp.IndexAsync(command, cancellationToken);
+            var id = await _indexApp.IndexAsync(command, cancellationToken);
 
-            return CreatedAtAction("GetById", "Entry", new { entryId }, command.Entry);
+            return CreatedAtAction("GetById", "Entry", new { feedId = command.FeedId, id }, command.Entry);
         }
     }
 }

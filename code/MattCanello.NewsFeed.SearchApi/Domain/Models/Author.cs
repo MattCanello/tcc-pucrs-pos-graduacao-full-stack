@@ -5,6 +5,8 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Models
     [Serializable]
     public sealed class Author
     {
+        public Author() : this(string.Empty) { }
+
         public Author(string name, string? email = null, string? url = null)
         {
             Name = name;

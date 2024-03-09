@@ -26,6 +26,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
 
             services
+                .AddScoped<IEntryRepository, ElasticSearchEntryRepository>();
+
+            services
                 .AddSingleton<IElasticSearchRepository, ElasticSearchRepository>()
                 .AddSingleton<IElasticClient>((sp) =>
                 {
