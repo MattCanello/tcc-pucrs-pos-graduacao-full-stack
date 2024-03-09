@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
         [HttpPost("index")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Entry))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Document))]
         public async Task<IActionResult> Index([FromBody, Required] IndexEntryCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
@@ -26,7 +26,9 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var id = await _indexApp.IndexAsync(command, cancellationToken);
 
-            return CreatedAtAction("GetById", "Entry", new { feedId = command.FeedId, id }, command.Entry);
+            var doc = new Document(id, command.FeedId!, command.Entry!);
+
+            return CreatedAtAction("GetById", "Document", new { feedId = command.FeedId, id }, doc);
         }
     }
 }

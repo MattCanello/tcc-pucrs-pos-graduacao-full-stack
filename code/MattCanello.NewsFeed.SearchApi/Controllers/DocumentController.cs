@@ -6,18 +6,18 @@ using System.ComponentModel.DataAnnotations;
 namespace MattCanello.NewsFeed.SearchApi.Controllers
 {
     [ApiController]
-    public class EntryController : ControllerBase
+    public class DocumentController : ControllerBase
     {
         private readonly IEntryRepository _entryRepository;
 
-        public EntryController(IEntryRepository entryRepository)
+        public DocumentController(IEntryRepository entryRepository)
         {
             _entryRepository = entryRepository;
         }
 
-        [HttpGet("feed/{feedId}/entry/{id}")]
+        [HttpGet("feed/{feedId}/document/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entry))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
         public async Task<IActionResult> GetById([FromRoute, Required] string feedId, [FromRoute, Required] string id, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
@@ -25,10 +25,9 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var entry = await _entryRepository.GetByIdAsync(feedId, id, cancellationToken);
 
-            if (entry is null)
-                return NotFound();
-
-            return Ok(entry);
+            var doc = new Document(id, feedId, entry);
+            
+            return Ok(doc);
         }
     }
 }
