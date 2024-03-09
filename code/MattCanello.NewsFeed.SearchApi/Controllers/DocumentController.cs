@@ -10,12 +10,12 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
     public class DocumentController : ControllerBase
     {
         private readonly IIndexApp _indexApp;
-        private readonly IEntryRepository _entryRepository;
+        private readonly IDocumentRepository _documentRepository;
 
-        public DocumentController(IIndexApp indexApp, IEntryRepository entryRepository)
+        public DocumentController(IIndexApp indexApp, IDocumentRepository documentRepository)
         {
             _indexApp = indexApp;
-            _entryRepository = entryRepository;
+            _documentRepository = documentRepository;
         }
 
         [HttpPost("index")]
@@ -41,10 +41,8 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var entry = await _entryRepository.GetByIdAsync(feedId, id, cancellationToken);
+            var doc = await _documentRepository.GetByIdAsync(feedId, id, cancellationToken);
 
-            var doc = new Document(id, feedId, entry);
-            
             return Ok(doc);
         }
     }

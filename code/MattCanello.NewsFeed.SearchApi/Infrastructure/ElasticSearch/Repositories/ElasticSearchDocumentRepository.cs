@@ -5,20 +5,20 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories
 {
-    public sealed class ElasticSearchEntryRepository : IEntryRepository
+    public sealed class ElasticSearchDocumentRepository : IDocumentRepository
     {
         private readonly IElasticSearchRepository _elasticSearchRepository;
         private readonly IIndexNameBuilder _indexNameBuilder;
         private readonly IMapper _mapper;
 
-        public ElasticSearchEntryRepository(IElasticSearchRepository elasticSearchRepository, IIndexNameBuilder indexNameBuilder, IMapper mapper)
+        public ElasticSearchDocumentRepository(IElasticSearchRepository elasticSearchRepository, IIndexNameBuilder indexNameBuilder, IMapper mapper)
         {
             _elasticSearchRepository = elasticSearchRepository;
             _indexNameBuilder = indexNameBuilder;
             _mapper = mapper;
         }
 
-        public async Task<Entry> GetByIdAsync(string feedId, string id, CancellationToken cancellationToken = default)
+        public async Task<Document> GetByIdAsync(string feedId, string id, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(id);
@@ -31,7 +31,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
             var domainEntry = _mapper.Map<Entry>(elasticSearchEntry);
 
-            return domainEntry;
+            return new Document(id, feedId, domainEntry);
         }
     }
 }
