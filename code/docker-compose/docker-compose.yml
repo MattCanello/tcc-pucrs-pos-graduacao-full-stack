@@ -62,7 +62,7 @@ services:
       - discovery.type=single-node
       - cluster.name=news-feed
     volumes:
-      - elasticsearch-data:/var/lib/elasticsearch/data
+      - elastic-data:/usr/share/elasticsearch/data
     networks:
       - backend
     healthcheck:
@@ -188,7 +188,7 @@ volumes:
   kafka_data:
     driver: local
 
-  elasticsearch-data:
+  elastic-data:
     driver: local
 
   kibana-data:
