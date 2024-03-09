@@ -2,16 +2,20 @@ using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Evaluators;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Evalulators;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Policies;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
+using MattCanello.NewsFeed.RssReader.Domain.Policies;
 using MattCanello.NewsFeed.RssReader.Domain.Profiles;
 using MattCanello.NewsFeed.RssReader.Domain.Services;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Clients;
@@ -107,6 +111,10 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddSingleton<IEventFactory, EventFactory>();
+
+            services
+                .AddSingleton<IPublishEntryPolicy, ForwardOnlyPublishEntryPolicy>()
+                .AddSingleton<IMostRecentPublishDateEvaluator, MostRecentPublishDateEvaluator>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
