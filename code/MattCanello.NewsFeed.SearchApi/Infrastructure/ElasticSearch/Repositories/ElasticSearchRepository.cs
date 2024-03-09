@@ -53,7 +53,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 || (getDocumentResponse.Found && getDocumentResponse.Source is null);
 
             if (isIndexNotFound || isEntryNotFound)
-                throw new EntryNotFoundException(id);
+                throw new DocumentNotFoundException(id);
 
             if (getDocumentResponse.Found && getDocumentResponse.Source != null)
                 return getDocumentResponse.Source;

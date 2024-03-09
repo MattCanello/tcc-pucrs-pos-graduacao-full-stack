@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Filters
             if (context.Exception is IndexException indexException)
                 _logger.LogCritical(indexException, "Unable to index a document on '{indexName}'", indexException.IndexName);
 
-            if (context.Exception is EntryNotFoundException)
+            if (context.Exception is DocumentNotFoundException)
             {
                 context.Exception = null;
                 context.Result = new NotFoundResult();

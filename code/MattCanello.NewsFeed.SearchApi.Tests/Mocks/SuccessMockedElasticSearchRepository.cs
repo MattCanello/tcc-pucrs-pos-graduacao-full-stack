@@ -35,7 +35,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             if (_data.TryGetValue(key, out var elasticModel))
                 return Task.FromResult((TElasticModel)Convert.ChangeType(elasticModel, typeof(TElasticModel)));
 
-            throw new EntryNotFoundException(id);
+            throw new DocumentNotFoundException(id);
         }
 
         private sealed record Key(string IndexName, string Id);

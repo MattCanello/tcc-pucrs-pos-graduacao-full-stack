@@ -3,14 +3,14 @@ using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 
 namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
 {
-    public class EntryNotFoundExceptionTests
+    public class DocumentNotFoundExceptionTests
     {
-        const string DefaultExceptionMessage = "Entry not found";
+        const string DefaultExceptionMessage = "Document not found";
 
         [Theory, AutoData]
         public void Constructor_GivenInnerException_ShouldPersistException(Exception innerException)
         {
-            var exception = new EntryNotFoundException(innerException);
+            var exception = new DocumentNotFoundException(innerException);
 
             Assert.Equal(innerException, exception.InnerException);
         }
@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
         [Fact]
         public void Constructor_GiveNoParam_ShouldUseDefaultMessage()
         {
-            var exception = new EntryNotFoundException();
+            var exception = new DocumentNotFoundException();
 
             Assert.Equal(DefaultExceptionMessage, exception.Message);
         }
@@ -26,17 +26,17 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
         [Theory, AutoData]
         public void Constructor_GivenId_ShouldPersistData(string id)
         {
-            var exception = new EntryNotFoundException(id);
+            var exception = new DocumentNotFoundException(id);
 
-            Assert.Equal(id, exception.EntryId);
+            Assert.Equal(id, exception.DocumentId);
         }
 
         [Theory, AutoData]
         public void Constructor_GivenId_ShouldUseCustomMessage(string id)
         {
-            var exception = new EntryNotFoundException(id);
+            var exception = new DocumentNotFoundException(id);
 
-            Assert.Equal($"The entry '{id}' was not found", exception.Message);
+            Assert.Equal($"The document '{id}' was not found", exception.Message);
         }
 
         [Theory]
@@ -44,7 +44,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
         [InlineData("")]
         public void Constructor_GivenEmptyId_ShouldUseDefaultMessage(string id)
         {
-            var exception = new EntryNotFoundException(id);
+            var exception = new DocumentNotFoundException(id);
 
             Assert.Equal(DefaultExceptionMessage, exception.Message);
         }
