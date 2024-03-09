@@ -1,4 +1,6 @@
-﻿namespace MattCanello.NewsFeed.RssReader.Domain.Responses
+﻿using MattCanello.NewsFeed.RssReader.Domain.Models;
+
+namespace MattCanello.NewsFeed.RssReader.Domain.Responses
 {
     [Serializable]
     public sealed record class PublishRssEntriesResponse
@@ -15,5 +17,12 @@
         public int PublishedCount { get; init; }
 
         public DateTimeOffset? MostRecentPublishDate { get; init; }
+
+        public void UpdateFeed(Feed feed)
+        {
+            ArgumentNullException.ThrowIfNull(feed);
+
+            feed.LastPublishedEntryDate = MostRecentPublishDate ?? feed.LastPublishedEntryDate;
+        }
     }
 }

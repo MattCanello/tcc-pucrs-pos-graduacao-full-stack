@@ -29,11 +29,10 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Models
 
         public DateTimeOffset? LastPublishedEntryDate { get; set; }
 
-        public void SetAsModified(string? etag = null, DateTimeOffset? modifiedDate = null, DateTimeOffset? lastPublishedEntryDate = null)
+        public void SetAsModified(string? etag = null, DateTimeOffset? modifiedDate = null)
         {
             LastETag = etag ?? LastETag;
             LastModifiedDate = modifiedDate ?? LastModifiedDate;
-            LastPublishedEntryDate = lastPublishedEntryDate ?? LastPublishedEntryDate;
         }
     }
 }

@@ -61,7 +61,8 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Application
             ArgumentNullException.ThrowIfNull(readResponse);
             ArgumentNullException.ThrowIfNull(publishResponse);
 
-            feed.SetAsModified(readResponse.ETag, readResponse.ResponseDate, publishResponse.MostRecentPublishDate);
+            feed.SetAsModified(readResponse.ETag, readResponse.ResponseDate);
+            publishResponse.UpdateFeed(feed);
 
             await _feedRepository.UpdateAsync(feed.FeedId, feed, cancellationToken);
         }
