@@ -2,11 +2,13 @@ using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.RssReader.Domain.Application;
+using MattCanello.NewsFeed.RssReader.Domain.Evaluators;
 using MattCanello.NewsFeed.RssReader.Domain.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Handlers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Application;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Clients;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Evalulators;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
@@ -111,7 +113,8 @@ namespace MattCanello.NewsFeed.RssReader
                 .AddSingleton<IEventFactory, EventFactory>();
 
             services
-                .AddSingleton<IPublishEntryPolicy, ForwardOnlyPublishEntryPolicy>();
+                .AddSingleton<IPublishEntryPolicy, ForwardOnlyPublishEntryPolicy>()
+                .AddSingleton<IMostRecentPublishDateEvaluator, MostRecentPublishDateEvaluator>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
