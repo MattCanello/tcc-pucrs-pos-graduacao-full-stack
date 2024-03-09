@@ -1,9 +1,11 @@
-﻿using System.ServiceModel.Syndication;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Models;
+using MattCanello.NewsFeed.RssReader.Domain.Responses;
+using System.ServiceModel.Syndication;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services
 {
     public interface IEntryService
     {
-        Task<int> ProcessEntriesFromRSSAsync(string feedId, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
+        Task<PublishRssEntriesResponse> ProcessEntriesFromRSSAsync(Feed feed, SyndicationFeed syndicationFeed, CancellationToken cancellationToken = default);
     }
 }
