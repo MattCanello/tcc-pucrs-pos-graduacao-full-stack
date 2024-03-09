@@ -2,6 +2,6 @@
 {
     public interface IMostRecentPublishDateEvaluator
     {
-        DateTimeOffset Evaluate(DateTimeOffset? current, DateTimeOffset entryPublishDate);
+        DateTimeOffset Evaluate(DateTimeOffset? current, DateTimeOffset other);
     }
 }

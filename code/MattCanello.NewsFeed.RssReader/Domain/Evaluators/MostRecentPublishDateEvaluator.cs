@@ -4,15 +4,15 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Evaluators
 {
     public sealed class MostRecentPublishDateEvaluator : IMostRecentPublishDateEvaluator
     {
-        public DateTimeOffset Evaluate(DateTimeOffset? current, DateTimeOffset entryPublishDate)
+        public DateTimeOffset Evaluate(DateTimeOffset? current, DateTimeOffset other)
         {
             if (current is null)
-                return entryPublishDate;
+                return other;
 
-            if (current > entryPublishDate)
+            if (current > other)
                 return current.Value;
 
-            return entryPublishDate;
+            return other;
         }
     }
 }
