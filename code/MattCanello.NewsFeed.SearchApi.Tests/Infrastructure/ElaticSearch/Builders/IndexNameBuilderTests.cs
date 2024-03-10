@@ -27,5 +27,17 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Build
 
             Assert.Equal($"entries-{feedId}", indexName);
         }
+
+        [Fact]
+        public void Build_AsAllEntriesIndices_ShouldReturnEntriesWildcard()
+        {
+            var builder = new IndexNameBuilder();
+
+            var indexName = builder
+                .AllEntriesIndices()
+                .Build();
+
+            Assert.Equal("entries-*", indexName);
+        }
     }
 }
