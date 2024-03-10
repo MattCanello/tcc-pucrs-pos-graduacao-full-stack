@@ -12,12 +12,14 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
     {
         private readonly IElasticClient _elasticClient;
         private readonly IIndexNameBuilder _indexNameBuilder;
+        private readonly IQueryStringProcessor _queryStringProcessor;
         private readonly IMapper _mapper;
 
-        public ElasticSearchSearchApp(IElasticClient elasticClient, IIndexNameBuilder indexNameBuilder, IMapper mapper)
+        public ElasticSearchSearchApp(IElasticClient elasticClient, IIndexNameBuilder indexNameBuilder, IQueryStringProcessor queryStringProcessor, IMapper mapper)
         {
             _elasticClient = elasticClient;
             _indexNameBuilder = indexNameBuilder;
+            _queryStringProcessor = queryStringProcessor;
             _mapper = mapper;
         }
 
@@ -29,7 +31,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
 
             var indexName = GetIndexName(searchCommand);
 
-            var queryString = ProcessQueryString(searchCommand.Query);
+            var queryString = _queryStringProcessor.Process(searchCommand.Query);
 
             var result = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>(s => s
                 .Index(indexName)
@@ -49,30 +51,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
                 Total = result.Total,
                 Results = entries
             };
-        }
-
-        private static string ProcessQueryString(string? query)
-        {
-            if (string.IsNullOrEmpty(query))
-                return "*";
-
-            query = query
-                .Replace("*", "")
-                .Replace("?", "")
-                .Replace(":", "")
-                .Replace("'", "")
-                .Replace("+", "")
-                .Replace("-", "")
-                .Replace("(", "")
-                .Replace(")", "")
-                .Replace("\"", "")
-                .ToLowerInvariant()
-                .Replace(" or ", " ")
-                .Replace(" not ", " ")
-                .Replace(" and ", " ")
-                .Replace(" ", "* *");
-
-            return $"*{query}*";
         }
 
         private IndexName? GetIndexName(SearchCommand searchCommand)
