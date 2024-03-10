@@ -6,7 +6,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors
     public sealed class QueryStringProcessor : IQueryStringProcessor
     {
         private const RegexOptions DefaultRegexOptions = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline;
-        private static readonly Regex UnsafeCharsPattern = new Regex("\\*|\\?|\\:|\\'|\\\"|\\+|\\-|\\(|\\)|\\\\|\\/", DefaultRegexOptions);
+        private static readonly Regex UnsafeCharsPattern = new Regex("\\*|\\?|\\:|\\'|\\\"|\\+|\\-|\\(|\\)|\\\\|\\/|\\<|\\>|\\[|\\]|\\{|\\}", DefaultRegexOptions);
         private static readonly Regex OrOperatorPattern = new Regex("(\\b|^)or(\\b|$)", DefaultRegexOptions);
         private static readonly Regex NotOperatorPattern = new Regex("(\\b|^)not(\\b|$)", DefaultRegexOptions);
         private static readonly Regex AndOperatorPattern = new Regex("(\\b|^)and(\\b|$)", DefaultRegexOptions);

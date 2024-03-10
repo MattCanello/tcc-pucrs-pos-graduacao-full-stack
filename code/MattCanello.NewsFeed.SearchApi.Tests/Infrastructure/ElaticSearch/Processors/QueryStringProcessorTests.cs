@@ -60,6 +60,12 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Proce
         [InlineData("(a(a(")]
         [InlineData(")a)a)")]
         [InlineData("\"a\"a\"")]
+        [InlineData(">a>a>")]
+        [InlineData("<a<a<")]
+        [InlineData("[a[a[")]
+        [InlineData("]a]a]")]
+        [InlineData("{a{a{")]
+        [InlineData("}a}a}")]
         public void StripUnsafeChars_GivenUnsafeChar_ShouldNotBePresent(string query)
         {
             var processedQuery = QueryStringProcessor.StripUnsafeChars(query);
