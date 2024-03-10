@@ -16,13 +16,13 @@
           "type": "keyword"
         },
         "title": {
-          "type": "keyword"
+          "type": "text"
         },
         "url": {
-          "type": "keyword"
+          "type": "text"
         },
         "description": {
-          "type": "keyword"
+          "type": "text"
         },
         "publishDate": {
           "type": "date",
@@ -61,7 +61,7 @@
           "include_in_parent": true,
           "properties": {
             "name": {
-              "type": "keyword"
+              "type": "text"
             },
             "email": {
               "type": "keyword"
@@ -74,5 +74,5 @@
       }
     }
   },
-  "version": 4
+  "version": 5
 }
