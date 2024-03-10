@@ -42,6 +42,27 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Proce
             Assert.Equal("*mancha* *tinta* *tecido* *operação* *ordinária*", processedQuery);
         }
 
+        [Theory]
+        [InlineData((string?)null)]
+        [InlineData("")]
+        public void EnsureSingleLine_GivenNull_ShouldReturnStringEmpty(string? query)
+        {
+            var processedQuery = QueryStringProcessor.EnsureSingleLine(query);
+
+            Assert.Equal(string.Empty, processedQuery);
+        }
+
+        [Theory]
+        [InlineData("\rA\rB\rC\r")]
+        [InlineData("\r\nA\r\nB\r\nC\r\n")]
+        [InlineData("\nA\nB\nC\n")]
+        public void EnsureSingleLine_GivenMultilineString_ShouldConcat(string query)
+        {
+            var processedQuery = QueryStringProcessor.EnsureSingleLine(query);
+
+            Assert.Equal(" A B C ", processedQuery);
+        }
+
         [Fact]
         public void StripUnsafeChars_GivenNull_ShouldReturnStringEmpty()
         {

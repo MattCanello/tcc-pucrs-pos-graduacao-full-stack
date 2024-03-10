@@ -11,11 +11,14 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors
         private static readonly Regex NotOperatorPattern = new Regex("(\\b|^)not(\\b|$)", DefaultRegexOptions);
         private static readonly Regex AndOperatorPattern = new Regex("(\\b|^)and(\\b|$)", DefaultRegexOptions);
         private static readonly Regex WhiteSpacePattern = new Regex("\\s+", DefaultRegexOptions);
+        private static readonly Regex MultilinePattern = new Regex("\\r\\n|\\r|\\n", DefaultRegexOptions | RegexOptions.Multiline);
 
         public string Process(string? query)
         {
             if (string.IsNullOrEmpty(query))
                 return "*";
+
+            query = EnsureSingleLine(query);
 
             query = StripUnsafeChars(query);
 
@@ -26,6 +29,16 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors
             query = RemoveMultipleWhiteSpaces(query);
 
             query = SurroundEachWordWithWildcard(query);
+
+            return query;
+        }
+
+        public static string EnsureSingleLine(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+                return string.Empty;
+
+            query = MultilinePattern.Replace(query, " ");
 
             return query;
         }
