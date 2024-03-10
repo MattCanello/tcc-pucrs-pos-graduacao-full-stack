@@ -34,6 +34,7 @@
         },
         "categories": {
           "type": "nested",
+          "include_in_parent": true,
           "properties": {
             "name": {
               "type": "keyword"
@@ -42,6 +43,7 @@
         },
         "thumbnails": {
           "type": "nested",
+          "include_in_parent": true,
           "properties": {
             "url": {
               "type": "text"
@@ -56,6 +58,7 @@
         },
         "authors": {
           "type": "nested",
+          "include_in_parent": true,
           "properties": {
             "name": {
               "type": "keyword"
@@ -71,5 +74,5 @@
       }
     }
   },
-  "version": 3
+  "version": 4
 }

@@ -29,9 +29,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
 
             var indexName = GetIndexName(searchCommand);
 
-            var queryString = string.IsNullOrEmpty(searchCommand.Query)
-                ? "*"
-                : $"*{searchCommand.Query?.Replace("*", "")?.Replace("?", "")}*";
+            var queryString = ProcessQueryString(searchCommand.Query);
 
             var result = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>(s => s
                 .Index(indexName)
@@ -51,6 +49,30 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
                 Total = result.Total,
                 Results = entries
             };
+        }
+
+        private static string ProcessQueryString(string? query)
+        {
+            if (string.IsNullOrEmpty(query))
+                return "*";
+
+            query = query
+                .Replace("*", "")
+                .Replace("?", "")
+                .Replace(":", "")
+                .Replace("'", "")
+                .Replace("+", "")
+                .Replace("-", "")
+                .Replace("(", "")
+                .Replace(")", "")
+                .Replace("\"", "")
+                .ToLowerInvariant()
+                .Replace(" or ", " ")
+                .Replace(" not ", " ")
+                .Replace(" and ", " ")
+                .Replace(" ", "* *");
+
+            return $"*{query}*";
         }
 
         private IndexName? GetIndexName(SearchCommand searchCommand)
