@@ -5,10 +5,12 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors
 {
     public sealed class QueryStringProcessor : IQueryStringProcessor
     {
-        private static readonly Regex OrOperatorPattern = new Regex("(\\b|^)or(\\b|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        private static readonly Regex NotOperatorPattern = new Regex("(\\b|^)not(\\b|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        private static readonly Regex AndOperatorPattern = new Regex("(\\b|^)and(\\b|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        private static readonly Regex WhiteSpacePattern = new Regex("\\s+", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.Singleline);
+        private const RegexOptions DefaultRegexOptions = RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline;
+        private static readonly Regex UnsafeCharsPattern = new Regex("\\*|\\?|\\:|\\'|\\\"|\\+|\\-|\\(|\\)|\\\\|\\/", DefaultRegexOptions);
+        private static readonly Regex OrOperatorPattern = new Regex("(\\b|^)or(\\b|$)", DefaultRegexOptions);
+        private static readonly Regex NotOperatorPattern = new Regex("(\\b|^)not(\\b|$)", DefaultRegexOptions);
+        private static readonly Regex AndOperatorPattern = new Regex("(\\b|^)and(\\b|$)", DefaultRegexOptions);
+        private static readonly Regex WhiteSpacePattern = new Regex("\\s+", DefaultRegexOptions);
 
         public string Process(string? query)
         {
@@ -28,19 +30,15 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors
             return query;
         }
 
-        public static string StripUnsafeChars(string query) 
-            => (query ?? string.Empty)
-                .Replace("*", "")
-                .Replace("?", "")
-                .Replace(":", "")
-                .Replace("'", "")
-                .Replace("+", "")
-                .Replace("-", "")
-                .Replace("(", "")
-                .Replace(")", "")
-                .Replace("\"", "")
-                .Replace("\\", "")
-                .Replace("/", "");
+        public static string StripUnsafeChars(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+                return string.Empty;
+
+            query = UnsafeCharsPattern.Replace(query, string.Empty);
+
+            return query;
+        }
 
         public static string RemoveOperatorWords(string query)
         {
