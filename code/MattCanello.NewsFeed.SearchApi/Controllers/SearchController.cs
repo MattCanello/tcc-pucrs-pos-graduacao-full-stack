@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.SearchApi.Controllers
 {
@@ -16,21 +17,45 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             _searchApp = searchApp;
         }
 
-        [HttpGet("search")]
+        [HttpPost("search")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResponse<Document>))]
-        public async Task<IActionResult> Search([FromQuery] SearchCommand searchCommand, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Search([FromBody, Required] SearchCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _searchApp.SearchAsync(searchCommand, cancellationToken);
+            var result = await _searchApp.SearchAsync(command, cancellationToken);
 
             if (result.IsEmpty)
                 return NoContent();
 
             return Ok(result);
+        }
+
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResponse<Document>))]
+        public async Task<IActionResult> Search(
+            string? q = null,
+            [Range(1, Paging.MaxPagingSize)] int? size = null,
+            [Range(0, int.MaxValue)] int? skip = null,
+            string? feedId = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var command = new SearchCommand()
+            {
+                FeedId = feedId,
+                Paging = new Paging(skip, size),
+                Query = q
+            };
+
+            return await Search(command, cancellationToken);
         }
     }
 }
