@@ -1,4 +1,5 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
@@ -27,6 +28,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
 
             services
                 .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>();
+
+            services
+                .AddScoped<ISearchApp, ElasticSearchSearchApp>();
 
             services
                 .AddSingleton<IElasticSearchRepository, ElasticSearchRepository>()

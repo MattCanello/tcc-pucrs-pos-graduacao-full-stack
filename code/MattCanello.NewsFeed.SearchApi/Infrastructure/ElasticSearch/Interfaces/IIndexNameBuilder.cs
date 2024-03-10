@@ -6,5 +6,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces
     {
         IndexName? Build();
         IIndexNameBuilder WithFeedId(string feedId);
+        IIndexNameBuilder AllEntriesIndices();
     }
 }
