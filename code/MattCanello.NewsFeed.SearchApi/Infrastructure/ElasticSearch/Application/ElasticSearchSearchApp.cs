@@ -31,15 +31,16 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
 
             var indexName = GetIndexName(searchCommand);
 
-            var queryString = _queryStringProcessor.Process(searchCommand.Query);
-
-            var result = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>(s => s
-                .Index(indexName)
-                .Skip(searchCommand.Paging.Skip)
-                .Take(searchCommand.Paging.Size)
-                .Query(q => q.QueryString(x => x.Query(queryString)))
-                .Sort(sort => sort.Descending(field => field.PublishDate))
-                , cancellationToken);
+            var result = await _elasticClient.SearchTemplateAsync<ElasticSearch.Models.Entry>(new SearchTemplateRequest(indexName)
+            {
+                Id = "entries-search",
+                Params = new Dictionary<string, object>()
+                {
+                    { "query_string", searchCommand.Query! },
+                    { "from", searchCommand.Paging.Skip },
+                    { "size", searchCommand.Paging.Size },
+                }
+            }, cancellationToken);
 
             var entries = result.Hits
                 .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
