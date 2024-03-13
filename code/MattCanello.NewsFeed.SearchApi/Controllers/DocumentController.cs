@@ -20,6 +20,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
         [HttpPost("index")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Document))]
         public async Task<IActionResult> Index([FromBody, Required] IndexEntryCommand command, CancellationToken cancellationToken = default)
         {

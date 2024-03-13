@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
+﻿using Elasticsearch.Net;
+using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Responses;
@@ -22,23 +23,23 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
         {
             ArgumentNullException.ThrowIfNull(indexName);
 
-            var result = await _elasticClient.SearchAsync<TElasticModel>((queryBuilder) => queryBuilder
+            var response = await _elasticClient.SearchAsync<TElasticModel>((queryBuilder) => queryBuilder
                 .Index(indexName)
                 .Size(1)
                 .Query(q => q.Term(term => term.Value(value).Field(fieldSelector))), cancellationToken);
 
-            var hit = result.Hits?.FirstOrDefault();
+            var hit = response.Hits?.FirstOrDefault();
 
             if (hit != null)
                 return new FindResponse<TElasticModel>(hit.Id, hit.Source);
 
-            if (result.IsValid)
+            if (response.IsValid || IsIndexNotFound(response.ServerError))
                 return FindResponse<TElasticModel>.NotFound;
 
             throw new ElasticSearchException(
                indexName.Name,
-               result.ServerError?.Error?.Reason,
-               result.OriginalException);
+               response.ServerError?.Error?.Reason,
+               response.OriginalException);
         }
 
         public async Task<string> IndexAsync(TElasticModel elasticModel, IndexName indexName, CancellationToken cancellationToken = default)
@@ -71,7 +72,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
             var getDocumentResponse = await _elasticClient.GetAsync<TElasticModel>(request, cancellationToken);
 
-            var isIndexNotFound = getDocumentResponse.ServerError?.Status == 404;
+            var isIndexNotFound = IsIndexNotFound(getDocumentResponse.ServerError);
 
             var isEntryNotFound = (getDocumentResponse.ApiCall?.HttpStatusCode == 404)
                 || (getDocumentResponse.ServerError is null && !getDocumentResponse.Found)
@@ -88,5 +89,8 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 getDocumentResponse.ServerError?.Error?.Reason,
                 getDocumentResponse.OriginalException);
         }
+
+        private static bool IsIndexNotFound(ServerError? serverError)
+            => serverError?.Status == 404;
     }
 }
