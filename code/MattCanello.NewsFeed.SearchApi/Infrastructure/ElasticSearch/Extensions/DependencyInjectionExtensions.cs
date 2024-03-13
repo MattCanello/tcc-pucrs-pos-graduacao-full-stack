@@ -3,7 +3,6 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Processors;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
@@ -25,8 +24,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddScoped<IIndexApp, ElasticSearchIndexApp>();
 
             services
-                .AddSingleton<IElasticModelFactory, ElasticModelFactory>()
-                .AddSingleton<IQueryStringProcessor, QueryStringProcessor>();
+                .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
 
             services
                 .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>();

@@ -12,14 +12,12 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Applicatio
     {
         private readonly IElasticClient _elasticClient;
         private readonly IIndexNameBuilder _indexNameBuilder;
-        private readonly IQueryStringProcessor _queryStringProcessor;
         private readonly IMapper _mapper;
 
-        public ElasticSearchSearchApp(IElasticClient elasticClient, IIndexNameBuilder indexNameBuilder, IQueryStringProcessor queryStringProcessor, IMapper mapper)
+        public ElasticSearchSearchApp(IElasticClient elasticClient, IIndexNameBuilder indexNameBuilder, IMapper mapper)
         {
             _elasticClient = elasticClient;
             _indexNameBuilder = indexNameBuilder;
-            _queryStringProcessor = queryStringProcessor;
             _mapper = mapper;
         }
 
