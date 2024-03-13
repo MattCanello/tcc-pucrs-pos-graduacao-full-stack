@@ -3,6 +3,8 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Models;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Policies;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
@@ -24,7 +26,8 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddScoped<IIndexApp, ElasticSearchIndexApp>();
 
             services
-                .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
+                .AddSingleton<IElasticModelFactory, ElasticModelFactory>()
+                .AddSingleton<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
 
             services
                 .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>();
@@ -33,7 +36,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddScoped<ISearchApp, ElasticSearchSearchApp>();
 
             services
-                .AddSingleton<IElasticSearchRepository, ElasticSearchRepository>()
+                .AddSingleton<IElasticSearchRepository<Entry>, ElasticSearchRepository<Entry>>()
                 .AddSingleton<IElasticClient>((sp) =>
                 {
                     var elasticUrl = Environment.GetEnvironmentVariable("ELASTICSEARCH_URL");

@@ -7,11 +7,11 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 {
     public sealed class ElasticSearchDocumentRepository : IDocumentRepository
     {
-        private readonly IElasticSearchRepository _elasticSearchRepository;
+        private readonly IElasticSearchRepository<Models.Entry> _elasticSearchRepository;
         private readonly IIndexNameBuilder _indexNameBuilder;
         private readonly IMapper _mapper;
 
-        public ElasticSearchDocumentRepository(IElasticSearchRepository elasticSearchRepository, IIndexNameBuilder indexNameBuilder, IMapper mapper)
+        public ElasticSearchDocumentRepository(IElasticSearchRepository<Models.Entry> elasticSearchRepository, IIndexNameBuilder indexNameBuilder, IMapper mapper)
         {
             _elasticSearchRepository = elasticSearchRepository;
             _indexNameBuilder = indexNameBuilder;
@@ -27,7 +27,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 .WithFeedId(feedId)
                 .Build();
 
-            var elasticSearchEntry = await _elasticSearchRepository.GetAsync<Models.Entry>(indexName!, id, cancellationToken);
+            var elasticSearchEntry = await _elasticSearchRepository.GetAsync(indexName!, id, cancellationToken);
 
             var domainEntry = _mapper.Map<Entry>(elasticSearchEntry);
 
