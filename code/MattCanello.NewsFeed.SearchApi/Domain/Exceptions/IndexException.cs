@@ -15,7 +15,7 @@
             : base(message ?? DefaultMessage, innerException) { }
 
         public IndexException(string indexName, string? message = null, Exception? innerException = null)
-            : this(message, innerException)
+            : this(message ?? $"{DefaultMessage} on '{indexName}'", innerException)
         {
             IndexName = indexName;
         }

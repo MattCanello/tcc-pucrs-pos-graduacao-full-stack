@@ -46,5 +46,21 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Exceptions
 
             Assert.Equal(indexName, exception.IndexName);
         }
+
+        [Theory, AutoData]
+        public void Constructor_GivenIndexName_ShouldProduceSpecificMessage(string indexName)
+        {
+            var exception = new IndexException(indexName, message: null, innerException: null);
+
+            Assert.Equal($"{DefaultExceptionMessage} on '{indexName}'", exception.Message);
+        }
+
+        [Theory, AutoData]
+        public void Constructor_GivenIndexNameAndMessage_ShouldPreserveGivenMessage(string indexName, string message)
+        {
+            var exception = new IndexException(indexName, message: message, innerException: null);
+
+            Assert.Equal(message, exception.Message);
+        }
     }
 }
