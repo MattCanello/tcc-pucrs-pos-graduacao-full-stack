@@ -16,7 +16,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
     public sealed class ElasticSearchIndexAppTests
     {
         private readonly IElasticModelFactory _defaultElasticModelFactory = new ElasticModelFactory(
-            new MapperConfiguration((config) => config.AddProfile<ElasticSearchModelProfile>()) .CreateMapper(),
+            new MapperConfiguration((config) => config.AddProfile<ElasticSearchModelProfile>()).CreateMapper(),
             new SystemDateTimeProvider());
 
         [Fact]
