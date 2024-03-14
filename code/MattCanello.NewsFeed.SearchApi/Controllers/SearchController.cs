@@ -48,12 +48,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var command = new SearchCommand()
-            {
-                FeedId = feedId,
-                Paging = new Paging(skip, size),
-                Query = q
-            };
+            var command = new SearchCommand(q, new Paging(skip, size), feedId);
 
             return await Search(command, cancellationToken);
         }
