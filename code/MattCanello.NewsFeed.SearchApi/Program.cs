@@ -65,7 +65,7 @@ namespace MattCanello.NewsFeed.SearchApi
                 .AddScoped<ISearchApp, SearchApp>();
 
             services
-                .AddSingleton<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
+                .AddScoped<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
 
             services
                 .Decorate<IIndexApp, IndexAppLogDecorator>()

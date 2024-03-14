@@ -40,6 +40,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 }
             }, cancellationToken);
 
+            if (response.IsIndexNotFound())
+                return DocumentSearchResponse.CreateEmpty(paging);
+
             if (!response.IsValid)
             {
                 throw new ElasticSearchException(
