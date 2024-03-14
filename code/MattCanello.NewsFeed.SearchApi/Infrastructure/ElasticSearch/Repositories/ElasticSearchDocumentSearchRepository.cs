@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 using DocumentSearchResponse = MattCanello.NewsFeed.SearchApi.Domain.Responses.SearchResponse<MattCanello.NewsFeed.SearchApi.Domain.Models.Document>;
@@ -22,11 +23,11 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
         public async Task<DocumentSearchResponse> SearchAsync(string? query = null, Paging? paging = null, string? feedId = null, CancellationToken cancellationToken = default)
         {
-            var indexName = GetIndexName(feedId);
+            var indexName = GetIndexName(feedId)!;
 
             paging ??= new Paging();
 
-            var result = await _elasticClient.SearchTemplateAsync<ElasticSearch.Models.Entry>(new SearchTemplateRequest(indexName)
+            var response = await _elasticClient.SearchTemplateAsync<ElasticSearch.Models.Entry>(new SearchTemplateRequest(indexName)
             {
                 Id = "entries-search",
                 Params = new Dictionary<string, object>()
@@ -37,16 +38,22 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 }
             }, cancellationToken);
 
-            // TODO: Considerar casos de erro
+            if (!response.IsValid)
+            {
+                throw new ElasticSearchException(
+                   indexName.Name,
+                   response.ServerError?.Error?.Reason,
+                   response.OriginalException);
+            }
 
-            var entries = result.Hits
+            var entries = response.Hits
                 .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
                 .ToList();
 
             return new DocumentSearchResponse()
             {
                 Paging = paging,
-                Total = result.Total,
+                Total = response.Total,
                 Results = entries
             };
         }
