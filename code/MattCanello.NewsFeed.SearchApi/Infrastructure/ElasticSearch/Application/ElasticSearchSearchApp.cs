@@ -1,60 +1,29 @@
-﻿using AutoMapper;
-using MattCanello.NewsFeed.SearchApi.Domain.Commands;
+﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Domain.Models;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
-using Nest;
 using DocumentSearchResponse = MattCanello.NewsFeed.SearchApi.Domain.Responses.SearchResponse<MattCanello.NewsFeed.SearchApi.Domain.Models.Document>;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application
 {
     public sealed class ElasticSearchSearchApp : ISearchApp
     {
-        private readonly IElasticClient _elasticClient;
-        private readonly IIndexNameBuilder _indexNameBuilder;
-        private readonly IMapper _mapper;
+        private readonly IDocumentSearchRepository _documentSearchRepository;
 
-        public ElasticSearchSearchApp(IElasticClient elasticClient, IIndexNameBuilder indexNameBuilder, IMapper mapper)
+        public ElasticSearchSearchApp(IDocumentSearchRepository documentSearchRepository)
         {
-            _elasticClient = elasticClient;
-            _indexNameBuilder = indexNameBuilder;
-            _mapper = mapper;
+            _documentSearchRepository = documentSearchRepository;
         }
 
         public async Task<DocumentSearchResponse> SearchAsync(SearchCommand searchCommand, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(searchCommand);
 
-            searchCommand.Paging ??= new Paging();
+            var response = await _documentSearchRepository.SearchAsync(
+                searchCommand.Query,
+                searchCommand.Paging,
+                searchCommand.FeedId,
+                cancellationToken);
 
-            var indexName = GetIndexName(searchCommand);
-
-            var result = await _elasticClient.SearchTemplateAsync<ElasticSearch.Models.Entry>(new SearchTemplateRequest(indexName)
-            {
-                Id = "entries-search",
-                Params = new Dictionary<string, object>()
-                {
-                    { "query_string", searchCommand.Query! },
-                    { "from", searchCommand.Paging.Skip },
-                    { "size", searchCommand.Paging.Size },
-                }
-            }, cancellationToken);
-
-            var entries = result.Hits
-                .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
-                .ToList();
-
-            return new DocumentSearchResponse()
-            {
-                Paging = searchCommand.Paging,
-                Total = result.Total,
-                Results = entries
-            };
+            return response;
         }
-
-        private IndexName? GetIndexName(SearchCommand searchCommand)
-            => (!string.IsNullOrEmpty(searchCommand.FeedId))
-                ? _indexNameBuilder.WithFeedId(searchCommand.FeedId).Build()
-                : _indexNameBuilder.AllEntriesIndices().Build();
     }
 }

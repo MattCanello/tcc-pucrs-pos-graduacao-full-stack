@@ -30,7 +30,8 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddSingleton<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
 
             services
-                .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>();
+                .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>()
+                .AddScoped<IDocumentSearchRepository, ElasticSearchDocumentSearchRepository>();
 
             services
                 .AddScoped<ISearchApp, ElasticSearchSearchApp>();
