@@ -52,12 +52,10 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
                 .ToList();
 
-            return new DocumentSearchResponse()
-            {
-                Paging = paging,
-                Total = response.Total,
-                Results = entries
-            };
+            return new DocumentSearchResponse(
+                entries, 
+                response.Total, 
+                paging);
         }
 
         private IndexName? GetIndexName(string? feedId = null)
