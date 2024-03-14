@@ -2,7 +2,7 @@
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.IndexApp
 {
     public sealed class IndexAppMetricsDecorator : IIndexApp
     {

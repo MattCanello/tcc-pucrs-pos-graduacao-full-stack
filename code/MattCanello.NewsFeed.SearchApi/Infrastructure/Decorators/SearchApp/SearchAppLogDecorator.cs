@@ -3,7 +3,7 @@ using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.SearchApp
 {
     public sealed class SearchAppLogDecorator : ISearchApp
     {
@@ -20,7 +20,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
         {
             using var scope = _logger.BeginScope(searchCommand);
 
-            _logger.LogInformation("Started searching for '{query}' on '{feedId}'", searchCommand.Query, 
+            _logger.LogInformation("Started searching for '{query}' on '{feedId}'", searchCommand.Query,
                 string.IsNullOrEmpty(searchCommand.FeedId) ? "(all feeds)" : searchCommand.FeedId);
 
             var response = await _innerApp.SearchAsync(searchCommand, cancellationToken);

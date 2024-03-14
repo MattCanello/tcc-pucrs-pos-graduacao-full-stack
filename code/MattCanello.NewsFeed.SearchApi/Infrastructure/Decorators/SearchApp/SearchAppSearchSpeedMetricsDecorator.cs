@@ -5,24 +5,32 @@ using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
 using System.Diagnostics;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.SearchApp
 {
-    public sealed class SearchAppSearchCountMetricsDecorator : ISearchApp
+    public sealed class SearchAppSearchSpeedMetricsDecorator : ISearchApp
     {
         private readonly ISearchApp _innerApp;
 
-        public SearchAppSearchCountMetricsDecorator(ISearchApp innerApp)
+        public SearchAppSearchSpeedMetricsDecorator(ISearchApp innerApp)
         {
             _innerApp = innerApp;
         }
 
         public async Task<SearchResponse<Document>> SearchAsync(SearchCommand searchCommand, CancellationToken cancellationToken = default)
         {
-            var count = Metrics.SearchCount.CreateCounter<int>("search-count", "Searches", "Search count");
+            var histogram = Metrics.SearchSpeed.CreateHistogram<double>("search-speed", "ms", "Search speed (in milliseconds)");
+
+            using var activity = ActivitySources.SearchApp.StartActivity("SearchActivity");
 
             var response = await _innerApp.SearchAsync(searchCommand, cancellationToken);
 
-            count.Add(1);
+            activity?
+                .SetTag("isEmpty", response.IsEmpty)
+                .SetTag("totalCount", response.Total);
+
+            activity?.Stop();
+
+            histogram.Record(activity?.Duration.TotalMilliseconds ?? 0d);
 
             return response;
         }

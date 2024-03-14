@@ -4,7 +4,7 @@ using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.SearchApp
 {
     public sealed class SearchAppEmptySearchMetricsDecorator : ISearchApp
     {

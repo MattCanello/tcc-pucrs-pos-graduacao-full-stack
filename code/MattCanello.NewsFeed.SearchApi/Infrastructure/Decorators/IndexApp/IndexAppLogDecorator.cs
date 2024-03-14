@@ -1,7 +1,7 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators
+namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.IndexApp
 {
     public sealed class IndexAppLogDecorator : IIndexApp
     {
