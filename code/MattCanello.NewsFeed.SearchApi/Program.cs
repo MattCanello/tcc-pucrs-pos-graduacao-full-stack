@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
+using MattCanello.NewsFeed.SearchApi.Domain.Application;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
@@ -57,6 +58,9 @@ namespace MattCanello.NewsFeed.SearchApi
 
             services
                 .UseElasticSearch();
+
+            services
+                .AddScoped<ISearchApp, SearchApp>();
 
             services
                 .Decorate<IIndexApp, IndexAppLogDecorator>()

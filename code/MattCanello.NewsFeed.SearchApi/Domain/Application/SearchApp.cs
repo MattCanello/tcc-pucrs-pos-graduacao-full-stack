@@ -1,19 +1,20 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
-using DocumentSearchResponse = MattCanello.NewsFeed.SearchApi.Domain.Responses.SearchResponse<MattCanello.NewsFeed.SearchApi.Domain.Models.Document>;
+using MattCanello.NewsFeed.SearchApi.Domain.Models;
+using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application
+namespace MattCanello.NewsFeed.SearchApi.Domain.Application
 {
-    public sealed class ElasticSearchSearchApp : ISearchApp
+    public sealed class SearchApp : ISearchApp
     {
         private readonly IDocumentSearchRepository _documentSearchRepository;
 
-        public ElasticSearchSearchApp(IDocumentSearchRepository documentSearchRepository)
+        public SearchApp(IDocumentSearchRepository documentSearchRepository)
         {
             _documentSearchRepository = documentSearchRepository;
         }
 
-        public async Task<DocumentSearchResponse> SearchAsync(SearchCommand searchCommand, CancellationToken cancellationToken = default)
+        public async Task<SearchResponse<Document>> SearchAsync(SearchCommand searchCommand, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(searchCommand);
 

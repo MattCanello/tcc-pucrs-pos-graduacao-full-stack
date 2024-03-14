@@ -34,9 +34,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                 .AddScoped<IDocumentSearchRepository, ElasticSearchDocumentSearchRepository>();
 
             services
-                .AddScoped<ISearchApp, ElasticSearchSearchApp>();
-
-            services
                 .AddSingleton<IElasticSearchRepository<Entry>, ElasticSearchRepository<Entry>>()
                 .AddSingleton<IElasticClient>((sp) =>
                 {
