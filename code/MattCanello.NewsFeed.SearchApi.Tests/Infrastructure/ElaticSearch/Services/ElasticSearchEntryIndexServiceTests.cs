@@ -11,9 +11,9 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
 using MattCanello.NewsFeed.SearchApi.Tests.Mocks;
 
-namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Application
+namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Services
 {
-    public sealed class ElasticSearchIndexAppTests
+    public sealed class ElasticSearchEntryIndexServiceTests
     {
         private readonly IElasticModelFactory _defaultElasticModelFactory = new ElasticModelFactory(
             new MapperConfiguration((config) => config.AddProfile<ElasticSearchModelProfile>()).CreateMapper(),
@@ -22,7 +22,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
         [Fact]
         public async Task IndexAsync_GivenNullCommand_ShouldThrowException()
         {
-            var app = new ElasticSearchIndexApp(null!, null!, null!, null!);
+            var app = new ElasticSearchEntryIndexService(null!, null!, null!);
 
             var argumentException = await Assert.ThrowsAsync<ArgumentNullException>(() => app.IndexAsync(null!));
 
@@ -34,11 +34,10 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
         {
             var mockedRepository = new SuccessMockedElasticSearchRepository<Entry>();
 
-            var app = new ElasticSearchIndexApp(
+            var app = new ElasticSearchEntryIndexService(
                 mockedRepository,
                 _defaultElasticModelFactory,
-                new IndexNameBuilder(),
-                new NoEntryIndexPolicy()
+                new IndexNameBuilder()
                 );
 
             var result = await app.IndexAsync(command);
@@ -53,11 +52,10 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Appli
         [Theory, AutoData]
         public async Task IndexAsync_GivenFailedState_ShouldThrowException(IndexEntryCommand command)
         {
-            var app = new ElasticSearchIndexApp(
+            var app = new ElasticSearchEntryIndexService(
                 new FailMockedElasticSearchRepository<Entry>(),
                 _defaultElasticModelFactory,
-                new IndexNameBuilder(),
-                new NoEntryIndexPolicy()
+                new IndexNameBuilder()
                 );
 
             await Assert.ThrowsAsync<IndexException>(() => app.IndexAsync(command));

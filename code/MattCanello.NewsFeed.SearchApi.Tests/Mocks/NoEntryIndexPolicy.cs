@@ -1,12 +1,11 @@
-﻿using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Models;
-using Nest;
+﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
+using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 
 namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
 {
     sealed class NoEntryIndexPolicy : IEntryIndexPolicy
     {
-        public Task EvaluateAsync(Entry entry, IndexName? indexName, CancellationToken cancellationToken = default) 
+        public Task EvaluateAsync(IndexEntryCommand command, CancellationToken cancellationToken = default)
             => Task.CompletedTask;
     }
 }

@@ -1,10 +1,8 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Application;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Models;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Policies;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Profiles;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services;
@@ -23,11 +21,10 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
 
             services
                 .AddScoped<IIndexNameBuilder, IndexNameBuilder>()
-                .AddScoped<IIndexApp, ElasticSearchIndexApp>();
+                .AddScoped<IEntryIndexService, ElasticSearchEntryIndexService>();
 
             services
-                .AddSingleton<IElasticModelFactory, ElasticModelFactory>()
-                .AddSingleton<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
+                .AddSingleton<IElasticModelFactory, ElasticModelFactory>();
 
             services
                 .AddScoped<IDocumentRepository, ElasticSearchDocumentRepository>()

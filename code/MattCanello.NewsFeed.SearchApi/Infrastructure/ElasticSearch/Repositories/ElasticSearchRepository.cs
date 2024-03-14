@@ -2,9 +2,7 @@
 using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Responses;
 using Nest;
-using System.Linq.Expressions;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositories
 {
@@ -16,30 +14,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
         public ElasticSearchRepository(IElasticClient elasticClient)
         {
             _elasticClient = elasticClient;
-        }
-
-        public async Task<FindResponse<TElasticModel>> FindAsync<TValue>(
-            Expression<Func<TElasticModel, TValue>> fieldSelector, TValue value, IndexName indexName, CancellationToken cancellationToken = default)
-        {
-            ArgumentNullException.ThrowIfNull(indexName);
-
-            var response = await _elasticClient.SearchAsync<TElasticModel>((queryBuilder) => queryBuilder
-                .Index(indexName)
-                .Size(1)
-                .Query(q => q.Term(term => term.Value(value).Field(fieldSelector))), cancellationToken);
-
-            var hit = response.Hits?.FirstOrDefault();
-
-            if (hit != null)
-                return new FindResponse<TElasticModel>(hit.Id, hit.Source);
-
-            if (response.IsValid || IsIndexNotFound(response.ServerError))
-                return FindResponse<TElasticModel>.NotFound;
-
-            throw new ElasticSearchException(
-               indexName.Name,
-               response.ServerError?.Error?.Reason,
-               response.OriginalException);
         }
 
         public async Task<string> IndexAsync(TElasticModel elasticModel, IndexName indexName, CancellationToken cancellationToken = default)

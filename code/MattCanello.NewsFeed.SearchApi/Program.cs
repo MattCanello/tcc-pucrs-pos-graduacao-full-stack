@@ -5,6 +5,7 @@ using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.SearchApi.Domain.Application;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+using MattCanello.NewsFeed.SearchApi.Domain.Policies;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Filters;
@@ -60,7 +61,11 @@ namespace MattCanello.NewsFeed.SearchApi
                 .UseElasticSearch();
 
             services
+                .AddScoped<IIndexApp, IndexApp>()
                 .AddScoped<ISearchApp, SearchApp>();
+
+            services
+                .AddSingleton<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
 
             services
                 .Decorate<IIndexApp, IndexAppLogDecorator>()

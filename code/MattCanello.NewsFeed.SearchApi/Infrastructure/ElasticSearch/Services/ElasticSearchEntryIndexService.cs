@@ -5,23 +5,20 @@ using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Models;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
 {
-    public sealed class ElasticSearchIndexApp : IIndexApp
+    public sealed class ElasticSearchEntryIndexService : IEntryIndexService
     {
         private readonly IElasticSearchRepository<Entry> _elasticSearchRepository;
         private readonly IElasticModelFactory _elasticModelFactory;
         private readonly IIndexNameBuilder _indexNameBuilder;
-        private readonly IEntryIndexPolicy _entryIndexPolicy;
 
-        public ElasticSearchIndexApp(
+        public ElasticSearchEntryIndexService(
             IElasticSearchRepository<Entry> elasticSearchRepository, 
             IElasticModelFactory elasticModelFactory, 
-            IIndexNameBuilder indexNameBuilder,
-            IEntryIndexPolicy entryIndexPolicy)
+            IIndexNameBuilder indexNameBuilder)
         {
             _elasticSearchRepository = elasticSearchRepository;
             _elasticModelFactory = elasticModelFactory;
             _indexNameBuilder = indexNameBuilder;
-            _entryIndexPolicy = entryIndexPolicy;
         }
 
         public async Task<string> IndexAsync(IndexEntryCommand command, CancellationToken cancellationToken = default)
@@ -33,8 +30,6 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Services
             var indexName = _indexNameBuilder
                 .WithFeedId(command.FeedId!)
                 .Build();
-
-            await _entryIndexPolicy.EvaluateAsync(elasticModel, indexName, cancellationToken);
 
             return await _elasticSearchRepository
                 .IndexAsync(elasticModel, indexName!, cancellationToken);

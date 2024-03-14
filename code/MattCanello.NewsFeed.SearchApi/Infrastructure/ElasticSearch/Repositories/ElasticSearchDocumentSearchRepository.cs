@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Elasticsearch.Net;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
+using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
@@ -62,5 +64,37 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
             => (!string.IsNullOrEmpty(feedId))
                 ? _indexNameBuilder.WithFeedId(feedId).Build()
                 : _indexNameBuilder.AllEntriesIndices().Build();
+
+        public async Task<FindResponse<Document>> FindByIdAsync(string entryId, string feedId, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(entryId);
+            ArgumentNullException.ThrowIfNull(feedId);
+
+            var indexName = GetIndexName(feedId)!;
+
+            var response = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>((queryBuilder) => queryBuilder
+                .Index(indexName)
+                .Size(1)
+                .Query(q => q.Term(term => term.Value(entryId).Field(entry => entry.EntryId))), cancellationToken);
+
+            var hit = response.Hits?.FirstOrDefault();
+
+            if (hit != null)
+                return new FindResponse<Document>(
+                    hit.Id, 
+                    new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)),
+                    hit.Index);
+
+            if (response.IsValid || IsIndexNotFound(response.ServerError))
+                return FindResponse<Document>.NotFound;
+
+            throw new ElasticSearchException(
+               indexName.Name,
+               response.ServerError?.Error?.Reason,
+               response.OriginalException);
+        }
+
+        private static bool IsIndexNotFound(ServerError? serverError)
+            => serverError?.Status == 404;
     }
 }
