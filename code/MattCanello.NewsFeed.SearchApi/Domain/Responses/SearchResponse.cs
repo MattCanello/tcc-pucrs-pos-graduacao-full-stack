@@ -18,6 +18,6 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Responses
         public Paging? Paging { get; set; }
 
         [JsonIgnore]
-        internal bool IsEmpty => Total == 0;
+        public bool IsEmpty => Total == 0;
     }
 }

@@ -14,6 +14,17 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             _data = data ?? new Dictionary<Key, Entry>();
         }
 
+        public MockedDocumentSearchRepository(params (string, Entry)[] feedIdAndEntries)
+        {
+            _data = new Dictionary<Key, Entry>();
+            
+            if (feedIdAndEntries is null)
+                return;
+
+            foreach (var (feedId, entry) in feedIdAndEntries)
+                this.Add(entry, feedId);
+        }
+
         public Key Add(Entry entry, string feedId)
         {
             ArgumentNullException.ThrowIfNull(entry);
@@ -38,7 +49,26 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
 
         public Task<DocumentSearchResponse> SearchAsync(string? query = null, Paging? paging = null, string? feedId = null, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            IEnumerable<KeyValuePair<Key, Entry>> entries = _data;
+
+            if (!string.IsNullOrEmpty(feedId))
+                entries = _data.Where(kvp => kvp.Key.FeedId == feedId);
+
+            if (!string.IsNullOrEmpty(query))
+                entries = entries
+                    .Where(e => (e.Value.Title ?? string.Empty).Contains(query, StringComparison.OrdinalIgnoreCase));
+
+            int countPrePaging = entries.Count();
+
+            if (paging != null)
+                entries = entries.Skip(paging.Skip).Take(paging.Size);
+
+            return Task.FromResult(new DocumentSearchResponse()
+            {
+                Paging = paging,
+                Total = countPrePaging,
+                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.FeedId, entries.Value)).ToList()
+            });
         }
 
         [Serializable]
