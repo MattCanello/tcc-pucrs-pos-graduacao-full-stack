@@ -1,6 +1,6 @@
-﻿using Elasticsearch.Net;
-using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
+﻿using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 
@@ -46,11 +46,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
             var getDocumentResponse = await _elasticClient.GetAsync<TElasticModel>(request, cancellationToken);
 
-            var isIndexNotFound = IsIndexNotFound(getDocumentResponse.ServerError);
+            var isIndexNotFound = getDocumentResponse.ServerError.IsIndexNotFound();
 
-            var isEntryNotFound = (getDocumentResponse.ApiCall?.HttpStatusCode == 404)
-                || (getDocumentResponse.ServerError is null && !getDocumentResponse.Found)
-                || (getDocumentResponse.Found && getDocumentResponse.Source is null);
+            var isEntryNotFound = getDocumentResponse.IsEntryNotFound();
 
             if (isIndexNotFound || isEntryNotFound)
                 throw new DocumentNotFoundException(id);
@@ -63,8 +61,5 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 getDocumentResponse.ServerError?.Error?.Reason,
                 getDocumentResponse.OriginalException);
         }
-
-        private static bool IsIndexNotFound(ServerError? serverError)
-            => serverError?.Status == 404;
     }
 }

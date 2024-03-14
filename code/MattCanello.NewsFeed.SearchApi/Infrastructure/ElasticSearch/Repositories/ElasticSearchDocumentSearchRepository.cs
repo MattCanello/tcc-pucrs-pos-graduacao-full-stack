@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Elasticsearch.Net;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 using DocumentSearchResponse = MattCanello.NewsFeed.SearchApi.Domain.Responses.SearchResponse<MattCanello.NewsFeed.SearchApi.Domain.Models.Document>;
@@ -85,7 +85,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                     new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)),
                     hit.Index);
 
-            if (response.IsValid || IsIndexNotFound(response.ServerError))
+            if (response.IsValid || response.IsIndexNotFound())
                 return FindResponse<Document>.NotFound;
 
             throw new ElasticSearchException(
@@ -93,8 +93,5 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                response.ServerError?.Error?.Reason,
                response.OriginalException);
         }
-
-        private static bool IsIndexNotFound(ServerError? serverError)
-            => serverError?.Status == 404;
     }
 }
