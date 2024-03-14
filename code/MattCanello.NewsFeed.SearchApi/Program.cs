@@ -32,8 +32,14 @@ namespace MattCanello.NewsFeed.SearchApi
             builder.Services.ConfigureHealthChecks();
 
             builder.AddDefaultTelemetry(
-                metrics => metrics.AddMeter(Metrics.IndexedDocuments.Name),
-                tracing => tracing.AddSource(ActivitySources.IndexApp.Name));
+                metrics => metrics
+                    .AddMeter(Metrics.IndexedDocuments.Name)
+                    .AddMeter(Metrics.SearchCount.Name)
+                    .AddMeter(Metrics.SearchSpeed.Name)
+                    .AddMeter(Metrics.EmptySearchCount.Name),
+                tracing => tracing
+                    .AddSource(ActivitySources.IndexApp.Name)
+                    .AddSource(ActivitySources.SearchApp.Name));
 
             var app = builder.Build();
 
@@ -70,6 +76,12 @@ namespace MattCanello.NewsFeed.SearchApi
             services
                 .Decorate<IIndexApp, IndexAppLogDecorator>()
                 .Decorate<IIndexApp, IndexAppMetricsDecorator>();
+
+            services
+                .Decorate<ISearchApp, SearchAppSearchSpeedMetricsDecorator>()
+                .Decorate<ISearchApp, SearchAppEmptySearchMetricsDecorator>()
+                .Decorate<ISearchApp, SearchAppSearchCountMetricsDecorator>()
+                .Decorate<ISearchApp, SearchAppLogDecorator>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
