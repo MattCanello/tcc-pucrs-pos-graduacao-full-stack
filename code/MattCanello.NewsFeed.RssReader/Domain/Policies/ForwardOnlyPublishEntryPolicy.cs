@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Policies
             if (feed.LastPublishedEntryDate is null)
                 return true;
 
-            return entry.PublishDate >= feed.LastPublishedEntryDate;
+            return entry.PublishDate > feed.LastPublishedEntryDate;
         }
     }
 }

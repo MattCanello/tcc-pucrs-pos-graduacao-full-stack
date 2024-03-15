@@ -64,7 +64,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Policies
         }
 
         [Theory, AutoData]
-        public void ShouldPublish_GivenSameEntryPublishDateAndFeedLastPublishedEntryDateGreater_ShouldReturnTrue(Feed feed, Entry entry)
+        public void ShouldPublish_GivenSameEntryPublishDateAndFeedLastPublishedEntryDateGreater_ShouldReturnFalse(Feed feed, Entry entry)
         {
             feed.LastPublishedEntryDate = entry.PublishDate = new DateTimeOffset(2024, 03, 08, 21, 01, 00, TimeSpan.Zero);
 
@@ -72,7 +72,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Policies
 
             var shouldPublish = policy.ShouldPublish(feed, entry);
 
-            Assert.True(shouldPublish);
+            Assert.False(shouldPublish);
         }
     }
 }
