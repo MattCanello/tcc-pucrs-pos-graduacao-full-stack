@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
+﻿using Elasticsearch.Net;
+using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Builders;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
@@ -39,7 +40,13 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
                     if (!string.IsNullOrEmpty(elasticUrl))
                         return new ElasticClient(new Uri(elasticUrl, UriKind.Absolute));
 
-                    return new ElasticClient();
+                    var cloudId = Environment.GetEnvironmentVariable("ELASTICSEARCH_CLOUDID");
+                    var apiKey = Environment.GetEnvironmentVariable("ELASTICSEARCH_API_KEY");
+
+                    if (!string.IsNullOrEmpty(cloudId))
+                        return new ElasticClient(cloudId, new ApiKeyAuthenticationCredentials(apiKey));
+
+                    throw new InvalidOperationException("Nenhuma configuração de ElasticSearch localizada.");
                 });
         }
     }
