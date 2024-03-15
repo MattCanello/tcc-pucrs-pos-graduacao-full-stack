@@ -10,7 +10,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./MattCanello.NewsFeed.SearchApi/MattCanello.NewsFeed.SearchApi.csproj", "MattCanello.NewsFeed.SearchApi/"]
+COPY ["./code/MattCanello.NewsFeed.SearchApi/MattCanello.NewsFeed.SearchApi.csproj", "MattCanello.NewsFeed.SearchApi/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Dapr/MattCanello.NewsFeed.Cross.Dapr.csproj", "MattCanello.NewsFeed.Cross.Dapr/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Abstractions/MattCanello.NewsFeed.Cross.Abstractions.csproj", "MattCanello.NewsFeed.Cross.Abstractions/"]
 RUN dotnet restore "./MattCanello.NewsFeed.SearchApi/./MattCanello.NewsFeed.SearchApi.csproj"
