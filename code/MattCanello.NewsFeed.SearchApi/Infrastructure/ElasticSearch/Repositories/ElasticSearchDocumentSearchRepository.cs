@@ -40,25 +40,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 }
             }, cancellationToken);
 
-            if (response.IsIndexNotFound())
-                return DocumentSearchResponse.CreateEmpty(paging);
-
-            if (!response.IsValid)
-            {
-                throw new ElasticSearchException(
-                   indexName.Name,
-                   response.ServerError?.Error?.Reason,
-                   response.OriginalException);
-            }
-
-            var entries = response.Hits
-                .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
-                .ToList();
-
-            return new DocumentSearchResponse(
-                entries, 
-                response.Total, 
-                paging);
+            return ProcessSearchResponse(paging, indexName, response);
         }
 
         private IndexName? GetIndexName(string? feedId = null)
@@ -93,6 +75,45 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                indexName.Name,
                response.ServerError?.Error?.Reason,
                response.OriginalException);
+        }
+
+        public async Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(paging);
+
+            var indexName = GetIndexName(feedId)!;
+
+            var response = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>((queryBuilder) => queryBuilder
+                .Index(indexName)
+                .Size(paging.Size)
+                .Skip(paging.Skip)
+                .Sort(q => q.Descending(t => t.PublishDate)), 
+                cancellationToken);
+
+            return ProcessSearchResponse(paging, indexName, response);
+        }
+
+        private DocumentSearchResponse ProcessSearchResponse(Paging paging, IndexName indexName, ISearchResponse<ElasticSearch.Models.Entry> response)
+        {
+            if (response.IsIndexNotFound())
+                return DocumentSearchResponse.CreateEmpty(paging);
+
+            if (!response.IsValid)
+            {
+                throw new ElasticSearchException(
+                   indexName.Name,
+                   response.ServerError?.Error?.Reason,
+                   response.OriginalException);
+            }
+
+            var entries = response.Hits
+                .Select(hit => new Document(hit.Id, hit.Source.FeedId!, _mapper.Map<Entry>(hit.Source)))
+                .ToList();
+
+            return new DocumentSearchResponse(
+                entries,
+                response.Total,
+                paging);
         }
     }
 }

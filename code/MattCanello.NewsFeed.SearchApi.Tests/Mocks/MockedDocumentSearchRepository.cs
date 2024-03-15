@@ -71,6 +71,26 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             });
         }
 
+        public Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, CancellationToken cancellationToken = default)
+        {
+            IEnumerable<KeyValuePair<Key, Entry>> entries = _data.OrderBy(kvp => kvp.Value.PublishDate);
+
+            if (!string.IsNullOrEmpty(feedId))
+                entries = _data.Where(kvp => kvp.Key.FeedId == feedId);
+
+            int countPrePaging = entries.Count();
+
+            if (paging != null)
+                entries = entries.Skip(paging.Skip).Take(paging.Size);
+
+            return Task.FromResult(new DocumentSearchResponse()
+            {
+                Paging = paging,
+                Total = countPrePaging,
+                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.FeedId, entries.Value)).ToList()
+            });
+        }
+
         [Serializable]
         public record class Key(string FeedId, string EntryId)
         {

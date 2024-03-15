@@ -69,7 +69,8 @@ namespace MattCanello.NewsFeed.SearchApi
 
             services
                 .AddScoped<IIndexApp, IndexApp>()
-                .AddScoped<ISearchApp, SearchApp>();
+                .AddScoped<ISearchApp, SearchApp>()
+                .AddScoped<IFeedApp, FeedApp>();
 
             services
                 .AddScoped<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
