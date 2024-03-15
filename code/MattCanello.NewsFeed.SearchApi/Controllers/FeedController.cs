@@ -21,7 +21,8 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Document>))]
         public async Task<IActionResult> GetRecent(
-            [FromQuery, Range(1, 100), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, CancellationToken cancellationToken = default)
+            [FromQuery, Range(1, GetFeedCommand.DefaultSize), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, 
+            CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -41,7 +42,8 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Document>))]
         public async Task<IActionResult> GetRecent(
             [FromRoute, Required] string feedId,
-            [FromQuery, Range(1, 100), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, CancellationToken cancellationToken = default)
+            [FromQuery, Range(1, GetFeedCommand.DefaultSize), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, 
+            CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
