@@ -8,9 +8,10 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Commands
     {
         public const int DefaultSize = 10;
 
-        public GetFeedCommand() { }
+        public GetFeedCommand()
+            : this(null, null, null) { }
 
-        public GetFeedCommand(string? feedId = null, int? size = DefaultSize, int? skip = 0) 
+        public GetFeedCommand(string? feedId = null, int? size = DefaultSize, int? skip = 0)
         {
             FeedId = feedId;
             Size = size ?? DefaultSize;
