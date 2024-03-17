@@ -4,6 +4,7 @@ using MattCanello.NewsFeed.Cross.Telemetry.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -17,6 +18,15 @@ namespace MattCanello.NewsFeed.Cross.Telemetry.Extensions
             Action<MeterProviderBuilder>? configureMetrics = null, 
             Action<TracerProviderBuilder>? configureTracing = null)
         {
+            builder.Services.AddLogging((logBuilder) =>
+            {
+                logBuilder.AddSimpleConsole(opt =>
+                {
+                    opt.TimestampFormat = "[yyyy-MM-dd HH:mm:ss UTC] ";
+                    opt.UseUtcTimestamp = true;
+                });
+            });
+
             var otel = builder.Services.AddOpenTelemetry();
             var isDev = builder.Environment.IsDevelopment();
 
