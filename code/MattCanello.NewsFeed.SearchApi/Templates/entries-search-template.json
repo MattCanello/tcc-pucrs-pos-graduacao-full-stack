@@ -1,0 +1,23 @@
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "query": {
+        "bool": {
+          "should": [
+            { "match": { "title": "{{query_string}}" } },
+            { "match": { "description": "{{query_string}}" } },
+            { "term": { "categories.name": "{{query_string}}" } },
+            { "match": { "thumbnails.credit": "{{query_string}}" } },
+            { "match": { "authors.name": "{{query_string}}" } }
+          ]
+        }
+      },
+      "from": "{{from}}",
+      "size": "{{size}}"
+    },
+    "params": {
+      "query_string": "Query string"
+    }
+  }
+}

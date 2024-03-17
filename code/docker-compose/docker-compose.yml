@@ -10,6 +10,8 @@ services:
       - '6379:6379'
     volumes:
       - 'redis_data:/bitnami/redis/data'
+    networks:
+      - backend
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -22,6 +24,8 @@ services:
     volumes:
       - 'zk_data:/var/lib/zookeeper/data'
       - 'zk_txn_logs:/var/lib/zookeeper/log'
+    networks:
+      - backend
   
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -45,7 +49,73 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     volumes:
       - 'kafka_data:/var/lib/kafka/data'
+    networks:
+      - backend
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - node.name=es01
+      - discovery.type=single-node
+      - cluster.name=news-feed
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    networks:
+      - backend
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+      
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    ports:
+      - 5601:5601
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+    restart: 'unless-stopped'
+    networks:
+      - backend
+
+  elasticsearch-setup-index-template:
+    image: curlimages/curl:8.6.0
+    networks:
+      - backend
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: '../MattCanello.NewsFeed.SearchApi/Templates'
+        target: '/data'
+    restart: on-failure
+    command: >
+      -X PUT -H "Accept:application/json" -H "Content-Type:application/json" --data "@/data/entries-index-template.json" http://elasticsearch:9200/_index_template/entries
+      
+  elasticsearch-setup-search-template:
+    image: curlimages/curl:8.6.0
+    networks:
+      - backend
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: '../MattCanello.NewsFeed.SearchApi/Templates'
+        target: '/data'
+    restart: on-failure
+    command: >
+      -X PUT -H "Accept:application/json" -H "Content-Type:application/json" --data "@/data/entries-search-template.json" http://elasticsearch:9200/_scripts/entries-search
+      
   mattcanello.newsfeed.rssreader:
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
@@ -55,6 +125,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+    networks:
+      - backend
 
   mattcanello.newsfeed.rssreader-dapr:
     image: "daprio/daprd:latest"
@@ -77,6 +149,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+    networks:
+      - backend
       
   mattcanello.newsfeed.cronapi-dapr:
     image: "daprio/daprd:latest"
@@ -87,6 +161,32 @@ services:
       - kafka
     restart: on-failure
     network_mode: "service:mattcanello.newsfeed.cronapi"
+    volumes:
+      - "../dapr/components/:/components"
+
+  mattcanello.newsfeed.searchapi:
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedsearchapi
+    build:
+      context: ..
+      dockerfile: ./MattCanello.NewsFeed.SearchApi/Dockerfile
+    depends_on:
+      - elasticsearch
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - "80"
+    networks:
+      - backend
+      
+  mattcanello.newsfeed.searchapi-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "search-api", "-app-port", "80", "--components-path", "./components" ]
+    depends_on:
+      - mattcanello.newsfeed.searchapi
+      - kafka
+    restart: on-failure
+    network_mode: "service:mattcanello.newsfeed.searchapi"
     volumes:
       - "../dapr/components/:/components"
 
@@ -102,3 +202,13 @@ volumes:
 
   kafka_data:
     driver: local
+
+  elastic-data:
+    driver: local
+
+  kibana-data:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge

@@ -22,3 +22,28 @@ spec:
     value: "rss-reader"
 scopes:
   - rss-reader
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: index
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "rss-entries"
+  - name: clientID
+    value: "search-api"
+  - name: consumerGroup
+    value: "search-api"
+scopes:
+  - search-api

@@ -1,0 +1,78 @@
+{
+  "index_patterns": [ "entries-*" ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1
+    },
+    "mappings": {
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+        "feedId": {
+          "type": "keyword"
+        },
+        "entryId": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text"
+        },
+        "url": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "publishDate": {
+          "type": "date",
+          "format": "strict_date_optional_time_nanos"
+        },
+        "indexDate": {
+          "type": "date",
+          "format": "strict_date_optional_time_nanos"
+        },
+        "categories": {
+          "type": "nested",
+          "include_in_parent": true,
+          "properties": {
+            "name": {
+              "type": "keyword"
+            }
+          }
+        },
+        "thumbnails": {
+          "type": "nested",
+          "include_in_parent": true,
+          "properties": {
+            "url": {
+              "type": "text"
+            },
+            "width": {
+              "type": "integer"
+            },
+            "credit": {
+              "type": "keyword"
+            }
+          }
+        },
+        "authors": {
+          "type": "nested",
+          "include_in_parent": true,
+          "properties": {
+            "name": {
+              "type": "text"
+            },
+            "email": {
+              "type": "keyword"
+            },
+            "url": {
+              "type": "text"
+            }
+          }
+        }
+      }
+    }
+  },
+  "version": 5
+}
