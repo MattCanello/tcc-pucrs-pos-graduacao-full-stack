@@ -84,6 +84,7 @@ namespace MattCanello.NewsFeed.RssReader
 
             services
                 .AddScoped<INewEntryFoundPublisher, DaprNewEntryFoundPublisher>()
+                .Decorate<INewEntryFoundPublisher, EntryFoundPublisherLogDecorator>()
                 .AddSingleton<IEntryFactory, EntryFactory>()
                 .AddScoped<IEntryService, EntryService>();
 
