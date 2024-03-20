@@ -45,6 +45,7 @@ namespace MattCanello.NewsFeed.CronApi
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.MapGet("/", () => Results.LocalRedirect("/swagger"));
             }
 
             app.UseAuthorization();
