@@ -117,6 +117,7 @@ services:
       -X PUT -H "Accept:application/json" -H "Content-Type:application/json" --data "@/data/entries-search-template.json" http://elasticsearch:9200/_scripts/entries-search
       
   mattcanello.newsfeed.rssreader:
+    container_name: rss-reader
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
       context: ..
@@ -129,6 +130,7 @@ services:
       - backend
 
   mattcanello.newsfeed.rssreader-dapr:
+    container_name: rss-reader-dapr
     image: "daprio/daprd:latest"
     command: [ "./daprd", "-app-id", "rss-reader", "-app-port", "80", "--components-path", "./components" ]
     depends_on:
@@ -141,6 +143,7 @@ services:
       - "../dapr/components/:/components"
 
   mattcanello.newsfeed.cronapi:
+    container_name: cron-api
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedcronapi
     build:
       context: ..
@@ -153,6 +156,7 @@ services:
       - backend
       
   mattcanello.newsfeed.cronapi-dapr:
+    container_name: cron-api-dapr
     image: "daprio/daprd:latest"
     command: [ "./daprd", "-app-id", "cron-api", "-app-port", "80", "--components-path", "./components" ]
     depends_on:
@@ -165,6 +169,7 @@ services:
       - "../dapr/components/:/components"
 
   mattcanello.newsfeed.searchapi:
+    container_name: search-api
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedsearchapi
     build:
       context: ..
@@ -180,6 +185,7 @@ services:
       - backend
       
   mattcanello.newsfeed.searchapi-dapr:
+    container_name: search-api-dapr
     image: "daprio/daprd:latest"
     command: [ "./daprd", "-app-id", "search-api", "-app-port", "80", "--components-path", "./components" ]
     depends_on:
