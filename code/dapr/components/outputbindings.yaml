@@ -54,3 +54,23 @@ spec:
     value: "rss-publish-commands"
   - name: clientID
     value: "cron-api"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: indexeddocument
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: direction
+    value: "output"
+  - name: publishTopic
+    value: "indexed-documents"
+  - name: clientID
+    value: "search-api"
+---
