@@ -16,6 +16,8 @@ spec:
     value: "rss-entries"
   - name: clientID
     value: "rss-reader"
+scopes:
+  - rss-reader
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -35,6 +37,8 @@ spec:
     value: "rss-channels"
   - name: clientID
     value: "rss-reader"
+scopes:
+  - rss-reader
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -54,6 +58,8 @@ spec:
     value: "rss-publish-commands"
   - name: clientID
     value: "cron-api"
+scopes:
+  - cron-api
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -73,4 +79,5 @@ spec:
     value: "indexed-documents"
   - name: clientID
     value: "search-api"
----
+scopes:
+  - search-api
