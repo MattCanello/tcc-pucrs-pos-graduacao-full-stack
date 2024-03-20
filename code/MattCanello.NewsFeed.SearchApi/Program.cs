@@ -52,6 +52,7 @@ namespace MattCanello.NewsFeed.SearchApi
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.MapGet("/", () => Results.LocalRedirect("/swagger"));
             }
 
             app.UseAuthorization();
