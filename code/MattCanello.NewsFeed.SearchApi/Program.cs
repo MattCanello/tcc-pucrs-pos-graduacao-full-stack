@@ -4,12 +4,16 @@ using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using MattCanello.NewsFeed.SearchApi.Domain.Application;
+using MattCanello.NewsFeed.SearchApi.Domain.Decorators;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Policies;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.IndexApp;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.SearchApp;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.SearchApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics.CodeAnalysis;
@@ -48,6 +52,7 @@ namespace MattCanello.NewsFeed.SearchApi
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.MapGet("/", () => Results.LocalRedirect("/swagger"));
             }
 
             app.UseAuthorization();
@@ -77,13 +82,18 @@ namespace MattCanello.NewsFeed.SearchApi
 
             services
                 .Decorate<IIndexApp, IndexAppLogDecorator>()
-                .Decorate<IIndexApp, IndexAppMetricsDecorator>();
+                .Decorate<IIndexApp, IndexAppMetricsDecorator>()
+                .Decorate<IIndexApp, IndexAppEventPublisherDecorator>();
 
             services
                 .Decorate<ISearchApp, SearchAppSearchSpeedMetricsDecorator>()
                 .Decorate<ISearchApp, SearchAppEmptySearchMetricsDecorator>()
                 .Decorate<ISearchApp, SearchAppSearchCountMetricsDecorator>()
                 .Decorate<ISearchApp, SearchAppLogDecorator>();
+
+            services
+                .AddScoped<IEventFactory, EventFactory>()
+                .AddScoped<IIndexedDocumentPublisher, DaprIndexedDocumentPublisher>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)

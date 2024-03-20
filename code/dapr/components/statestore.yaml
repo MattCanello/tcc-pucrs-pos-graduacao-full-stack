@@ -12,6 +12,8 @@ spec:
     value: ""
   - name: actorStateStore
     value: "true"
+scopes:
+  - rss-reader
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -27,3 +29,5 @@ spec:
     value: ""
   - name: actorStateStore
     value: "true"
+scopes:
+  - cron-api
