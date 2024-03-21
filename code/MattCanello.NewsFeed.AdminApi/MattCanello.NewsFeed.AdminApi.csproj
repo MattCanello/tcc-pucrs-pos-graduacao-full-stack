@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Dapr\MattCanello.NewsFeed.Cross.Dapr.csproj" />
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj" />
+  </ItemGroup>
+
 </Project>
