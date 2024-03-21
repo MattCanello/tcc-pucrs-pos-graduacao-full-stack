@@ -43,7 +43,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Search", "Search", "{53E0D6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.SearchApi", "MattCanello.NewsFeed.SearchApi\MattCanello.NewsFeed.SearchApi.csproj", "{59E04BDA-7AAB-46FD-A3CD-66618412DB5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.SearchApi.Tests", "MattCanello.NewsFeed.SearchApi.Tests\MattCanello.NewsFeed.SearchApi.Tests.csproj", "{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.SearchApi.Tests", "MattCanello.NewsFeed.SearchApi.Tests\MattCanello.NewsFeed.SearchApi.Tests.csproj", "{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{46420F95-D963-49EF-A2CA-71B3AFE850CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.AdminApi", "MattCanello.NewsFeed.AdminApi\MattCanello.NewsFeed.AdminApi.csproj", "{55AC14DB-F0C0-41B2-9C9D-81D9253752C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,10 @@ Global
 		{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55AC14DB-F0C0-41B2-9C9D-81D9253752C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AC14DB-F0C0-41B2-9C9D-81D9253752C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AC14DB-F0C0-41B2-9C9D-81D9253752C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AC14DB-F0C0-41B2-9C9D-81D9253752C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +124,7 @@ Global
 		{826ECA9F-9835-4277-B3CB-F0C108E9D633} = {F56011FB-A028-4A2D-B272-325E080268F7}
 		{59E04BDA-7AAB-46FD-A3CD-66618412DB5E} = {53E0D6CC-F0A1-4D31-847B-B4420CB32156}
 		{90DAC69A-3E4F-4CFF-9C23-51E98BA6AD21} = {53E0D6CC-F0A1-4D31-847B-B4420CB32156}
+		{55AC14DB-F0C0-41B2-9C9D-81D9253752C3} = {46420F95-D963-49EF-A2CA-71B3AFE850CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}
