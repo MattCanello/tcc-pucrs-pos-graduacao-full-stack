@@ -1,8 +1,8 @@
 ﻿using Nest;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
+namespace MattCanello.NewsFeed.Cross.ElasticSearch.Extensions
 {
-    static class SearchResponseExtensions
+    public static class SearchResponseExtensions
     {
         public static bool IsIndexNotFound<TDocument>(this ISearchResponse<TDocument> response)
             where TDocument : class

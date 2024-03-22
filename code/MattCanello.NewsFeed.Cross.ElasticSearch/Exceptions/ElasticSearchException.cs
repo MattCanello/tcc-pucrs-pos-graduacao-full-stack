@@ -1,4 +1,4 @@
-﻿namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions
+﻿namespace MattCanello.NewsFeed.Cross.ElasticSearch.Exceptions
 {
     [Serializable]
     public class ElasticSearchException : ApplicationException

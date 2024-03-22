@@ -1,10 +1,10 @@
 ﻿using Nest;
 
-namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions
+namespace MattCanello.NewsFeed.Cross.ElasticSearch.Extensions
 {
-    static class GetResponseExtensions
+    public static class GetResponseExtensions
     {
-        public static bool IsEntryNotFound<TDocument>(this GetResponse<TDocument> response)
+        public static bool IsDocumentNotFound<TDocument>(this GetResponse<TDocument> response)
             where TDocument : class
         {
             var isEntryNotFound = response.IsNotFound()

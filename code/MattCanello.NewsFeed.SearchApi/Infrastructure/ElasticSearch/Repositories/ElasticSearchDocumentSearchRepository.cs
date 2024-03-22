@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using MattCanello.NewsFeed.Cross.ElasticSearch.Exceptions;
+using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 using DocumentSearchResponse = MattCanello.NewsFeed.SearchApi.Domain.Responses.SearchResponse<MattCanello.NewsFeed.SearchApi.Domain.Models.Document>;

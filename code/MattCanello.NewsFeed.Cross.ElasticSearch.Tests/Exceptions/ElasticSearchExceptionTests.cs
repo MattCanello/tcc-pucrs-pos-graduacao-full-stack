@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
+using MattCanello.NewsFeed.Cross.ElasticSearch.Exceptions;
 
-namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Exceptions
+namespace MattCanello.NewsFeed.Cross.ElasticSearch.Tests.Exceptions
 {
     public sealed class ElasticSearchExceptionTests
     {
