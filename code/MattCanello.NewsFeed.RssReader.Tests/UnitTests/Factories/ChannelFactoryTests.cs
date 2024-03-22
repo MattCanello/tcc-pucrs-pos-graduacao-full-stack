@@ -10,12 +10,11 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
         [Fact]
         public void FromRSS_UsingTheGuardianUkSample_ShouldReturnExpectedData()
         {
-            const string feedId = "the-guardian-uk";
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
             var factory = new ChannelFactory();
-            var channel = factory.FromRSS(feedId, feed);
+            var channel = factory.FromRSS(feed);
 
             Assert.NotNull(channel);
 
@@ -25,7 +24,6 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
             Assert.Equal("The Guardian", channel.Name);
             Assert.Equal("https://www.theguardian.com/uk", channel.Url);
             Assert.Equal("https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png", channel.ImageUrl);
-            Assert.Equal(feedId, channel.FeedId);
         }
     }
 }

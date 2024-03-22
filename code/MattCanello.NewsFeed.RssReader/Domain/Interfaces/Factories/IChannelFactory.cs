@@ -5,6 +5,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories
 {
     public interface IChannelFactory
     {
-        Channel FromRSS(string feedId, SyndicationFeed syndicationFeed);
+        Channel FromRSS(SyndicationFeed syndicationFeed);
     }
 }

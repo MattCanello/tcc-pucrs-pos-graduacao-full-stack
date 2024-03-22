@@ -5,7 +5,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Models
     [Serializable]
     public sealed class Channel
     {
-        public string? FeedId { get; set; }
         public string? Name { get; set; }
 
         [DataType(DataType.Url)]

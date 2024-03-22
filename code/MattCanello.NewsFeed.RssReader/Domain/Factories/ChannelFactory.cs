@@ -6,7 +6,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 {
     public sealed class ChannelFactory : IChannelFactory
     {
-        public Channel FromRSS(string feedId, SyndicationFeed syndicationFeed)
+        public Channel FromRSS(SyndicationFeed syndicationFeed)
         {
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
@@ -16,7 +16,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 
             return new Channel()
             {
-                FeedId = feedId,
                 Copyright = syndicationFeed.Copyright?.Text,
                 Description = syndicationFeed.Description?.Text,
                 Language = syndicationFeed.Language,
