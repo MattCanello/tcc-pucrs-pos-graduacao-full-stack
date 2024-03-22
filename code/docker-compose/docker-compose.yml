@@ -202,8 +202,11 @@ services:
     build:
       context: ..
       dockerfile: ./MattCanello.NewsFeed.AdminApi/Dockerfile
+    depends_on:
+      - elasticsearch
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "80"
     networks:

@@ -1,5 +1,13 @@
+using MattCanello.NewsFeed.AdminApi.Domain.Application;
+using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
+using MattCanello.NewsFeed.AdminApi.Domain.Services;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Decorators;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositories;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
+using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -43,6 +51,31 @@ namespace MattCanello.NewsFeed.AdminApi
 
         private static void AddAppServices(this IServiceCollection services)
         {
+            services
+                .AddScoped<ICreateFeedApp, CreateFeedApp>();
+
+            services
+                .AddScoped<IChannelService, ChannelService>();
+
+            services
+                .AddElasticSearch()
+                .AddMemoryCache();
+
+            services
+                .AddScoped<IElasticSearchManagementRepository, ElasticSearchRepository>()
+                .AddScoped<IElasticSearchRepository, ElasticSearchRepository>()
+                .AddScoped<IFeedRepository, ElasticFeedRepository>()
+                .AddScoped<IChannelRepository, ElasticChannelRepository>();
+
+            services
+                .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>();
+
+            services
+                .AddAutoMapper(config =>
+                {
+                    config.AddProfile<FeedProfile>();
+                    config.AddProfile<ChannelProfile>();
+                });
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)

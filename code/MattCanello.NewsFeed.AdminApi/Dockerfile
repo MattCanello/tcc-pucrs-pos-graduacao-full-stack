@@ -13,6 +13,7 @@ WORKDIR /src
 COPY ["./code/MattCanello.NewsFeed.AdminApi/MattCanello.NewsFeed.AdminApi.csproj", "MattCanello.NewsFeed.AdminApi/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Dapr/MattCanello.NewsFeed.Cross.Dapr.csproj", "MattCanello.NewsFeed.Cross.Dapr/"]
 COPY ["./code/MattCanello.NewsFeed.Cross.Telemetry/MattCanello.NewsFeed.Cross.Telemetry.csproj", "MattCanello.NewsFeed.Cross.Telemetry/"]
+COPY ["./code/MattCanello.NewsFeed.Cross.ElasticSearch/MattCanello.NewsFeed.Cross.ElasticSearch.csproj", "MattCanello.NewsFeed.Cross.ElasticSearch/"]
 RUN dotnet restore "./MattCanello.NewsFeed.AdminApi/./MattCanello.NewsFeed.AdminApi.csproj"
 COPY "./code" .
 WORKDIR "/src/MattCanello.NewsFeed.AdminApi"
