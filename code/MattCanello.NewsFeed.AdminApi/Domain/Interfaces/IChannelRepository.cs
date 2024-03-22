@@ -7,5 +7,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
         Task<Channel?> GetByIdAsync(string channelId, CancellationToken cancellationToken = default);
 
         Task<Channel> CreateAsync(Channel channel, CancellationToken cancellationToken = default);
+
+        Task<Channel> UpdateAsync(Channel channel, CancellationToken cancellationToken = default);
     }
 }

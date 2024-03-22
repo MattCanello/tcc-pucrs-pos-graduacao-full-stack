@@ -52,7 +52,8 @@ namespace MattCanello.NewsFeed.AdminApi
         private static void AddAppServices(this IServiceCollection services)
         {
             services
-                .AddScoped<ICreateFeedApp, CreateFeedApp>();
+                .AddScoped<ICreateFeedApp, CreateFeedApp>()
+                .AddScoped<IUpdateChannelApp, UpdateChannelApp>();
 
             services
                 .AddScoped<IChannelService, ChannelService>();

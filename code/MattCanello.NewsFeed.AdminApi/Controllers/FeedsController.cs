@@ -6,14 +6,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.AdminApi.Controllers
 {
-    [Route("api/feed")]
+    [Route("feeds")]
     [ApiController]
-    public class FeedController : ControllerBase
+    public class FeedsController : ControllerBase
     {
         private readonly ICreateFeedApp _createFeedApp;
         private readonly IFeedRepository _feedRepository;
 
-        public FeedController(ICreateFeedApp createFeedApp, IFeedRepository feedRepository)
+        public FeedsController(ICreateFeedApp createFeedApp, IFeedRepository feedRepository)
         {
             _createFeedApp = createFeedApp;
             _feedRepository = feedRepository;

@@ -33,6 +33,19 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             return channel;
         }
 
+        public async Task<Channel> UpdateAsync(Channel channel, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(channel);
+
+            var elasticModel = _mapper.Map<ChannelElasticModel>(channel);
+
+            await EnsureIndexExistsAsync(cancellationToken);
+
+            await _elasticSearchRepository.IndexAsync(channel.ChannelId, elasticModel, ChannelsIndexName, cancellationToken);
+
+            return channel;
+        }
+
         public async Task<Channel?> GetByIdAsync(string channelId, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(channelId);
