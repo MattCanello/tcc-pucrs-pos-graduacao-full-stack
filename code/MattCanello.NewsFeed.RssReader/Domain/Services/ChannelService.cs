@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
-            var channel = _channelFactory.FromRSS(syndicationFeed);
+            var channel = _channelFactory.FromRSS(feedId, syndicationFeed);
 
             if (channel is null)
                 return;

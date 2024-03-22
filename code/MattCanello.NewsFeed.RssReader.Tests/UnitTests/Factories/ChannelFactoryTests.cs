@@ -10,22 +10,22 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
         [Fact]
         public void FromRSS_UsingTheGuardianUkSample_ShouldReturnExpectedData()
         {
+            const string feedId = "the-guardian-uk";
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
             var factory = new ChannelFactory();
-            var publisher = factory.FromRSS(feed);
+            var channel = factory.FromRSS(feedId, feed);
 
-            Assert.NotNull(publisher);
+            Assert.NotNull(channel);
 
-            Assert.Equal("Guardian News and Media Limited or its affiliated companies. All rights reserved. 2024", publisher.Copyright);
-            Assert.Equal("Latest news, sport, business, comment, analysis and reviews from the Guardian, the world's leading liberal voice", publisher.Description);
-            Assert.Equal("en-gb", publisher.Language);
-            Assert.Equal("The Guardian", publisher.Name);
-            Assert.Equal("https://www.theguardian.com/uk", publisher.Url);
-
-            Assert.NotNull(publisher.Image);
-            Assert.Equal("https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png", publisher.Image.Url);
+            Assert.Equal("Guardian News and Media Limited or its affiliated companies. All rights reserved. 2024", channel.Copyright);
+            Assert.Equal("Latest news, sport, business, comment, analysis and reviews from the Guardian, the world's leading liberal voice", channel.Description);
+            Assert.Equal("en-gb", channel.Language);
+            Assert.Equal("The Guardian", channel.Name);
+            Assert.Equal("https://www.theguardian.com/uk", channel.Url);
+            Assert.Equal("https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png", channel.ImageUrl);
+            Assert.Equal(feedId, channel.FeedId);
         }
     }
 }
