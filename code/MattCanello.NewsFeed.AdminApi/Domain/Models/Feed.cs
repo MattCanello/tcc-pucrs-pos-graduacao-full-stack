@@ -12,8 +12,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Models
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        [Required]
-        public Channel Channel { get; set; }
+        public Channel? Channel { get; set; }
 
         [Required]
         public DateTimeOffset CreatedAt { get; set; }

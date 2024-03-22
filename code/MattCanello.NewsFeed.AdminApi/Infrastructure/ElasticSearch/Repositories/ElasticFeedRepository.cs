@@ -11,12 +11,18 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
         const string FeedsIndexName = "feeds";
         private readonly IElasticSearchRepository _elasticSearchRepository;
         private readonly IElasticSearchManagementRepository _elasticSearchManagementRepository;
+        private readonly IChannelRepository _channelRepository;
         private readonly IMapper _mapper;
 
-        public ElasticFeedRepository(IElasticSearchRepository elasticSearchRepository, IElasticSearchManagementRepository elasticSearchManagementRepository, IMapper mapper)
+        public ElasticFeedRepository(
+            IElasticSearchRepository elasticSearchRepository,
+            IElasticSearchManagementRepository elasticSearchManagementRepository,
+            IChannelRepository channelRepository,
+            IMapper mapper)
         {
             _elasticSearchRepository = elasticSearchRepository;
             _elasticSearchManagementRepository = elasticSearchManagementRepository;
+            _channelRepository = channelRepository;
             _mapper = mapper;
         }
 
@@ -37,9 +43,12 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
-            var elasticModel = await _elasticSearchRepository.GetByIdAsync<Feed>(feedId, FeedsIndexName, cancellationToken);
+            var elasticModel = await _elasticSearchRepository.GetByIdAsync<FeedElasticModel>(feedId, FeedsIndexName, cancellationToken);
 
             var feed = _mapper.Map<Feed>(elasticModel);
+
+            if (feed != null && !string.IsNullOrEmpty(elasticModel?.ChannelId))
+                feed.Channel = await _channelRepository.GetByIdAsync(elasticModel.ChannelId, cancellationToken);
 
             return feed;
         }

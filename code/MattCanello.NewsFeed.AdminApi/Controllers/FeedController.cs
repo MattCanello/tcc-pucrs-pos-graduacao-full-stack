@@ -39,8 +39,9 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         }
 
         [HttpPost("")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
         public async Task<IActionResult> Create([FromBody] CreateFeedCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
