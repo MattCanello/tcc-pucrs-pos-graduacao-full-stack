@@ -9,6 +9,13 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Filters
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
+            if (context.Exception is FeedNotFoundException)
+            {
+                context.Exception = null;
+                context.Result = new NotFoundResult();
+                return;
+            }
+
             if (context.Exception is FeedAlreadyExistingException ex)
             {
                 context.Exception = null;
