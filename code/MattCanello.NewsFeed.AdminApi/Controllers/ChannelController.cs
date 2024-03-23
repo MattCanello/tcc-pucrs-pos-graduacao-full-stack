@@ -7,11 +7,11 @@ using System.ComponentModel.DataAnnotations;
 namespace MattCanello.NewsFeed.AdminApi.Controllers
 {
     [ApiController]
-    public class ChannelsController : ControllerBase
+    public class ChannelController : ControllerBase
     {
         private readonly IUpdateChannelApp _updateChannelApp;
 
-        public ChannelsController(IUpdateChannelApp updateChannelApp)
+        public ChannelController(IUpdateChannelApp updateChannelApp)
         {
             _updateChannelApp = updateChannelApp;
         }
