@@ -81,3 +81,24 @@ spec:
     value: "search-api"
 scopes:
   - search-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: feedcreated
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: direction
+    value: "output"
+  - name: publishTopic
+    value: "created-feeds"
+  - name: clientID
+    value: "admin-api"
+scopes:
+  - admin-api

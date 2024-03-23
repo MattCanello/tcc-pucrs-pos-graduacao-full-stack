@@ -1,10 +1,14 @@
 using MattCanello.NewsFeed.AdminApi.Domain.Application;
+using MattCanello.NewsFeed.AdminApi.Domain.Decorators;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Services;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Decorators;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositories;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Filters;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
@@ -69,7 +73,12 @@ namespace MattCanello.NewsFeed.AdminApi
                 .AddScoped<IChannelRepository, ElasticChannelRepository>();
 
             services
-                .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>();
+                .AddScoped<IEventFactory, EventFactory>()
+                .AddScoped<IEventPublisher, DaprEventPublisher>();
+
+            services
+                .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>()
+                .Decorate<ICreateFeedApp, CreateFeedAppPublishEventDecorator>();
 
             services
                 .AddAutoMapper(config =>
