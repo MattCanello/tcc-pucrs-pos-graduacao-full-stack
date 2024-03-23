@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Decorators
             _memoryCache = memoryCache;
         }
 
-        private static string GetKey(string indexName) 
+        public static string GetKey(string indexName) 
             => $"idx_{indexName}_exists";
 
         public async Task EnsureIndexExistsAsync(string indexName, Func<CreateIndexDescriptor, ICreateIndexRequest> selector, CancellationToken cancellationToken = default)

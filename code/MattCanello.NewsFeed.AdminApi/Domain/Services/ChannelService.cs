@@ -37,7 +37,8 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             ArgumentNullException.ThrowIfNull(channelId);
             ArgumentNullException.ThrowIfNull(channelData);
 
-            var channel = await _channelRepository.GetByIdAsync(channelId, cancellationToken) ?? new Channel { ChannelId = channelId };
+            var channel = await _channelRepository.GetByIdAsync(channelId, cancellationToken) 
+                ?? new Channel { ChannelId = channelId };
 
             channel = _mapper.Map(channelData, channel);
 

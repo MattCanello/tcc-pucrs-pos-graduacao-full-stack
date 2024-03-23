@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
 
         public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(nameof(createFeedCommand));
+            ArgumentNullException.ThrowIfNull(createFeedCommand);
 
             await CheckIfFeedExistsAsync(createFeedCommand.FeedId!, cancellationToken);
 
