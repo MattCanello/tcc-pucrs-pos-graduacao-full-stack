@@ -2,6 +2,7 @@ using MattCanello.NewsFeed.AdminApi.Domain.Application;
 using MattCanello.NewsFeed.AdminApi.Domain.Decorators;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Services;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Decorators;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositories;
@@ -15,6 +16,8 @@ using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Nest;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
@@ -34,6 +37,8 @@ namespace MattCanello.NewsFeed.AdminApi
             builder.Services.AddDapr();
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
+
+            builder.AddDefaultTelemetry();
 
             var app = builder.Build();
 
@@ -77,8 +82,14 @@ namespace MattCanello.NewsFeed.AdminApi
                 .AddScoped<IEventPublisher, DaprEventPublisher>();
 
             services
-                .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>()
-                .Decorate<ICreateFeedApp, CreateFeedAppPublishEventDecorator>();
+                .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>();
+
+            services
+                .Decorate<ICreateFeedApp, CreateFeedAppPublishEventDecorator>()
+                .Decorate<ICreateFeedApp, CreateFeedAppLogDecorator>();
+
+            services
+                .Decorate<IUpdateChannelApp, UpdateChannelAppLogDecorator>();
 
             services
                 .AddAutoMapper(config =>
