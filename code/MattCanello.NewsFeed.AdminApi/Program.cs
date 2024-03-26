@@ -11,13 +11,12 @@ using MattCanello.NewsFeed.AdminApi.Infrastructure.Factories;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.Telemetry;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Nest;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
@@ -38,7 +37,8 @@ namespace MattCanello.NewsFeed.AdminApi
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
 
-            builder.AddDefaultTelemetry();
+            builder.AddDefaultTelemetry(
+                configureTracing: (builder) => builder.AddSource(ActivitySources.CreateFeedApp.Name, ActivitySources.UpdateChannelApp.Name));
 
             var app = builder.Build();
 
@@ -86,10 +86,12 @@ namespace MattCanello.NewsFeed.AdminApi
 
             services
                 .Decorate<ICreateFeedApp, CreateFeedAppPublishEventDecorator>()
-                .Decorate<ICreateFeedApp, CreateFeedAppLogDecorator>();
+                .Decorate<ICreateFeedApp, CreateFeedAppLogDecorator>()
+                .Decorate<ICreateFeedApp, CreateFeedAppMetricsDecorator>();
 
             services
-                .Decorate<IUpdateChannelApp, UpdateChannelAppLogDecorator>();
+                .Decorate<IUpdateChannelApp, UpdateChannelAppLogDecorator>()
+                .Decorate<IUpdateChannelApp, UpdateChannelAppMetricsDecorator>();
 
             services
                 .AddAutoMapper(config =>
