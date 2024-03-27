@@ -47,71 +47,71 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNullChannelId_ShouldThrowException(ChannelData channelData)
+        public async Task AppendDataToChannelAsync_GivenNullChannelId_ShouldThrowException(RssData data)
         {
             var service = new ChannelService(null!, null!);
 
-            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.AppendDataToChannelAsync(null!, channelData));
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.AppendDataToChannelAsync(null!, data));
 
             Assert.Equal("channelId", exception.ParamName);
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNullChannelData_ShouldThrowException(string channelId)
+        public async Task AppendDataToChannelAsync_GivenNullData_ShouldThrowException(string channelId)
         {
             var service = new ChannelService(null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.AppendDataToChannelAsync(channelId, null!));
 
-            Assert.Equal("channelData", exception.ParamName);
+            Assert.Equal("data", exception.ParamName);
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, ChannelData channelData)
+        public async Task AppendDataToChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, RssData data)
         {
             var service = new ChannelService(
                 new MockedChannelRepository(),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
-            var channel = await service.AppendDataToChannelAsync(channelId, channelData);
+            var channel = await service.AppendDataToChannelAsync(channelId, data);
 
             Assert.NotNull(channel);
             Assert.Equal(channelId, channel.ChannelId);
-            Assert.Equal(channelData.Name, channel.Name);
-            Assert.Equal(channelData.Language, channel.Language);
-            Assert.Equal(channelData.ImageUrl, channel.ImageUrl);
-            Assert.Equal(channelData.Url, channel.Url);
-            Assert.Equal(channelData.Copyright, channel.Copyright);
+            Assert.Equal(data.Name, channel.Name);
+            Assert.Equal(data.Language, channel.Language);
+            Assert.Equal(data.ImageUrl, channel.ImageUrl);
+            Assert.Equal(data.Url, channel.Url);
+            Assert.Equal(data.Copyright, channel.Copyright);
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenExistingChannel_ShouldUpdateChannel(string channelId, ChannelData channelData)
+        public async Task AppendDataToChannelAsync_GivenExistingChannel_ShouldUpdateChannel(string channelId, RssData data)
         {
             var mapping = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
 
             var repository = new MockedChannelRepository(new Channel()
             {
                 ChannelId = channelId,
-                Copyright = channelData.Copyright,
-                ImageUrl = channelData.ImageUrl,
-                Language = channelData.Language,
-                Name = channelData.Name,
-                Url = channelData.Url
+                Copyright = data.Copyright,
+                ImageUrl = data.ImageUrl,
+                Language = data.Language,
+                Name = data.Name,
+                Url = data.Url
             });
 
             var service = new ChannelService(
                 repository,
                 mapping);
 
-            var channel = await service.AppendDataToChannelAsync(channelId, channelData);
+            var channel = await service.AppendDataToChannelAsync(channelId, data);
 
             Assert.NotNull(channel);
             Assert.Equal(channelId, channel.ChannelId);
-            Assert.Equal(channelData.Name, channel.Name);
-            Assert.Equal(channelData.Language, channel.Language);
-            Assert.Equal(channelData.ImageUrl, channel.ImageUrl);
-            Assert.Equal(channelData.Url, channel.Url);
-            Assert.Equal(channelData.Copyright, channel.Copyright);
+            Assert.Equal(data.Name, channel.Name);
+            Assert.Equal(data.Language, channel.Language);
+            Assert.Equal(data.ImageUrl, channel.ImageUrl);
+            Assert.Equal(data.Url, channel.Url);
+            Assert.Equal(data.Copyright, channel.Copyright);
             Assert.Equal(1, repository.Count);
         }
     }

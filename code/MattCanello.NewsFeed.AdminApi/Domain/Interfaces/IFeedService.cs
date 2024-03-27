@@ -5,6 +5,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
 {
     public interface IFeedService
     {
-        Task<Feed> UpdateFeedAsync(string feedId, ChannelData channelData, CancellationToken cancellationToken = default);
+        Task<Feed> UpdateFeedAsync(string feedId, RssData data, CancellationToken cancellationToken = default);
     }
 }

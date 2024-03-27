@@ -18,6 +18,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Commands
         [DataType(DataType.Url)]
         public string? Url { get; set; }
 
-        public ChannelData? Channel { get; set; }
+        public RssData? Data { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task UpdateFeedAsync_GivenUpdatedDataOnEmptyFeed_ShouldUpdateFeed(string channelId, string feedUrl, UpdateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-            var feed = new Feed() { FeedId = command.FeedId!, Url = feedUrl, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
+            var feed = new Feed() { FeedId = command.FeedId!, Url = feedUrl, Channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId } };
 
             var app = new UpdateFeedApp(
                MockedChannelServiceBuilder.CreateInstance(),
@@ -46,11 +46,11 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             var updatedFeed = await app.UpdateFeedAsync(command);
 
             Assert.NotNull(updatedFeed);
-            Assert.NotNull(command.Channel);
-            Assert.Equal(command.Channel.Name, updatedFeed.Name);
-            Assert.Equal(command.Channel.Language, updatedFeed.Language);
-            Assert.Equal(command.Channel.Copyright, updatedFeed.Copyright);
-            Assert.Equal(command.Channel.ImageUrl, updatedFeed.ImageUrl);
+            Assert.NotNull(command.Data);
+            Assert.Equal(command.Data.Name, updatedFeed.Name);
+            Assert.Equal(command.Data.Language, updatedFeed.Language);
+            Assert.Equal(command.Data.Copyright, updatedFeed.Copyright);
+            Assert.Equal(command.Data.ImageUrl, updatedFeed.ImageUrl);
             Assert.Equal(feedUrl, updatedFeed.Url);
         }
 
@@ -77,7 +77,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task UpdateFeedAsync_GivenNewChannel_ShouldCreateChannel(string channelId, UpdateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-            var feed = new Feed() { FeedId = command.FeedId!, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
+            var feed = new Feed() { FeedId = command.FeedId!, Channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId } };
 
             var app = new UpdateFeedApp(
                MockedChannelServiceBuilder.CreateInstance(),
@@ -91,12 +91,12 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.NotNull(feed.Channel);
             Assert.Equal(feed.Channel.ChannelId, updatedFeed.Channel.ChannelId);
 
-            Assert.NotNull(command.Channel);
-            Assert.Equal(command.Channel.Name, updatedFeed.Channel.Name);
-            Assert.Equal(command.Channel.Language, updatedFeed.Channel.Language);
-            Assert.Equal(command.Channel.ImageUrl, updatedFeed.Channel.ImageUrl);
-            Assert.Equal(command.Channel.Url, updatedFeed.Channel.Url);
-            Assert.Equal(command.Channel.Copyright, updatedFeed.Channel.Copyright);
+            Assert.NotNull(command.Data);
+            Assert.Equal(command.Data.Name, updatedFeed.Channel.Name);
+            Assert.Equal(command.Data.Language, updatedFeed.Channel.Language);
+            Assert.Equal(command.Data.ImageUrl, updatedFeed.Channel.ImageUrl);
+            Assert.Equal(command.Data.Url, updatedFeed.Channel.Url);
+            Assert.Equal(command.Data.Copyright, updatedFeed.Channel.Copyright);
         }
 
         [Theory,AutoData]
@@ -117,19 +117,19 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.NotNull(feed.Channel);
             Assert.Equal(feed.Channel.ChannelId, updatedFeed.Channel.ChannelId);
 
-            Assert.NotNull(command.Channel);
-            Assert.Equal(command.Channel.Name, updatedFeed.Channel.Name);
-            Assert.Equal(command.Channel.Language, updatedFeed.Channel.Language);
-            Assert.Equal(command.Channel.ImageUrl, updatedFeed.Channel.ImageUrl);
-            Assert.Equal(command.Channel.Url, updatedFeed.Channel.Url);
-            Assert.Equal(command.Channel.Copyright, updatedFeed.Channel.Copyright);
+            Assert.NotNull(command.Data);
+            Assert.Equal(command.Data.Name, updatedFeed.Channel.Name);
+            Assert.Equal(command.Data.Language, updatedFeed.Channel.Language);
+            Assert.Equal(command.Data.ImageUrl, updatedFeed.Channel.ImageUrl);
+            Assert.Equal(command.Data.Url, updatedFeed.Channel.Url);
+            Assert.Equal(command.Data.Copyright, updatedFeed.Channel.Copyright);
         }
 
         [Theory, AutoData]
         public async Task UpdateFeedAsync_GivenExistingFilledChannel_ShouldNotUpdateChannel(string channelId, UpdateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-            var channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId };
+            var channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId };
             var feed = new Feed() { FeedId = command.FeedId!, Channel = channel };
             var channelRepository = new MockedChannelRepository(channel);
 

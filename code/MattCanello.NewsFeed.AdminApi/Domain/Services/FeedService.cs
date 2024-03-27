@@ -17,15 +17,15 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             _mapper = mapper;
         }
 
-        public async Task<Feed> UpdateFeedAsync(string feedId, ChannelData channelData, CancellationToken cancellationToken = default)
+        public async Task<Feed> UpdateFeedAsync(string feedId, RssData data, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
-            ArgumentNullException.ThrowIfNull(channelData);
+            ArgumentNullException.ThrowIfNull(data);
 
             var feed = await _feedRepository.GetByIdAsync(feedId, cancellationToken)
                 ?? throw new FeedNotFoundException(feedId);
 
-            feed = _mapper.Map(channelData, feed);
+            feed = _mapper.Map(data, feed);
 
             feed = await _feedRepository.UpdateAsync(feed, cancellationToken);
 

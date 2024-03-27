@@ -19,10 +19,10 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
         {
             ArgumentNullException.ThrowIfNull(command);
 
-            var feed = await _feedService.UpdateFeedAsync(command.FeedId!, command.Channel!, cancellationToken);
+            var feed = await _feedService.UpdateFeedAsync(command.FeedId!, command.Data!, cancellationToken);
 
             if (feed.Channel != null)
-                feed.Channel = await _channelService.AppendDataToChannelAsync(feed.Channel.ChannelId, command.Channel!, cancellationToken);
+                feed.Channel = await _channelService.AppendDataToChannelAsync(feed.Channel.ChannelId, command.Data!, cancellationToken);
 
             return feed;
         }
