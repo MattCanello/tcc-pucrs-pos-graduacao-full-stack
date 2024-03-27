@@ -87,15 +87,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         public async Task AppendDataToChannelAsync_GivenExistingChannel_ShouldUpdateChannel(string channelId, RssData data)
         {
             var mapping = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-
-            var repository = new MockedChannelRepository(new Channel()
-            {
-                ChannelId = channelId,
-                Copyright = data.Copyright,
-                ImageUrl = data.ImageUrl,
-                Name = data.Name,
-                Url = data.Url
-            });
+            var repository = new MockedChannelRepository(mapping.Map<Channel>(data) with { ChannelId = channelId });
 
             var service = new ChannelService(
                 repository,

@@ -11,11 +11,13 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Models
 
         public string? Name { get; set; }
 
+        [Url]
         [DataType(DataType.Url)]
         public string? Url { get; set; }
 
         public string? Copyright { get; set; }
 
+        [Url]
         [DataType(DataType.ImageUrl)]
         public string? ImageUrl { get; set; }
 
