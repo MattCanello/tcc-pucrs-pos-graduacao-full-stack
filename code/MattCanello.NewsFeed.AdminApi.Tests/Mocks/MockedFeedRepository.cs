@@ -7,13 +7,14 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
     {
         private readonly IDictionary<string, Feed> _data;
 
+        public MockedFeedRepository() 
+            : this(data: null) { }
+
         public MockedFeedRepository(Feed feed)
             : this(new Dictionary<string, Feed>(capacity: 1) { { feed.FeedId, feed } }) { }
 
         public MockedFeedRepository(IDictionary<string, Feed>? data = null)
-        {
-            _data = data ?? new Dictionary<string, Feed>();
-        }
+            => _data = data ?? new Dictionary<string, Feed>();
 
         public Task<Feed> CreateAsync(Feed feed, CancellationToken cancellationToken = default)
         {

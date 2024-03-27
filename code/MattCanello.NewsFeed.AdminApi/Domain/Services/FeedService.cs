@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.AdminApi.Domain.Commands;
+﻿using AutoMapper;
+using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Exceptions;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
@@ -8,9 +9,13 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
     public sealed class FeedService : IFeedService
     {
         private readonly IFeedRepository _feedRepository;
+        private readonly IMapper _mapper;
 
-        public FeedService(IFeedRepository feedRepository) 
-            => _feedRepository = feedRepository;
+        public FeedService(IFeedRepository feedRepository, IMapper mapper)
+        {
+            _feedRepository = feedRepository;
+            _mapper = mapper;
+        }
 
         public async Task<Feed> UpdateFeedAsync(string feedId, ChannelData channelData, CancellationToken cancellationToken = default)
         {
@@ -20,11 +25,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             var feed = await _feedRepository.GetByIdAsync(feedId, cancellationToken)
                 ?? throw new FeedNotFoundException(feedId);
 
-            // TODO: Transformar em mapping com ValueResolver
-            feed.Copyright ??= channelData.Copyright;
-            feed.ImageUrl ??= channelData.ImageUrl;
-            feed.Language ??= channelData.Language;
-            feed.Name ??= channelData.Name;
+            feed = _mapper.Map(channelData, feed);
 
             feed = await _feedRepository.UpdateAsync(feed, cancellationToken);
 

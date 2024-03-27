@@ -37,10 +37,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         public async Task GetOrCreateAsync_GivenExistingChannel_ShouldReturnChannel(Channel channel)
         {
             var service = new ChannelService(
-                new MockedChannelRepository(new Dictionary<string, Channel>(capacity: 1)
-                {
-                    { channel.ChannelId, channel }
-                }),
+                new MockedChannelRepository(channel),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
             var resultingChannel = await service.GetOrCreateAsync(channel.ChannelId);
@@ -92,19 +89,14 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         {
             var mapping = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
 
-            var repository = new MockedChannelRepository(new Dictionary<string, Channel>(capacity: 1)
+            var repository = new MockedChannelRepository(new Channel()
             {
-                {
-                    channelId,
-                    new Channel() {
-                        ChannelId = channelId,
-                        Copyright = channelData.Copyright,
-                        ImageUrl = channelData.ImageUrl,
-                        Language = channelData.Language,
-                        Name = channelData.Name,
-                        Url = channelData.Url
-                    }
-                }
+                ChannelId = channelId,
+                Copyright = channelData.Copyright,
+                ImageUrl = channelData.ImageUrl,
+                Language = channelData.Language,
+                Name = channelData.Name,
+                Url = channelData.Url
             });
 
             var service = new ChannelService(

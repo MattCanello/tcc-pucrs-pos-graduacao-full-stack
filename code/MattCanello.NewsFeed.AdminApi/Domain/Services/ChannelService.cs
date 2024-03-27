@@ -41,12 +41,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             var channel = await _channelRepository.GetByIdAsync(channelId, cancellationToken) 
                 ?? new Channel { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
 
-            // TODO: Transformar em mapping com ValueResolver
-            channel.Copyright ??= channelData.Copyright;
-            channel.ImageUrl ??= channelData.ImageUrl;
-            channel.Language ??= channelData.Language;
-            channel.Name ??= channelData.Name;
-            channel.Url ??= channelData.Url;
+            channel = _mapper.Map(channelData, channel);
 
             channel = await _channelRepository.UpdateAsync(channel, cancellationToken);
 

@@ -102,10 +102,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper();
             var feed = mapper.Map<Feed>(command);
-            var feedRepository = new MockedFeedRepository(new Dictionary<string, Feed>(capacity: 1) 
-            { 
-                { feed.FeedId, feed} 
-            });
+            var feedRepository = new MockedFeedRepository(feed);
 
             var app = new CreateFeedApp(
                 feedRepository,
@@ -122,7 +119,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         {
             command.Channel = null;
             command.ChannelId = channel.ChannelId;
-            var channelRepository = new MockedChannelRepository(new Dictionary<string, Channel>(capacity: 1) { { channel.ChannelId, channel } });
+            var channelRepository = new MockedChannelRepository(channel);
 
             var app = new CreateFeedApp(
                 new MockedFeedRepository(),
@@ -152,7 +149,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task CreateFeedAsync_GivenPreExistingChannelWithChannelData_ShouldKeepChannelData(Channel channel, CreateFeedCommand command)
         {
             command.ChannelId = channel.ChannelId;
-            var channelRepository = new MockedChannelRepository(new Dictionary<string, Channel>(capacity: 1) { { channel.ChannelId, channel } });
+            var channelRepository = new MockedChannelRepository(channel);
 
             var app = new CreateFeedApp(
                 new MockedFeedRepository(),

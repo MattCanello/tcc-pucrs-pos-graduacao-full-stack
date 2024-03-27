@@ -7,10 +7,13 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
     {
         private readonly IDictionary<string, Channel> _data;
 
-        public MockedChannelRepository(Channel channel) 
-            : this(new Dictionary<string, Channel>(capacity: 1) { { channel.ChannelId, channel} }) { }
+        public MockedChannelRepository() 
+            : this(data: null) { }
 
-        public MockedChannelRepository(IDictionary<string, Channel>? data = null) 
+        public MockedChannelRepository(Channel channel)
+            : this(new Dictionary<string, Channel>(capacity: 1) { { channel.ChannelId, channel } }) { }
+
+        public MockedChannelRepository(IDictionary<string, Channel>? data = null)
             => _data = data ?? new Dictionary<string, Channel>();
 
         public Channel? this[string channelId]
