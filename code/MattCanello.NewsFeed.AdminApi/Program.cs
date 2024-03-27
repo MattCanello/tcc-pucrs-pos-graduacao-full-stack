@@ -38,7 +38,7 @@ namespace MattCanello.NewsFeed.AdminApi
             builder.Services.ConfigureHealthChecks();
 
             builder.AddDefaultTelemetry(
-                configureTracing: (builder) => builder.AddSource(ActivitySources.CreateFeedApp.Name, ActivitySources.UpdateFeedApp.Name));
+                configureTracing: (builder) => builder.AddSource(ActivitySources.CreateFeedApp.Name, ActivitySources.UpdateFeedApp.Name, ActivitySources.ChannelApp.Name));
 
             var app = builder.Build();
 
@@ -96,6 +96,10 @@ namespace MattCanello.NewsFeed.AdminApi
             services
                 .Decorate<IUpdateFeedApp, UpdateFeedAppLogDecorator>()
                 .Decorate<IUpdateFeedApp, UpdateFeedAppMetricsDecorator>();
+
+            services
+                .Decorate<IChannelApp, ChannelAppLogDecorator>()
+                .Decorate<IChannelApp, ChannelAppMetricsDecorator>();
 
             services
                 .AddAutoMapper(config =>
