@@ -9,6 +9,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Commands
         public string? FeedId { get; set; }
 
         [Required]
-        public RssData? Data { get; set; }
+        public RssChannel? Channel { get; set; }
     }
 }

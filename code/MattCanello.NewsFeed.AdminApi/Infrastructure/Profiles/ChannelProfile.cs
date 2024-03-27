@@ -12,7 +12,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
             CreateMap<Channel, ChannelElasticModel>()
                 .ReverseMap();
 
-            CreateMap<RssData, Channel>()
+            CreateMap<RssChannel, Channel>()
                 .ForMember(channel => channel.ChannelId, o => o.Ignore())
                 .ForMember(channel => channel.Copyright, o => o.MapFrom((data, channel) => channel.Copyright ?? data.Copyright))
                 .ForMember(channel => channel.CreatedAt, o => o.Ignore())

@@ -19,7 +19,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
             CreateMap<FeedElasticModel, Feed>()
                 .ForMember(feed => feed.Channel, o => o.Ignore());
 
-            CreateMap<RssData, Feed>()
+            CreateMap<RssChannel, Feed>()
                 .ForMember(feed => feed.FeedId, o => o.Ignore())
                 .ForMember(feed => feed.Channel, o => o.Ignore())
                 .ForMember(feed => feed.Url, o => o.Ignore())

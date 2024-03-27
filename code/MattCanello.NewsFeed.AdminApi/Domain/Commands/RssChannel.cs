@@ -3,7 +3,7 @@
 namespace MattCanello.NewsFeed.AdminApi.Domain.Commands
 {
     [Serializable]
-    public sealed class RssData
+    public sealed class RssChannel
     {
         public string? Name { get; set; }
 

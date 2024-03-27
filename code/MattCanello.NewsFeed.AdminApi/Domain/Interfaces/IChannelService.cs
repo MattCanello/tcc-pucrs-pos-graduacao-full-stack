@@ -7,6 +7,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
     {
         Task<Channel> GetOrCreateAsync(string channelId, CancellationToken cancellationToken = default);
 
-        Task<Channel> UpdateChannelAsync(string channelId, RssData data, CancellationToken cancellationToken = default);
+        Task<Channel> UpdateChannelAsync(string channelId, RssChannel rssChannel, CancellationToken cancellationToken = default);
     }
 }

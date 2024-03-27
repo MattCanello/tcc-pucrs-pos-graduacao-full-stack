@@ -41,12 +41,12 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             var feed = await _feedRepository.GetByIdAsync(command.FeedId!, cancellationToken)
                 ?? throw new FeedNotFoundException(command.FeedId!);
 
-            feed = _mapper.Map(command.Data, feed);
+            feed = _mapper.Map(command.Channel, feed);
 
             feed = await _feedRepository.UpdateAsync(feed, cancellationToken);
 
             if (feed.Channel != null)
-                feed.Channel = await _channelService.UpdateChannelAsync(feed.Channel.ChannelId, command.Data!, cancellationToken);
+                feed.Channel = await _channelService.UpdateChannelAsync(feed.Channel.ChannelId, command.Channel!, cancellationToken);
 
             return feed;
         }
