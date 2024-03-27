@@ -38,9 +38,8 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         }
 
         [Theory, AutoData]
-        public async Task CreateFeedAsync_GivenNewChannelWithoutData_ShouldCreateSimpleChannel(CreateFeedCommand command)
+        public async Task CreateFeedAsync_GivenNewChannel_ShouldCreateSimpleChannel(CreateFeedCommand command)
         {
-            command.Data = null;
             var channelRepository = new MockedChannelRepository();
 
             var app = new CreateFeedApp(
@@ -67,35 +66,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         }
 
         [Theory, AutoData]
-        public async Task CreateFeedAsync_GivenNewChannelWithData_ShouldCreateSimpleChannel(CreateFeedCommand command)
-        {
-            var channelRepository = new MockedChannelRepository();
-
-            var app = new CreateFeedApp(
-                new MockedFeedRepository(),
-                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper(),
-                MockedChannelServiceBuilder.CreateInstance(channelRepository));
-
-            var feed = await app.CreateFeedAsync(command);
-
-            Assert.NotNull(feed);
-            Assert.NotNull(feed.Channel);
-            Assert.Equal(command.ChannelId, feed.Channel.ChannelId);
-
-            var channel = channelRepository[command.ChannelId!];
-            Assert.NotNull(channel);
-
-            Assert.NotNull(command.Data);
-            Assert.Equal(command.ChannelId, channel.ChannelId);
-            Assert.Equal(command.Data.Copyright, channel.Copyright);
-            Assert.Equal(command.Data.ImageUrl, channel.ImageUrl);
-            Assert.Equal(command.Data.Name, channel.Name);
-            Assert.Equal(command.Data.Url, channel.Url);
-
-            // TODO: Adicionar verificação para CreatedDate
-        }
-
-        [Theory, AutoData]
         public async Task CreateFeedAsync_GivenExistingFeedId_ShouldThrowException(CreateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper();
@@ -113,37 +83,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         }
 
         [Theory, AutoData]
-        public async Task CreateFeedAsync_GivenPreExistingChannelWithoutData_ShouldKeepChannelInfo(Channel channel, CreateFeedCommand command)
-        {
-            command.Data = null;
-            command.ChannelId = channel.ChannelId;
-            var channelRepository = new MockedChannelRepository(channel);
-
-            var app = new CreateFeedApp(
-                new MockedFeedRepository(),
-                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper(),
-                MockedChannelServiceBuilder.CreateInstance(channelRepository));
-
-            var feed = await app.CreateFeedAsync(command);
-
-            Assert.NotNull(feed);
-            Assert.NotNull(feed.Channel);
-            Assert.Equal(command.ChannelId, feed.Channel.ChannelId);
-
-            var resultingChannel = channelRepository[command.ChannelId!];
-            Assert.NotNull(resultingChannel);
-
-            Assert.Equal(channel.ChannelId, resultingChannel.ChannelId);
-            Assert.Equal(channel.Copyright, resultingChannel.Copyright);
-            Assert.Equal(channel.ImageUrl, resultingChannel.ImageUrl);
-            Assert.Equal(channel.Name, resultingChannel.Name);
-            Assert.Equal(channel.Url, resultingChannel.Url);
-
-            // TODO: Adicionar verificação para CreatedDate
-        }
-
-        [Theory, AutoData]
-        public async Task CreateFeedAsync_GivenPreExistingChannelWithData_ShouldKeepChannelInfo(Channel channel, CreateFeedCommand command)
+        public async Task CreateFeedAsync_GivenPreExistingChannel_ShouldKeepChannelInfo(Channel channel, CreateFeedCommand command)
         {
             command.ChannelId = channel.ChannelId;
             var channelRepository = new MockedChannelRepository(channel);

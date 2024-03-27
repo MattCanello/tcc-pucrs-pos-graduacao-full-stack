@@ -17,7 +17,5 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Commands
         [Required]
         [DataType(DataType.Url)]
         public string? Url { get; set; }
-
-        public RssData? Data { get; set; }
     }
 }

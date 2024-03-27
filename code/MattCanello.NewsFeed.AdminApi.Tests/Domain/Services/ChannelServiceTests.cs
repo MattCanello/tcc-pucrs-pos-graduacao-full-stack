@@ -47,33 +47,33 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNullChannelId_ShouldThrowException(RssData data)
+        public async Task UpdateChannelAsync_GivenNullChannelId_ShouldThrowException(RssData data)
         {
             var service = new ChannelService(null!, null!);
 
-            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.AppendDataToChannelAsync(null!, data));
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateChannelAsync(null!, data));
 
             Assert.Equal("channelId", exception.ParamName);
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNullData_ShouldThrowException(string channelId)
+        public async Task UpdateChannelAsync_GivenNullData_ShouldThrowException(string channelId)
         {
             var service = new ChannelService(null!, null!);
 
-            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.AppendDataToChannelAsync(channelId, null!));
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateChannelAsync(channelId, null!));
 
             Assert.Equal("data", exception.ParamName);
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, RssData data)
+        public async Task UpdateChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, RssData data)
         {
             var service = new ChannelService(
                 new MockedChannelRepository(),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
-            var channel = await service.AppendDataToChannelAsync(channelId, data);
+            var channel = await service.UpdateChannelAsync(channelId, data);
 
             Assert.NotNull(channel);
             Assert.Equal(channelId, channel.ChannelId);
@@ -84,7 +84,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         }
 
         [Theory, AutoData]
-        public async Task AppendDataToChannelAsync_GivenExistingChannel_ShouldUpdateChannel(string channelId, RssData data)
+        public async Task UpdateChannelAsync_GivenExistingChannel_ShouldUpdateChannel(string channelId, RssData data)
         {
             var mapping = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
             var repository = new MockedChannelRepository(mapping.Map<Channel>(data) with { ChannelId = channelId });
@@ -93,7 +93,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
                 repository,
                 mapping);
 
-            var channel = await service.AppendDataToChannelAsync(channelId, data);
+            var channel = await service.UpdateChannelAsync(channelId, data);
 
             Assert.NotNull(channel);
             Assert.Equal(channelId, channel.ChannelId);

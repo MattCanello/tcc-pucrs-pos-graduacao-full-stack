@@ -22,7 +22,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             var feed = await _feedService.UpdateFeedAsync(command.FeedId!, command.Data!, cancellationToken);
 
             if (feed.Channel != null)
-                feed.Channel = await _channelService.AppendDataToChannelAsync(feed.Channel.ChannelId, command.Data!, cancellationToken);
+                feed.Channel = await _channelService.UpdateChannelAsync(feed.Channel.ChannelId, command.Data!, cancellationToken);
 
             return feed;
         }

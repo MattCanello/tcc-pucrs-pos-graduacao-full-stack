@@ -16,7 +16,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             _mapper = mapper;
         }
 
-        public async Task<Channel> GetOrCreateAsync(string channelId, RssData? data = null, CancellationToken cancellationToken = default)
+        public async Task<Channel> GetOrCreateAsync(string channelId, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(channelId);
 
@@ -25,15 +25,14 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             if (channel is not null)
                 return channel;
 
-            channel = (_mapper.Map<Channel>(data) ?? new Channel())
-                with { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
+            channel = new Channel() { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
 
             channel = await _channelRepository.CreateAsync(channel, cancellationToken);
 
             return channel;
         }
 
-        public async Task<Channel> AppendDataToChannelAsync(string channelId, RssData data, CancellationToken cancellationToken = default)
+        public async Task<Channel> UpdateChannelAsync(string channelId, RssData data, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(channelId);
             ArgumentNullException.ThrowIfNull(data);

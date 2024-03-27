@@ -27,7 +27,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
 
             var feed = _mapper.Map<Feed>(createFeedCommand);
 
-            feed.Channel = await _channelService.GetOrCreateAsync(createFeedCommand.ChannelId!, createFeedCommand.Data, cancellationToken);
+            feed.Channel = await _channelService.GetOrCreateAsync(createFeedCommand.ChannelId!, cancellationToken);
 
             feed = await _feedRepository.CreateAsync(feed, cancellationToken);
 
