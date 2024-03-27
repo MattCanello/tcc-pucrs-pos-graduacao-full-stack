@@ -6,20 +6,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.AdminApi.Controllers
 {
-    [Route("feed")]
     [ApiController]
     public class FeedController : ControllerBase
     {
         private readonly ICreateFeedApp _createFeedApp;
+        private readonly IUpdateFeedApp _updateFeedApp;
         private readonly IFeedRepository _feedRepository;
 
-        public FeedController(ICreateFeedApp createFeedApp, IFeedRepository feedRepository)
+        public FeedController(ICreateFeedApp createFeedApp, IUpdateFeedApp updateFeedApp, IFeedRepository feedRepository)
         {
             _createFeedApp = createFeedApp;
+            _updateFeedApp = updateFeedApp;
             _feedRepository = feedRepository;
         }
 
-        [HttpGet("{feedId}")]
+        [HttpGet("feed/{feedId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
@@ -38,7 +39,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             return Ok(feed);
         }
 
-        [HttpPost("")]
+        [HttpPost("create-feed")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
@@ -50,6 +51,20 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             var feed = await _createFeedApp.CreateFeedAsync(command, cancellationToken);
 
             return CreatedAtAction(nameof(GetById), new { feedId = command.FeedId }, feed);
+        }
+
+        [HttpPost("update-feed")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
+        public async Task<IActionResult> UpdateFeed([FromBody, Required] UpdateFeedCommand command, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var feed = await _updateFeedApp.UpdateFeedAsync(command, cancellationToken);
+
+            return Ok(feed);
         }
     }
 }

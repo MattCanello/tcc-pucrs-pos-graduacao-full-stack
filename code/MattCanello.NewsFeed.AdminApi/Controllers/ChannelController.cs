@@ -1,5 +1,4 @@
-﻿using MattCanello.NewsFeed.AdminApi.Domain.Commands;
-using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -9,23 +8,26 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
     [ApiController]
     public class ChannelController : ControllerBase
     {
-        private readonly IUpdateChannelApp _updateChannelApp;
+        private readonly IChannelRepository _channelRepository;
 
-        public ChannelController(IUpdateChannelApp updateChannelApp)
+        public ChannelController(IChannelRepository channelRepository)
         {
-            _updateChannelApp = updateChannelApp;
+            _channelRepository = channelRepository;
         }
 
-        [HttpPost("update-channel")]
+        [HttpGet("{channelId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Channel))]
-        public async Task<IActionResult> UpdateChannel([FromBody, Required] UpdateChannelCommand command, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetById([FromRoute, Required] string channelId, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var channel = await _updateChannelApp.UpdateChannelAsync(command, cancellationToken);
+            var channel = await _channelRepository.GetByIdAsync(channelId, cancellationToken);
+
+            if (channel is null)
+                return NotFound();
 
             return Ok(channel);
         }

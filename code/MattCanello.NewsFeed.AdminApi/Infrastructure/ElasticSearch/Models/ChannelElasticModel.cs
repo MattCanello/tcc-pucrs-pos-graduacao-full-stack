@@ -9,6 +9,7 @@
 
         public string? Url { get; set; }
 
+        // TODO: Remover Language de Channel
         public string? Language { get; set; }
 
         public string? Copyright { get; set; }

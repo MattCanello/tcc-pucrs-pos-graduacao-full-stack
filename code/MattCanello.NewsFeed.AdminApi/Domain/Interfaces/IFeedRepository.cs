@@ -7,5 +7,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
         Task<Feed?> GetByIdAsync(string feedId, CancellationToken cancellationToken = default);
 
         Task<Feed> CreateAsync(Feed feed, CancellationToken cancellationToken = default);
+
+        Task<Feed> UpdateAsync(Feed feed, CancellationToken cancellationToken = default);
     }
 }

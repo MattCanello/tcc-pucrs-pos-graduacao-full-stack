@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
-using static MattCanello.NewsFeed.AdminApi.Domain.Commands.UpdateChannelCommand;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Services
 {
@@ -16,7 +16,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             _mapper = mapper;
         }
 
-        public async Task<Channel> GetOrCreateAsync(string channelId, CancellationToken cancellationToken = default)
+        public async Task<Channel> GetOrCreateAsync(string channelId, ChannelData? channelData = null, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(channelId);
 
@@ -25,22 +25,28 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Services
             if (channel is not null)
                 return channel;
 
-            channel = new Channel() { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
+            channel = (_mapper.Map<Channel>(channelData) ?? new Channel())
+                with { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
 
             channel = await _channelRepository.CreateAsync(channel, cancellationToken);
 
             return channel;
         }
 
-        public async Task<Channel> UpdateChannelAsync(string channelId, ChannelData channelData, CancellationToken cancellationToken = default)
+        public async Task<Channel> AppendDataToChannelAsync(string channelId, ChannelData channelData, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(channelId);
             ArgumentNullException.ThrowIfNull(channelData);
 
             var channel = await _channelRepository.GetByIdAsync(channelId, cancellationToken) 
-                ?? new Channel { ChannelId = channelId };
+                ?? new Channel { ChannelId = channelId, CreatedAt = DateTimeOffset.UtcNow };
 
-            channel = _mapper.Map(channelData, channel);
+            // TODO: Transformar em mapping com ValueResolver
+            channel.Copyright ??= channelData.Copyright;
+            channel.ImageUrl ??= channelData.ImageUrl;
+            channel.Language ??= channelData.Language;
+            channel.Name ??= channelData.Name;
+            channel.Url ??= channelData.Url;
 
             channel = await _channelRepository.UpdateAsync(channel, cancellationToken);
 

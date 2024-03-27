@@ -3,8 +3,8 @@ using MattCanello.NewsFeed.AdminApi.Domain.Models;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
 {
-    public interface IUpdateChannelApp
+    public interface IFeedService
     {
-        Task<Channel> UpdateChannelAsync(UpdateChannelCommand command, CancellationToken cancellationToken = default);
+        Task<Feed> UpdateFeedAsync(string feedId, ChannelData channelData, CancellationToken cancellationToken = default);
     }
 }

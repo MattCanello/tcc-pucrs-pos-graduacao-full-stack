@@ -51,7 +51,7 @@ scopes:
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: update-channel
+  name: update-feed
 spec:
   type: bindings.kafka
   version: v1

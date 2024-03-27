@@ -53,12 +53,29 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             return feed;
         }
 
+        public async Task<Feed> UpdateAsync(Feed feed, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(feed);
+
+            var elasticModel = _mapper.Map<FeedElasticModel>(feed);
+
+            await EnsureIndexExistsAsync(cancellationToken);
+
+            await _elasticSearchRepository.IndexAsync(feed.FeedId, elasticModel, FeedsIndexName, cancellationToken);
+
+            return feed;
+        }
+
         private async Task EnsureIndexExistsAsync(CancellationToken cancellationToken = default)
         {
             await _elasticSearchManagementRepository.EnsureIndexExistsAsync(FeedsIndexName, idx => idx.Map(map => map
                 .Properties<FeedElasticModel>(p => p
                     .Keyword(field => field.Name("feedId"))
                     .Keyword(field => field.Name("channelId"))
+                    .Text(field => field.Name("name"))
+                    .Keyword(field => field.Name("language"))
+                    .Text(field => field.Name("copyright"))
+                    .Text(field => field.Name("imageUrl"))
                     .Text(field => field.Name("url"))
                     .DateNanos(field => field.Name("createdAt").Format("strict_date_optional_time_nanos"))
                 )), cancellationToken);
