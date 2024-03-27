@@ -17,7 +17,6 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
                 .ForMember(channel => channel.Copyright, o => o.MapFrom((data, channel) => channel.Copyright ?? data.Copyright))
                 .ForMember(channel => channel.CreatedAt, o => o.Ignore())
                 .ForMember(channel => channel.ImageUrl, o => o.MapFrom((data, channel) => channel.ImageUrl ?? data.ImageUrl))
-                .ForMember(channel => channel.Language, o => o.MapFrom((data, channel) => channel.Language ?? data.Language))
                 .ForMember(channel => channel.Name, o => o.MapFrom((data, channel) => channel.Name ?? data.Name))
                 .ForMember(channel => channel.Url, o => o.MapFrom((data, channel) => channel.Url ?? data.Url))
                 .ReverseMap();

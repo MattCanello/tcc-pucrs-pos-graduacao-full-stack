@@ -60,7 +60,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(command.ChannelId, channel.ChannelId);
             Assert.Null(channel.Copyright);
             Assert.Null(channel.ImageUrl);
-            Assert.Null(channel.Language);
             Assert.Null(channel.Name);
             Assert.Null(channel.Url);
 
@@ -90,7 +89,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(command.ChannelId, channel.ChannelId);
             Assert.Equal(command.Data.Copyright, channel.Copyright);
             Assert.Equal(command.Data.ImageUrl, channel.ImageUrl);
-            Assert.Equal(command.Data.Language, channel.Language);
             Assert.Equal(command.Data.Name, channel.Name);
             Assert.Equal(command.Data.Url, channel.Url);
 
@@ -138,7 +136,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(channel.ChannelId, resultingChannel.ChannelId);
             Assert.Equal(channel.Copyright, resultingChannel.Copyright);
             Assert.Equal(channel.ImageUrl, resultingChannel.ImageUrl);
-            Assert.Equal(channel.Language, resultingChannel.Language);
             Assert.Equal(channel.Name, resultingChannel.Name);
             Assert.Equal(channel.Url, resultingChannel.Url);
 
@@ -168,7 +165,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(channel.ChannelId, resultingChannel.ChannelId);
             Assert.Equal(channel.Copyright, resultingChannel.Copyright);
             Assert.Equal(channel.ImageUrl, resultingChannel.ImageUrl);
-            Assert.Equal(channel.Language, resultingChannel.Language);
             Assert.Equal(channel.Name, resultingChannel.Name);
             Assert.Equal(channel.Url, resultingChannel.Url);
 

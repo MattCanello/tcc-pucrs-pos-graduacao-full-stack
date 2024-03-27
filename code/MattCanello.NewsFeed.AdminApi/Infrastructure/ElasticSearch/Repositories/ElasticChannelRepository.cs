@@ -64,7 +64,6 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
                     .Keyword(field => field.Name("channelId"))
                     .Text(field => field.Name("name"))
                     .Text(field => field.Name("url"))
-                    .Keyword(field => field.Name("language"))
                     .Text(field => field.Name("copyright"))
                     .Text(field => field.Name("imageUrl"))
                     .DateNanos(field => field.Name("createdAt").Format("strict_date_optional_time_nanos"))

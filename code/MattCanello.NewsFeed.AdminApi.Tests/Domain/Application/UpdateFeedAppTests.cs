@@ -93,7 +93,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
 
             Assert.NotNull(command.Data);
             Assert.Equal(command.Data.Name, updatedFeed.Channel.Name);
-            Assert.Equal(command.Data.Language, updatedFeed.Channel.Language);
             Assert.Equal(command.Data.ImageUrl, updatedFeed.Channel.ImageUrl);
             Assert.Equal(command.Data.Url, updatedFeed.Channel.Url);
             Assert.Equal(command.Data.Copyright, updatedFeed.Channel.Copyright);
@@ -119,7 +118,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
 
             Assert.NotNull(command.Data);
             Assert.Equal(command.Data.Name, updatedFeed.Channel.Name);
-            Assert.Equal(command.Data.Language, updatedFeed.Channel.Language);
             Assert.Equal(command.Data.ImageUrl, updatedFeed.Channel.ImageUrl);
             Assert.Equal(command.Data.Url, updatedFeed.Channel.Url);
             Assert.Equal(command.Data.Copyright, updatedFeed.Channel.Copyright);
@@ -146,7 +144,6 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(feed.Channel.ChannelId, updatedFeed.Channel.ChannelId);
 
             Assert.Equal(channel.Name, updatedFeed.Channel.Name);
-            Assert.Equal(channel.Language, updatedFeed.Channel.Language);
             Assert.Equal(channel.ImageUrl, updatedFeed.Channel.ImageUrl);
             Assert.Equal(channel.Url, updatedFeed.Channel.Url);
             Assert.Equal(channel.Copyright, updatedFeed.Channel.Copyright);

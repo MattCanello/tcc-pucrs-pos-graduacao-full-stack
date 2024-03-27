@@ -14,9 +14,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Models
         [DataType(DataType.Url)]
         public string? Url { get; set; }
 
-        // TODO: Remover Language de Channel
-        public string? Language { get; set; }
-
         public string? Copyright { get; set; }
 
         [DataType(DataType.ImageUrl)]
