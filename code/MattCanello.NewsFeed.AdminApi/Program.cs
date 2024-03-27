@@ -65,6 +65,9 @@ namespace MattCanello.NewsFeed.AdminApi
                 .AddScoped<IUpdateFeedApp, UpdateFeedApp>();
 
             services
+                .AddScoped<IChannelApp, ChannelApp>();
+
+            services
                 .AddScoped<IChannelService, ChannelService>()
                 .AddScoped<IFeedService, FeedService>();
 

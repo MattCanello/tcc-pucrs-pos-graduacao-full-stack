@@ -77,7 +77,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
                 mapper,
                 MockedChannelServiceBuilder.CreateInstance());
 
-            var exception = await Assert.ThrowsAsync<FeedAlreadyExistingException>(() =>  app.CreateFeedAsync(command));
+            var exception = await Assert.ThrowsAsync<FeedAlreadyExistsException>(() =>  app.CreateFeedAsync(command));
 
             Assert.Equal(command.FeedId, exception.FeedId);
         }

@@ -9,17 +9,25 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Filters
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.Exception is FeedNotFoundException)
+            if (context.Exception is FeedNotFoundException || context.Exception is ChannelNotFoundException)
             {
                 context.Exception = null;
                 context.Result = new NotFoundResult();
                 return;
             }
 
-            if (context.Exception is FeedAlreadyExistingException ex)
+            if (context.Exception is FeedAlreadyExistsException feedAlreadyExistsException)
             {
                 context.Exception = null;
-                context.ModelState.AddModelError(nameof(CreateFeedCommand.FeedId), ex.Message);
+                context.ModelState.AddModelError(nameof(CreateFeedCommand.FeedId), feedAlreadyExistsException.Message);
+                context.Result = new ConflictObjectResult(context.ModelState);
+                return;
+            }
+
+            if (context.Exception is ChannelAlreadyExistsException channelAlreadyExistsException)
+            {
+                context.Exception = null;
+                context.ModelState.AddModelError(nameof(CreateChannelCommand.ChannelId), channelAlreadyExistsException.Message);
                 context.Result = new ConflictObjectResult(context.ModelState);
                 return;
             }

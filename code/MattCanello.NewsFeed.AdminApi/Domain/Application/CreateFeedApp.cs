@@ -41,7 +41,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             if (feed is null)
                 return;
 
-            throw new FeedAlreadyExistingException(feedId);
+            throw new FeedAlreadyExistsException(feedId);
         }
     }
 }
