@@ -9,7 +9,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Commands
         [StringLength(100)]
         public string? ChannelId { get; set; }
 
-        [Required]
         public ChannelData? Data { get; set; }
     }
 }

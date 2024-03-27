@@ -18,7 +18,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             _channelApp = channelApp;
         }
 
-        [HttpGet("{channelId}")]
+        [HttpGet("channel/{channelId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Channel))]
@@ -50,7 +50,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         }
 
         [HttpPost("update-channel")]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Channel))]
         public async Task<IActionResult> Update([FromBody, Required] UpdateChannelCommand command, CancellationToken cancellationToken = default)

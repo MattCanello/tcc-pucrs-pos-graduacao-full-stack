@@ -9,7 +9,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Filters
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.Exception is FeedNotFoundException || context.Exception is ChannelNotFoundException)
+            if (context.Exception is NotFoundException)
             {
                 context.Exception = null;
                 context.Result = new NotFoundResult();

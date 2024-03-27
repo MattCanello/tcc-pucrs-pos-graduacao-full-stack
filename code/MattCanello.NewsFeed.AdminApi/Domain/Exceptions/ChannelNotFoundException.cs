@@ -1,6 +1,6 @@
 ﻿namespace MattCanello.NewsFeed.AdminApi.Domain.Exceptions
 {
-    public sealed class ChannelNotFoundException : ApplicationException
+    public sealed class ChannelNotFoundException : NotFoundException
     {
         private const string DefaultMessage = "The requested channel was not found";
 
