@@ -9,12 +9,112 @@ using MattCanello.NewsFeed.AdminApi.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
 {
-    public class UpdateFeedAppTests
+    public class FeedAppTests
     {
+        [Fact]
+        public async Task CreateFeedAsync_GivenNullCommand_ShouldThrowException()
+        {
+            var app = new FeedApp(null!, null!, null!);
+
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => app.CreateFeedAsync(null!));
+
+            Assert.NotNull(exception);
+            Assert.Equal("createFeedCommand", exception.ParamName);
+        }
+
+        [Theory, AutoData]
+        public async Task CreateFeedAsync_GivenNewFeed_ShouldCreateFeed(CreateFeedCommand command)
+        {
+            var app = new FeedApp(
+                new MockedFeedRepository(),
+                MockedChannelServiceBuilder.CreateInstance(),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
+
+            var feed = await app.CreateFeedAsync(command);
+
+            Assert.NotNull(feed);
+            Assert.Equal(command.FeedId, feed.FeedId);
+            Assert.Equal(command.Url, feed.Url);
+        }
+
+        [Theory, AutoData]
+        public async Task CreateFeedAsync_GivenNewChannel_ShouldCreateSimpleChannel(CreateFeedCommand command)
+        {
+            var channelRepository = new MockedChannelRepository();
+
+            var app = new FeedApp(
+                new MockedFeedRepository(),
+                MockedChannelServiceBuilder.CreateInstance(channelRepository),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
+
+            var feed = await app.CreateFeedAsync(command);
+
+            Assert.NotNull(feed);
+            Assert.NotNull(feed.Channel);
+            Assert.Equal(command.ChannelId, feed.Channel.ChannelId);
+
+            var channel = channelRepository[command.ChannelId!];
+            Assert.NotNull(channel);
+
+            Assert.Equal(command.ChannelId, channel.ChannelId);
+            Assert.Null(channel.Copyright);
+            Assert.Null(channel.ImageUrl);
+            Assert.Null(channel.Name);
+            Assert.Null(channel.Url);
+
+            // TODO: Adicionar verificação para CreatedDate
+        }
+
+        [Theory, AutoData]
+        public async Task CreateFeedAsync_GivenExistingFeedId_ShouldThrowException(CreateFeedCommand command)
+        {
+            var mapper = new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper();
+            var feed = mapper.Map<Feed>(command);
+            var feedRepository = new MockedFeedRepository(feed);
+
+            var app = new FeedApp(
+                feedRepository,
+                MockedChannelServiceBuilder.CreateInstance(),
+                mapper);
+
+            var exception = await Assert.ThrowsAsync<FeedAlreadyExistsException>(() => app.CreateFeedAsync(command));
+
+            Assert.Equal(command.FeedId, exception.FeedId);
+        }
+
+        [Theory, AutoData]
+        public async Task CreateFeedAsync_GivenPreExistingChannel_ShouldKeepChannelInfo(Channel channel, CreateFeedCommand command)
+        {
+            command.ChannelId = channel.ChannelId;
+            var channelRepository = new MockedChannelRepository(channel);
+
+            var app = new FeedApp(
+                new MockedFeedRepository(),
+                MockedChannelServiceBuilder.CreateInstance(channelRepository),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
+
+            var feed = await app.CreateFeedAsync(command);
+
+            Assert.NotNull(feed);
+            Assert.NotNull(feed.Channel);
+            Assert.Equal(command.ChannelId, feed.Channel.ChannelId);
+
+            var resultingChannel = channelRepository[command.ChannelId!];
+            Assert.NotNull(resultingChannel);
+
+            Assert.Equal(channel.ChannelId, resultingChannel.ChannelId);
+            Assert.Equal(channel.Copyright, resultingChannel.Copyright);
+            Assert.Equal(channel.ImageUrl, resultingChannel.ImageUrl);
+            Assert.Equal(channel.Name, resultingChannel.Name);
+            Assert.Equal(channel.Url, resultingChannel.Url);
+
+            // TODO: Adicionar verificação para CreatedDate
+        }
+
         [Fact]
         public async Task UpdateFeedAsync_GivenNullCommand_ShouldThrowException()
         {
-            var app = new UpdateFeedApp(null!, null!);
+            var app = new FeedApp(null!, null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => app.UpdateFeedAsync(null!));
 
@@ -24,9 +124,10 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         [Theory, AutoData]
         public async Task UpdateFeedAsync_GivenUnknownFeedId_ShouldThrowException(UpdateFeedCommand command)
         {
-            var app = new UpdateFeedApp(
+            var app = new FeedApp(
+                new MockedFeedRepository(),
                 MockedChannelServiceBuilder.CreateInstance(),
-                MockedFeedServiceBuilder.CreateInstance());
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var exception = await Assert.ThrowsAsync<FeedNotFoundException>(() => app.UpdateFeedAsync(command));
 
@@ -39,9 +140,10 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
             var feed = new Feed() { FeedId = command.FeedId!, Url = feedUrl, Channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId } };
 
-            var app = new UpdateFeedApp(
-               MockedChannelServiceBuilder.CreateInstance(),
-               MockedFeedServiceBuilder.CreateInstance(new MockedFeedRepository(feed)));
+            var app = new FeedApp(
+                new MockedFeedRepository(feed), 
+                MockedChannelServiceBuilder.CreateInstance(),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var updatedFeed = await app.UpdateFeedAsync(command);
 
@@ -59,9 +161,10 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         {
             command.FeedId = feed.FeedId;
 
-            var app = new UpdateFeedApp(
-               MockedChannelServiceBuilder.CreateInstance(),
-               MockedFeedServiceBuilder.CreateInstance(new MockedFeedRepository(feed)));
+            var app = new FeedApp(
+                new MockedFeedRepository(feed),
+                MockedChannelServiceBuilder.CreateInstance(),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var updatedFeed = await app.UpdateFeedAsync(command);
 
@@ -79,9 +182,10 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
             var feed = new Feed() { FeedId = command.FeedId!, Channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId } };
 
-            var app = new UpdateFeedApp(
-               MockedChannelServiceBuilder.CreateInstance(),
-               MockedFeedServiceBuilder.CreateInstance(new MockedFeedRepository(feed)));
+            var app = new FeedApp(
+                new MockedFeedRepository(feed),
+                MockedChannelServiceBuilder.CreateInstance(),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var updatedFeed = await app.UpdateFeedAsync(command);
 
@@ -98,15 +202,15 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             Assert.Equal(command.Data.Copyright, updatedFeed.Channel.Copyright);
         }
 
-        [Theory,AutoData]
+        [Theory, AutoData]
         public async Task UpdateFeedAsync_GivenExistingEmptyChannel_ShouldUpdateChannel(string channelId, UpdateFeedCommand command)
         {
             var feed = new Feed() { FeedId = command.FeedId!, Channel = new Channel() { ChannelId = channelId } };
-            var channelRepository = new MockedChannelRepository(feed.Channel);
 
-            var app = new UpdateFeedApp(
-               MockedChannelServiceBuilder.CreateInstance(channelRepository),
-               MockedFeedServiceBuilder.CreateInstance(new MockedFeedRepository(feed)));
+            var app = new FeedApp(
+                new MockedFeedRepository(feed),
+                MockedChannelServiceBuilder.CreateInstance(new MockedChannelRepository(feed.Channel)),
+                new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var updatedFeed = await app.UpdateFeedAsync(command);
 
@@ -129,11 +233,11 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
             var channel = mapper.Map<Channel>(command.Data) with { ChannelId = channelId };
             var feed = new Feed() { FeedId = command.FeedId!, Channel = channel };
-            var channelRepository = new MockedChannelRepository(channel);
 
-            var app = new UpdateFeedApp(
-               MockedChannelServiceBuilder.CreateInstance(channelRepository),
-               MockedFeedServiceBuilder.CreateInstance(new MockedFeedRepository(feed)));
+            var app = new FeedApp(
+                new MockedFeedRepository(feed),
+               MockedChannelServiceBuilder.CreateInstance(new MockedChannelRepository(channel)),
+               new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper());
 
             var updatedFeed = await app.UpdateFeedAsync(command);
 

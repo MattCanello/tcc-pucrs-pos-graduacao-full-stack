@@ -4,12 +4,12 @@ using MattCanello.NewsFeed.AdminApi.Domain.Models;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Decorators
 {
-    public sealed class CreateFeedAppPublishEventDecorator : ICreateFeedApp
+    public sealed class FeedAppPublishEventDecorator : IFeedApp
     {
-        private readonly ICreateFeedApp _app;
+        private readonly IFeedApp _app;
         private readonly IEventPublisher _eventPublisher;
 
-        public CreateFeedAppPublishEventDecorator(ICreateFeedApp app, IEventPublisher eventPublisher)
+        public FeedAppPublishEventDecorator(IFeedApp app, IEventPublisher eventPublisher)
         {
             _app = app;
             _eventPublisher = eventPublisher;
@@ -25,5 +25,8 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Decorators
 
             return feed;
         }
+
+        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default) 
+            => await _app.UpdateFeedAsync(command, cancellationToken);
     }
 }

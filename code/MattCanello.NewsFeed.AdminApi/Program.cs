@@ -38,7 +38,7 @@ namespace MattCanello.NewsFeed.AdminApi
             builder.Services.ConfigureHealthChecks();
 
             builder.AddDefaultTelemetry(
-                configureTracing: (builder) => builder.AddSource(ActivitySources.CreateFeedApp.Name, ActivitySources.UpdateFeedApp.Name, ActivitySources.ChannelApp.Name));
+                configureTracing: (builder) => builder.AddSource(ActivitySources.FeedApp.Name, ActivitySources.ChannelApp.Name));
 
             var app = builder.Build();
 
@@ -61,15 +61,9 @@ namespace MattCanello.NewsFeed.AdminApi
         private static void AddAppServices(this IServiceCollection services)
         {
             services
-                .AddScoped<ICreateFeedApp, CreateFeedApp>()
-                .AddScoped<IUpdateFeedApp, UpdateFeedApp>();
-
-            services
-                .AddScoped<IChannelApp, ChannelApp>();
-
-            services
-                .AddScoped<IChannelService, ChannelService>()
-                .AddScoped<IFeedService, FeedService>();
+                .AddScoped<IFeedApp, FeedApp>()
+                .AddScoped<IChannelApp, ChannelApp>()
+                .AddScoped<IChannelService, ChannelService>();
 
             services
                 .AddElasticSearch()
@@ -89,13 +83,9 @@ namespace MattCanello.NewsFeed.AdminApi
                 .Decorate<IElasticSearchManagementRepository, CachedElasticSearchManagementRepository>();
 
             services
-                .Decorate<ICreateFeedApp, CreateFeedAppPublishEventDecorator>()
-                .Decorate<ICreateFeedApp, CreateFeedAppLogDecorator>()
-                .Decorate<ICreateFeedApp, CreateFeedAppMetricsDecorator>();
-
-            services
-                .Decorate<IUpdateFeedApp, UpdateFeedAppLogDecorator>()
-                .Decorate<IUpdateFeedApp, UpdateFeedAppMetricsDecorator>();
+                .Decorate<IFeedApp, FeedAppPublishEventDecorator>()
+                .Decorate<IFeedApp, FeedAppLogDecorator>()
+                .Decorate<IFeedApp, FeedAppMetricsDecorator>();
 
             services
                 .Decorate<IChannelApp, ChannelAppLogDecorator>()

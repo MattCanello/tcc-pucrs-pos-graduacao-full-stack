@@ -9,14 +9,12 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
     [ApiController]
     public class FeedController : ControllerBase
     {
-        private readonly ICreateFeedApp _createFeedApp;
-        private readonly IUpdateFeedApp _updateFeedApp;
+        private readonly IFeedApp _feedApp;
         private readonly IFeedRepository _feedRepository;
 
-        public FeedController(ICreateFeedApp createFeedApp, IUpdateFeedApp updateFeedApp, IFeedRepository feedRepository)
+        public FeedController(IFeedApp feedApp, IFeedRepository feedRepository)
         {
-            _createFeedApp = createFeedApp;
-            _updateFeedApp = updateFeedApp;
+            _feedApp = feedApp;
             _feedRepository = feedRepository;
         }
 
@@ -48,7 +46,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var feed = await _createFeedApp.CreateFeedAsync(command, cancellationToken);
+            var feed = await _feedApp.CreateFeedAsync(command, cancellationToken);
 
             return CreatedAtAction(nameof(GetById), new { feedId = command.FeedId }, feed);
         }
@@ -62,7 +60,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var feed = await _updateFeedApp.UpdateFeedAsync(command, cancellationToken);
+            var feed = await _feedApp.UpdateFeedAsync(command, cancellationToken);
 
             return Ok(feed);
         }

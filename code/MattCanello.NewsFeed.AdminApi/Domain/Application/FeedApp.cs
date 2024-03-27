@@ -6,17 +6,17 @@ using MattCanello.NewsFeed.AdminApi.Domain.Models;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Application
 {
-    public sealed class CreateFeedApp : ICreateFeedApp
+    public sealed class FeedApp : IFeedApp
     {
         private readonly IFeedRepository _feedRepository;
-        private readonly IMapper _mapper;
         private readonly IChannelService _channelService;
+        private readonly IMapper _mapper;
 
-        public CreateFeedApp(IFeedRepository feedRepository, IMapper mapper, IChannelService channelService)
+        public FeedApp(IFeedRepository feedRepository, IChannelService channelService, IMapper mapper)
         {
             _feedRepository = feedRepository;
-            _mapper = mapper;
             _channelService = channelService;
+            _mapper = mapper;
         }
 
         public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
@@ -30,6 +30,23 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             feed.Channel = await _channelService.GetOrCreateAsync(createFeedCommand.ChannelId!, cancellationToken);
 
             feed = await _feedRepository.CreateAsync(feed, cancellationToken);
+
+            return feed;
+        }
+
+        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(command);
+
+            var feed = await _feedRepository.GetByIdAsync(command.FeedId!, cancellationToken)
+                ?? throw new FeedNotFoundException(command.FeedId!);
+
+            feed = _mapper.Map(command.Data, feed);
+
+            feed = await _feedRepository.UpdateAsync(feed, cancellationToken);
+
+            if (feed.Channel != null)
+                feed.Channel = await _channelService.UpdateChannelAsync(feed.Channel.ChannelId, command.Data!, cancellationToken);
 
             return feed;
         }

@@ -6,12 +6,12 @@ using MattCanello.NewsFeed.AdminApi.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Decorators
 {
-    public class CreateFeedAppPublishEventDecoratorTests
+    public class FeedAppPublishEventDecoratorTests
     {
         [Fact]
         public async Task CreateFeedAsync_GivenNullCommand_ShouldThrowException()
         {
-            var decorator = new CreateFeedAppPublishEventDecorator(null!, null!);
+            var decorator = new FeedAppPublishEventDecorator(null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => decorator.CreateFeedAsync(null!));
 
@@ -25,8 +25,8 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Decorators
             var hasEventBeenPublished = false;
             var eventPublisher = new MockedEventPublisher((feed) => hasEventBeenPublished = true);
 
-            var decorator = new CreateFeedAppPublishEventDecorator(
-                new MockedCreateFeedApp((cmd) => feed),
+            var decorator = new FeedAppPublishEventDecorator(
+                new MockedCreateFeedApp((cmd) => feed, (cmd) => feed),
                 new MockedEventPublisher((feed) => hasEventBeenPublished = true));
 
             var resultingFeed = await decorator.CreateFeedAsync(command);

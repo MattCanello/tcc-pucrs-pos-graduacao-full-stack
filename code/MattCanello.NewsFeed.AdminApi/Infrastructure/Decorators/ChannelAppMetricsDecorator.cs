@@ -14,7 +14,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
 
         public async Task<Channel> CreateAsync(CreateChannelCommand command, CancellationToken cancellationToken = default)
         {
-            using var activity = ActivitySources.ChannelApp.StartActivity("CreateAsync");
+            using var activity = ActivitySources.ChannelApp.StartActivity("CreateActivity");
 
             var response = await _channelApp.CreateAsync(command, cancellationToken);
 
@@ -25,7 +25,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
 
         public async Task<Channel> UpdateAsync(UpdateChannelCommand command, CancellationToken cancellationToken = default)
         {
-            using var activity = ActivitySources.ChannelApp.StartActivity("UpdateAsync");
+            using var activity = ActivitySources.ChannelApp.StartActivity("UpdateActivity");
 
             var response = await _channelApp.UpdateAsync(command, cancellationToken);
 
