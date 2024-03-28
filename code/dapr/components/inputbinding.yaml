@@ -47,3 +47,78 @@ spec:
     value: "search-api"
 scopes:
   - search-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: update-feed
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "rss-channels"
+  - name: clientID
+    value: "admin-api"
+  - name: consumerGroup
+    value: "admin-api"
+scopes:
+  - admin-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: create-feed
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "created-feeds"
+  - name: clientID
+    value: "rss-reader"
+  - name: consumerGroup
+    value: "rss-reader"
+scopes:
+  - rss-reader
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: register-feed
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "created-feeds"
+  - name: clientID
+    value: "cron-api"
+  - name: consumerGroup
+    value: "cron-api"
+scopes:
+  - cron-api

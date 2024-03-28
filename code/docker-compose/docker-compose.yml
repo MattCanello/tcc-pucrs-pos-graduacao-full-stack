@@ -196,6 +196,34 @@ services:
     volumes:
       - "../dapr/components/:/components"
 
+  mattcanello.newsfeed.adminapi:
+    container_name: admin-api
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedadminapi
+    build:
+      context: ..
+      dockerfile: ./MattCanello.NewsFeed.AdminApi/Dockerfile
+    depends_on:
+      - elasticsearch
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - "80"
+    networks:
+      - backend
+      
+  mattcanello.newsfeed.adminapi-dapr:
+    container_name: admin-api-dapr
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "admin-api", "-app-port", "80", "--components-path", "./components" ]
+    depends_on:
+      - mattcanello.newsfeed.adminapi
+      - kafka
+    restart: on-failure
+    network_mode: "service:mattcanello.newsfeed.adminapi"
+    volumes:
+      - "../dapr/components/:/components"
+
 volumes:
   redis_data:
     driver: local

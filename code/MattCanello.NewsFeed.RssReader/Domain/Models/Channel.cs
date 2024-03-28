@@ -12,6 +12,8 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Models
         public string? Description { get; set; }
         public string? Language { get; set; }
         public string? Copyright { get; set; }
-        public Image? Image { get; set; }
+
+        [DataType(DataType.ImageUrl)]
+        public string? ImageUrl { get; set; }
     }
 }

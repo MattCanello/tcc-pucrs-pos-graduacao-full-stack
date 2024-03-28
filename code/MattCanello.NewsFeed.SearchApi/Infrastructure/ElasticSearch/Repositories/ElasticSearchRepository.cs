@@ -1,6 +1,6 @@
-﻿using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Exceptions;
-using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Extensions;
+﻿using MattCanello.NewsFeed.Cross.ElasticSearch.Exceptions;
+using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
+using MattCanello.NewsFeed.SearchApi.Domain.Exceptions;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Interfaces;
 using Nest;
 
@@ -48,7 +48,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
             var isIndexNotFound = getDocumentResponse.ServerError.IsIndexNotFound();
 
-            var isEntryNotFound = getDocumentResponse.IsEntryNotFound();
+            var isEntryNotFound = getDocumentResponse.IsDocumentNotFound();
 
             if (isIndexNotFound || isEntryNotFound)
                 throw new DocumentNotFoundException(id);

@@ -10,9 +10,9 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
         {
             ArgumentNullException.ThrowIfNull(syndicationFeed);
 
-            Image? image = null;
+            string? imageUrl = null;
             if (syndicationFeed.ImageUrl != null)
-                image = new Image() { Url = syndicationFeed.ImageUrl?.ToString() };
+                imageUrl = syndicationFeed.ImageUrl?.ToString();
 
             return new Channel()
             {
@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
                 Language = syndicationFeed.Language,
                 Name = syndicationFeed.Title?.Text,
                 Url = syndicationFeed.Links?.FirstOrDefault()?.Uri?.ToString(),
-                Image = image
+                ImageUrl = imageUrl
             };
         }
     }
