@@ -3,6 +3,7 @@ using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Exceptions;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Application
 {
@@ -10,12 +11,14 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
     {
         private readonly IFeedRepository _feedRepository;
         private readonly IChannelService _channelService;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IMapper _mapper;
 
-        public FeedApp(IFeedRepository feedRepository, IChannelService channelService, IMapper mapper)
+        public FeedApp(IFeedRepository feedRepository, IChannelService channelService, IDateTimeProvider dateTimeProvider, IMapper mapper)
         {
             _feedRepository = feedRepository;
             _channelService = channelService;
+            _dateTimeProvider = dateTimeProvider;
             _mapper = mapper;
         }
 
@@ -26,6 +29,8 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             await CheckIfFeedExistsAsync(createFeedCommand.FeedId!, cancellationToken);
 
             var feed = _mapper.Map<FeedWithChannel>(createFeedCommand);
+
+            feed.CreatedAt = _dateTimeProvider.GetUtcNow();
 
             feed.Channel = await _channelService.GetOrCreateAsync(createFeedCommand.ChannelId!, cancellationToken);
 

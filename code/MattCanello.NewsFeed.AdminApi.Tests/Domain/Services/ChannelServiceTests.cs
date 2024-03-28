@@ -5,6 +5,7 @@ using MattCanello.NewsFeed.AdminApi.Domain.Models;
 using MattCanello.NewsFeed.AdminApi.Domain.Services;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles;
 using MattCanello.NewsFeed.AdminApi.Tests.Mocks;
+using MattCanello.NewsFeed.Cross.Abstractions.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
 {
@@ -13,7 +14,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         [Fact]
         public async Task GetOrCreateAsync_GivenNullChannelId_ShouldThrowException()
         {
-            var service = new ChannelService(null!, null!);
+            var service = new ChannelService(null!, null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.GetOrCreateAsync(null!));
 
@@ -25,6 +26,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         {
             var service = new ChannelService(
                 new MockedChannelRepository(),
+                new MockedDateTimeProvider(),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
             var channel = await service.GetOrCreateAsync(channelId);
@@ -38,6 +40,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         {
             var service = new ChannelService(
                 new MockedChannelRepository(channel),
+                new MockedDateTimeProvider(),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
             var resultingChannel = await service.GetOrCreateAsync(channel.ChannelId);
@@ -49,7 +52,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         [Theory, AutoData]
         public async Task UpdateChannelAsync_GivenNullChannelId_ShouldThrowException(RssChannel data)
         {
-            var service = new ChannelService(null!, null!);
+            var service = new ChannelService(null!, null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateChannelAsync(null!, data));
 
@@ -59,7 +62,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         [Theory, AutoData]
         public async Task UpdateChannelAsync_GivenNullData_ShouldThrowException(string channelId)
         {
-            var service = new ChannelService(null!, null!);
+            var service = new ChannelService(null!, null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateChannelAsync(channelId, null!));
 
@@ -67,10 +70,11 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
         }
 
         [Theory, AutoData]
-        public async Task UpdateChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, RssChannel data)
+        public async Task UpdateChannelAsync_GivenNewChannel_ShouldCreateChannel(string channelId, RssChannel data, DateTimeOffset now)
         {
             var service = new ChannelService(
                 new MockedChannelRepository(),
+                new MockedDateTimeProvider(now),
                 new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper());
 
             var channel = await service.UpdateChannelAsync(channelId, data);
@@ -81,6 +85,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
             Assert.Equal(data.ImageUrl, channel.ImageUrl);
             Assert.Equal(data.Url, channel.Url);
             Assert.Equal(data.Copyright, channel.Copyright);
+            Assert.Equal(now, channel.CreatedAt);
         }
 
         [Theory, AutoData]
@@ -91,6 +96,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Services
 
             var service = new ChannelService(
                 repository,
+                new MockedDateTimeProvider(),
                 mapping);
 
             var channel = await service.UpdateChannelAsync(channelId, data);

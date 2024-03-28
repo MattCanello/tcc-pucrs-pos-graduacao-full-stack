@@ -3,17 +3,20 @@ using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Exceptions;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Application
 {
     public sealed class ChannelApp : IChannelApp
     {
         private readonly IChannelRepository _channelRepository;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IMapper _mapper;
 
-        public ChannelApp(IChannelRepository channelRepository, IMapper mapper)
+        public ChannelApp(IChannelRepository channelRepository, IDateTimeProvider dateTimeProvider, IMapper mapper)
         {
             _channelRepository = channelRepository;
+            _dateTimeProvider = dateTimeProvider;
             _mapper = mapper;
         }
 
@@ -24,6 +27,8 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             await CheckIfChannelExistsAsync(command.ChannelId!, cancellationToken);
 
             var channel = _mapper.Map<Channel>(command);
+
+            channel.CreatedAt = _dateTimeProvider.GetUtcNow();
 
             channel = await _channelRepository.CreateAsync(channel, cancellationToken);
 

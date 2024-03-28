@@ -10,7 +10,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
         public FeedProfile()
         {
             CreateMap<CreateFeedCommand, FeedWithChannel>()
-                .ForMember(feed => feed.CreatedAt, o => o.MapFrom(command => DateTimeOffset.UtcNow))
+                .ForMember(feed => feed.CreatedAt, o => o.Ignore())
                 .ForMember(feed => feed.Channel, o => o.Ignore());
 
             CreateMap<FeedWithChannel, FeedElasticModel>()

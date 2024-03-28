@@ -22,8 +22,8 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
                 .ReverseMap();
 
             CreateMap<CreateChannelCommand, Channel>()
+                .ForMember(channel => channel.CreatedAt, o => o.Ignore())
                 .ForMember(channel => channel.ChannelId, o => o.MapFrom(command => command.ChannelId))
-                .ForMember(channel => channel.CreatedAt, o => o.MapFrom(command => DateTimeOffset.UtcNow))
                 .ForMember(channel => channel.Copyright, o => o.MapFrom(command => command.Data != null ? command.Data.Copyright : null))
                 .ForMember(channel => channel.ImageUrl, o => o.MapFrom(command => command.Data != null ? command.Data.ImageUrl : null))
                 .ForMember(channel => channel.Name, o => o.MapFrom(command => command.Data != null ? command.Data.Name : null))

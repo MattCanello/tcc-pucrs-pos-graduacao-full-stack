@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MattCanello.NewsFeed.AdminApi\MattCanello.NewsFeed.AdminApi.csproj" />
+    <ProjectReference Include="..\MattCanello.NewsFeed.Cross.Abstractions.Tests\MattCanello.NewsFeed.Cross.Abstractions.Tests.csproj" />
   </ItemGroup>
 
 </Project>
