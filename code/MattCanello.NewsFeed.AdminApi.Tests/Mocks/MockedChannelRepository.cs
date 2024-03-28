@@ -1,5 +1,7 @@
-﻿using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.AdminApi.Domain.Commands;
+using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.AdminApi.Domain.Responses;
 
 namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
 {
@@ -42,6 +44,16 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
                 return Task.FromResult<Channel?>(channel);
 
             return Task.FromResult<Channel?>(null);
+        }
+
+        public Task<QueryResponse<Channel>> QueryAsync(QueryCommand command, CancellationToken cancellationToken = default)
+        {
+            var results = _data.Values
+                .OrderBy(item => item.ChannelId)
+                .Skip(command.Skip ?? 0)
+                .Take(command.PageSize ?? QueryCommand.DefaultPageSize);
+
+            return Task.FromResult(new QueryResponse<Channel>(_data.Count, results));
         }
 
         public Task<Channel> UpdateAsync(Channel channel, CancellationToken cancellationToken = default)
