@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Factories
             _bindingRequestFactory = bindingRequestFactory;
         }
 
-        public BindingRequest CreateNewFeedCreatedEvent(Feed feed, string bindingName)
+        public BindingRequest CreateNewFeedCreatedEvent(FeedWithChannel feed, string bindingName)
         {
             ArgumentNullException.ThrowIfNull(feed);
             ArgumentNullException.ThrowIfNull(bindingName);

@@ -4,6 +4,6 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
 {
     public interface IEventPublisher
     {
-        Task PublishFeedCreatedEventAsync(Feed feed, CancellationToken cancellationToken = default);
+        Task PublishFeedCreatedEventAsync(FeedWithChannel feed, CancellationToken cancellationToken = default);
     }
 }

@@ -5,6 +5,6 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Interfaces
 {
     public interface IEventFactory
     {
-        BindingRequest CreateNewFeedCreatedEvent(Feed feed, string bindingName);
+        BindingRequest CreateNewFeedCreatedEvent(FeedWithChannel feed, string bindingName);
     }
 }

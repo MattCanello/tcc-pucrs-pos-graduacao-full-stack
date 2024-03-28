@@ -1,4 +1,6 @@
-﻿using MattCanello.NewsFeed.AdminApi.Domain.Models;
+﻿using MattCanello.NewsFeed.AdminApi.Domain.Commands;
+using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.AdminApi.Domain.Responses;
 
 namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
 {
@@ -9,5 +11,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Interfaces
         Task<Channel> CreateAsync(Channel channel, CancellationToken cancellationToken = default);
 
         Task<Channel> UpdateAsync(Channel channel, CancellationToken cancellationToken = default);
+
+        Task<QueryResponse<Channel>> QueryAsync(QueryCommand command, CancellationToken cancellationToken = default);
     }
 }

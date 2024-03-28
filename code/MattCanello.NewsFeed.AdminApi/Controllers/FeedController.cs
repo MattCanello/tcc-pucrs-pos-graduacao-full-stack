@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         [HttpGet("feed/{feedId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedWithChannel))]
         public async Task<IActionResult> GetById(
             [FromRoute, Required, StringLength(100)] string feedId,
             CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         [HttpPost("create-feed")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FeedWithChannel))]
         public async Task<IActionResult> Create([FromBody] CreateFeedCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
@@ -54,7 +54,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         [HttpPost("update-feed")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedWithChannel))]
         public async Task<IActionResult> UpdateFeed([FromBody, Required] UpdateFeedCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
@@ -63,6 +63,23 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             var feed = await _feedApp.UpdateFeedAsync(command, cancellationToken);
 
             return Ok(feed);
+        }
+
+        [HttpGet("feed")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
+        public async Task<IActionResult> Query([FromQuery]QueryCommand command, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _feedRepository.QueryAsync(command, cancellationToken);
+
+            if (response.Total == 0)
+                return NoContent();
+
+            return Ok(response);
         }
     }
 }

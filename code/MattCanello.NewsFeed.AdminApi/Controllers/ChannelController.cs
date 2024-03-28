@@ -62,5 +62,22 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
 
             return Ok(channel);
         }
+
+        [HttpGet("channel")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedWithChannel))]
+        public async Task<IActionResult> Query([FromQuery] QueryCommand command, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _channelRepository.QueryAsync(command, cancellationToken);
+
+            if (response.Total == 0)
+                return NoContent();
+
+            return Ok(response);
+        }
     }
 }

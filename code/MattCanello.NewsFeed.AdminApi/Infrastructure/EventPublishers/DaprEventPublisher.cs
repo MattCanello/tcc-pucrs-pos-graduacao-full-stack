@@ -17,7 +17,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.EventPublishers
             _eventFactory = eventFactory;
         }
 
-        public async Task PublishFeedCreatedEventAsync(Feed feed, CancellationToken cancellationToken = default)
+        public async Task PublishFeedCreatedEventAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feed);
 

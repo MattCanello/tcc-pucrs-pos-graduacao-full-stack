@@ -20,7 +20,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Decorators
         }
 
         [Theory, AutoData]
-        public async Task CreateFeedAsync_GivenValidCommand_ShouldPublishEvent(CreateFeedCommand command, Feed feed)
+        public async Task CreateFeedAsync_GivenValidCommand_ShouldPublishEvent(CreateFeedCommand command, FeedWithChannel feed)
         {
             var hasEventBeenPublished = false;
             var eventPublisher = new MockedEventPublisher((feed) => hasEventBeenPublished = true);

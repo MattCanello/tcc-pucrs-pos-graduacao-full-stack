@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
             _logger = logger;
         }
 
-        public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
         {
             using var state = _logger.BeginScope(createFeedCommand);
 
@@ -28,7 +28,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
             return feed;
         }
 
-        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
         {
             using var state = _logger.BeginScope(command);
 

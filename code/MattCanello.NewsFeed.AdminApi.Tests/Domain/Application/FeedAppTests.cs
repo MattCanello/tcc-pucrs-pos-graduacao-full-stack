@@ -69,7 +69,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task CreateFeedAsync_GivenExistingFeedId_ShouldThrowException(CreateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<FeedProfile>()).CreateMapper();
-            var feed = mapper.Map<Feed>(command);
+            var feed = mapper.Map<FeedWithChannel>(command);
             var feedRepository = new MockedFeedRepository(feed);
 
             var app = new FeedApp(
@@ -138,7 +138,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task UpdateFeedAsync_GivenUpdatedDataOnEmptyFeed_ShouldUpdateFeed(string channelId, string feedUrl, UpdateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-            var feed = new Feed() { FeedId = command.FeedId!, Url = feedUrl, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
+            var feed = new FeedWithChannel() { FeedId = command.FeedId!, Url = feedUrl, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
 
             var app = new FeedApp(
                 new MockedFeedRepository(feed), 
@@ -157,7 +157,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         }
 
         [Theory, AutoData]
-        public async Task UpdateFeedAsync_GivenUpdatedDataOnFilledFeed_ShouldNotUpdateFeed(Feed feed, UpdateFeedCommand command)
+        public async Task UpdateFeedAsync_GivenUpdatedDataOnFilledFeed_ShouldNotUpdateFeed(FeedWithChannel feed, UpdateFeedCommand command)
         {
             command.FeedId = feed.FeedId;
 
@@ -180,7 +180,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         public async Task UpdateFeedAsync_GivenNewChannel_ShouldCreateChannel(string channelId, UpdateFeedCommand command)
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
-            var feed = new Feed() { FeedId = command.FeedId!, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
+            var feed = new FeedWithChannel() { FeedId = command.FeedId!, Channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId } };
 
             var app = new FeedApp(
                 new MockedFeedRepository(feed),
@@ -205,7 +205,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         [Theory, AutoData]
         public async Task UpdateFeedAsync_GivenExistingEmptyChannel_ShouldUpdateChannel(string channelId, UpdateFeedCommand command)
         {
-            var feed = new Feed() { FeedId = command.FeedId!, Channel = new Channel() { ChannelId = channelId } };
+            var feed = new FeedWithChannel() { FeedId = command.FeedId!, Channel = new Channel() { ChannelId = channelId } };
 
             var app = new FeedApp(
                 new MockedFeedRepository(feed),
@@ -232,7 +232,7 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Domain.Application
         {
             var mapper = new MapperConfiguration(config => config.AddProfile<ChannelProfile>()).CreateMapper();
             var channel = mapper.Map<Channel>(command.Channel) with { ChannelId = channelId };
-            var feed = new Feed() { FeedId = command.FeedId!, Channel = channel };
+            var feed = new FeedWithChannel() { FeedId = command.FeedId!, Channel = channel };
 
             var app = new FeedApp(
                 new MockedFeedRepository(feed),

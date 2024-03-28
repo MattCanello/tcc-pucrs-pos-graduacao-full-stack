@@ -5,33 +5,33 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
 {
     sealed class MockedFeedRepository : IFeedRepository
     {
-        private readonly IDictionary<string, Feed> _data;
+        private readonly IDictionary<string, FeedWithChannel> _data;
 
         public MockedFeedRepository() 
             : this(data: null) { }
 
-        public MockedFeedRepository(Feed feed)
-            : this(new Dictionary<string, Feed>(capacity: 1) { { feed.FeedId, feed } }) { }
+        public MockedFeedRepository(FeedWithChannel feed)
+            : this(new Dictionary<string, FeedWithChannel>(capacity: 1) { { feed.FeedId, feed } }) { }
 
-        public MockedFeedRepository(IDictionary<string, Feed>? data = null)
-            => _data = data ?? new Dictionary<string, Feed>();
+        public MockedFeedRepository(IDictionary<string, FeedWithChannel>? data = null)
+            => _data = data ?? new Dictionary<string, FeedWithChannel>();
 
-        public Task<Feed> CreateAsync(Feed feed, CancellationToken cancellationToken = default)
+        public Task<FeedWithChannel> CreateAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             _data[feed.FeedId] = feed;
 
             return Task.FromResult(feed);
         }
 
-        public Task<Feed?> GetByIdAsync(string feedId, CancellationToken cancellationToken = default)
+        public Task<FeedWithChannel?> GetByIdAsync(string feedId, CancellationToken cancellationToken = default)
         {
-            if (_data.TryGetValue(feedId, out Feed? feed))
-                return Task.FromResult<Feed?>(feed);
+            if (_data.TryGetValue(feedId, out FeedWithChannel? feed))
+                return Task.FromResult<FeedWithChannel?>(feed);
 
-            return Task.FromResult<Feed?>(null);
+            return Task.FromResult<FeedWithChannel?>(null);
         }
 
-        public Task<Feed> UpdateAsync(Feed feed, CancellationToken cancellationToken = default)
+        public Task<FeedWithChannel> UpdateAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             _data[feed.FeedId] = feed;
 

@@ -12,7 +12,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
         public FeedAppMetricsDecorator(IFeedApp innerApp) 
             => _innerApp = innerApp;
 
-        public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
         {
             using var activity = ActivitySources.FeedApp.StartActivity("CreateFeedActivity");
 
@@ -25,7 +25,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Decorators
             return response;
         }
 
-        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
         {
             using var activity = ActivitySources.FeedApp.StartActivity("UpdateFeedActivity");
 

@@ -5,12 +5,12 @@ namespace MattCanello.NewsFeed.AdminApi.Tests.Mocks
 {
     sealed class MockedEventPublisher : IEventPublisher
     {
-        private readonly Action<Feed> _onPublish;
+        private readonly Action<FeedWithChannel> _onPublish;
 
-        public MockedEventPublisher(Action<Feed> onPublish) 
+        public MockedEventPublisher(Action<FeedWithChannel> onPublish) 
             => _onPublish = onPublish ?? throw new ArgumentNullException(nameof(onPublish));
 
-        public Task PublishFeedCreatedEventAsync(Feed feed, CancellationToken cancellationToken = default)
+        public Task PublishFeedCreatedEventAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             _onPublish(feed);
 

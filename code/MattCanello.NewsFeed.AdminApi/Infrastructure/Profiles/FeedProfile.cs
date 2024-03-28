@@ -9,17 +9,19 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles
     {
         public FeedProfile()
         {
-            CreateMap<CreateFeedCommand, Feed>()
+            CreateMap<CreateFeedCommand, FeedWithChannel>()
                 .ForMember(feed => feed.CreatedAt, o => o.MapFrom(command => DateTimeOffset.UtcNow))
                 .ForMember(feed => feed.Channel, o => o.Ignore());
 
-            CreateMap<Feed, FeedElasticModel>()
+            CreateMap<FeedWithChannel, FeedElasticModel>()
                 .ForMember(elastic => elastic.ChannelId, o => o.MapFrom(feed => feed.Channel.ChannelId));
 
-            CreateMap<FeedElasticModel, Feed>()
+            CreateMap<FeedElasticModel, FeedWithChannel>()
                 .ForMember(feed => feed.Channel, o => o.Ignore());
 
-            CreateMap<RssChannel, Feed>()
+            CreateMap<FeedElasticModel, Feed>();
+
+            CreateMap<RssChannel, FeedWithChannel>()
                 .ForMember(feed => feed.FeedId, o => o.Ignore())
                 .ForMember(feed => feed.Channel, o => o.Ignore())
                 .ForMember(feed => feed.Url, o => o.Ignore())

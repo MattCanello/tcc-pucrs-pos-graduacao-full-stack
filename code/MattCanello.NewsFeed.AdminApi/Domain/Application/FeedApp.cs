@@ -19,13 +19,13 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             _mapper = mapper;
         }
 
-        public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(createFeedCommand);
 
             await CheckIfFeedExistsAsync(createFeedCommand.FeedId!, cancellationToken);
 
-            var feed = _mapper.Map<Feed>(createFeedCommand);
+            var feed = _mapper.Map<FeedWithChannel>(createFeedCommand);
 
             feed.Channel = await _channelService.GetOrCreateAsync(createFeedCommand.ChannelId!, cancellationToken);
 
@@ -34,7 +34,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Application
             return feed;
         }
 
-        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(command);
 

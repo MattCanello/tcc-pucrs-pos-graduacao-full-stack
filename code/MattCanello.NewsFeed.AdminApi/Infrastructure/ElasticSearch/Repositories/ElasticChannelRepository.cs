@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.AdminApi.Domain.Responses;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Models;
 
@@ -55,6 +57,22 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             var channel = _mapper.Map<Channel>(elasticModel);
 
             return channel;
+        }
+
+        public async Task<QueryResponse<Channel>> QueryAsync(QueryCommand command, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(command);
+
+            var result = await _elasticSearchRepository.QueryAsync<ChannelElasticModel>(
+                command.PageSize ?? QueryCommand.DefaultPageSize,
+                command.Skip ?? 0,
+                ChannelsIndexName,
+                sort => sort.Ascending(t => t.ChannelId),
+                cancellationToken);
+
+            return new QueryResponse<Channel>(
+                result.Total,
+                result.Items.Select(item => _mapper.Map<Channel>(item)));
         }
 
         private async Task EnsureIndexExistsAsync(CancellationToken cancellationToken = default)

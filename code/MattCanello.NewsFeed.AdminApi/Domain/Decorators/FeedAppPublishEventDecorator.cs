@@ -15,7 +15,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Decorators
             _eventPublisher = eventPublisher;
         }
 
-        public async Task<Feed> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> CreateFeedAsync(CreateFeedCommand createFeedCommand, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(createFeedCommand);
 
@@ -26,7 +26,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Decorators
             return feed;
         }
 
-        public async Task<Feed> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default) 
+        public async Task<FeedWithChannel> UpdateFeedAsync(UpdateFeedCommand command, CancellationToken cancellationToken = default) 
             => await _app.UpdateFeedAsync(command, cancellationToken);
     }
 }

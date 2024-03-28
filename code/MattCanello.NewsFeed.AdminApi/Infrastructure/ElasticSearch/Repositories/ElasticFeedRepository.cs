@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.AdminApi.Domain.Responses;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Models;
 
@@ -26,7 +28,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             _mapper = mapper;
         }
 
-        public async Task<Feed> CreateAsync(Feed feed, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> CreateAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feed);
 
@@ -39,13 +41,13 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             return feed;
         }
 
-        public async Task<Feed?> GetByIdAsync(string feedId, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel?> GetByIdAsync(string feedId, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
             var elasticModel = await _elasticSearchRepository.GetByIdAsync<FeedElasticModel>(feedId, FeedsIndexName, cancellationToken);
 
-            var feed = _mapper.Map<Feed>(elasticModel);
+            var feed = _mapper.Map<FeedWithChannel>(elasticModel);
 
             if (feed != null && !string.IsNullOrEmpty(elasticModel?.ChannelId))
                 feed.Channel = await _channelRepository.GetByIdAsync(elasticModel.ChannelId, cancellationToken);
@@ -53,7 +55,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             return feed;
         }
 
-        public async Task<Feed> UpdateAsync(Feed feed, CancellationToken cancellationToken = default)
+        public async Task<FeedWithChannel> UpdateAsync(FeedWithChannel feed, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feed);
 
@@ -64,6 +66,22 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
             await _elasticSearchRepository.IndexAsync(feed.FeedId, elasticModel, FeedsIndexName, cancellationToken);
 
             return feed;
+        }
+
+        public async Task<QueryResponse<Feed>> QueryAsync(QueryCommand command, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(command);
+
+            var result = await _elasticSearchRepository.QueryAsync<FeedElasticModel>(
+                command.PageSize ?? QueryCommand.DefaultPageSize, 
+                command.Skip ?? 0, 
+                FeedsIndexName,
+                sort => sort.Ascending(t => t.FeedId),
+                cancellationToken);
+
+            return new QueryResponse<Feed>(
+                result.Total,
+                result.Items.Select(item => _mapper.Map<Feed>(item)));
         }
 
         private async Task EnsureIndexExistsAsync(CancellationToken cancellationToken = default)

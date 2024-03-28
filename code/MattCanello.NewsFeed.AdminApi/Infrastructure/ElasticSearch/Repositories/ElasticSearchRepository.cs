@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
+﻿using MattCanello.NewsFeed.AdminApi.Domain.Responses;
+using MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Interfaces;
 using MattCanello.NewsFeed.Cross.ElasticSearch.Exceptions;
 using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using Nest;
@@ -74,6 +75,48 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.ElasticSearch.Repositorie
                 indexName,
                 getResponse.ServerError?.Error?.Reason,
                 getResponse.OriginalException);
+        }
+
+        public async Task<QueryResponse<TModel>> QueryAsync<TModel>(
+            int pageSize, 
+            int skip, 
+            string indexName, 
+            Func<SortDescriptor<TModel>, IPromise<IList<ISort>>>? sortSelector = null, 
+            CancellationToken cancellationToken = default) where TModel : class, new()
+        {
+            ArgumentNullException.ThrowIfNull(indexName);
+
+            if (pageSize <= 0)
+                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "Page size must be greater than zero");
+
+            if (skip < 0)
+                throw new ArgumentOutOfRangeException(nameof(skip), skip, "Skip must be greater than or equal to zero");
+
+            var result = await _elasticClient.SearchAsync<TModel>(searchBuilder => 
+            { 
+                searchBuilder
+                    .Index(indexName)
+                    .Skip(skip)
+                    .Take(pageSize);
+
+                if (sortSelector != null)
+                    searchBuilder.Sort(sortSelector);
+
+                return searchBuilder;
+            }, cancellationToken);
+
+            if (result.IsIndexNotFound())
+                return QueryResponse<TModel>.Empty;
+
+            if (result.IsValid)
+                return new QueryResponse<TModel>(
+                    result.Total,
+                    result.Documents);
+
+            throw new ElasticSearchException(
+                indexName,
+                result.ServerError?.Error?.Reason,
+                result.OriginalException);
         }
     }
 }

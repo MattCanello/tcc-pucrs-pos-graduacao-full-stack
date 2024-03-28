@@ -3,7 +3,7 @@
 namespace MattCanello.NewsFeed.AdminApi.Domain.Models
 {
     [Serializable]
-    public sealed class Feed
+    public sealed class FeedWithChannel
     {
         [Required]
         [StringLength(100)]
@@ -13,9 +13,7 @@ namespace MattCanello.NewsFeed.AdminApi.Domain.Models
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string ChannelId { get; set; }
+        public Channel? Channel { get; set; }
 
         public string? Name { get; set; }
 
