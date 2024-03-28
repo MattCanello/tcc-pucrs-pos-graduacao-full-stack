@@ -12,6 +12,8 @@ using MattCanello.NewsFeed.AdminApi.Infrastructure.Filters;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Profiles;
 using MattCanello.NewsFeed.AdminApi.Infrastructure.Telemetry;
+using MattCanello.NewsFeed.Cross.Abstractions;
+using MattCanello.NewsFeed.Cross.Abstractions.Interfaces;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.ElasticSearch.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
@@ -60,6 +62,9 @@ namespace MattCanello.NewsFeed.AdminApi
 
         private static void AddAppServices(this IServiceCollection services)
         {
+            services
+                .AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
+
             services
                 .AddScoped<IFeedApp, FeedApp>()
                 .AddScoped<IChannelApp, ChannelApp>()
