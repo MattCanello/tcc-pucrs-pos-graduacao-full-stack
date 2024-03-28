@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.CronApi.Controllers
 {
-    [Route("api/feed")]
     [ApiController]
     public class FeedController : ControllerBase
     {
@@ -16,7 +15,7 @@ namespace MattCanello.NewsFeed.CronApi.Controllers
             _registerFeedHandler = registerFeedHandler;
         }
 
-        [HttpPost("")]
+        [HttpPost("register-feed")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
         public async Task<IActionResult> Register(RegisterFeedCommand command, CancellationToken cancellationToken = default)

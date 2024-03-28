@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MattCanello.NewsFeed.RssReader.Controllers
 {
-    [Route("api/feed")]
     [ApiController]
     public class FeedController : ControllerBase
     {
@@ -19,7 +18,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
             _createFeedHandler = createFeedHandler;
         }
 
-        [HttpGet("{feedId}")]
+        [HttpGet("feed/{feedId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
         public async Task<IActionResult> Get(string feedId, CancellationToken cancellationToken = default)
@@ -32,7 +31,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
             return Ok(feed);
         }
 
-        [HttpPost("")]
+        [HttpPost("create-feed")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Feed))]
         public async Task<IActionResult> Create(CreateFeedCommand command)
@@ -44,7 +43,7 @@ namespace MattCanello.NewsFeed.RssReader.Controllers
             return CreatedAtAction(nameof(Get), new { feedId = feed.FeedId }, feed);
         }
 
-        [HttpDelete("{feedId}")]
+        [HttpDelete("feed/{feedId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(string feedId, CancellationToken cancellationToken = default)
         {
