@@ -49,6 +49,10 @@ export default defineConfig({
             '^/channels': {
                 target: 'http://localhost:5191/',
                 secure: false
+            },
+            '^/articles': {
+                target: 'http://localhost:5191/',
+                secure: false
             }
         },
         port: 5173,

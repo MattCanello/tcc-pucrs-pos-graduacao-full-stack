@@ -11,7 +11,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             // Add services to the container.
             builder.Services.AddSingleton<IChannelRepository, MockedChannelRepository>();
-
+            builder.Services.AddSingleton<IArticleRepository, MockedArticleRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
