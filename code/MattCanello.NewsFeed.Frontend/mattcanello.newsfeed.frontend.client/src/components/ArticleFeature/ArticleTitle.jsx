@@ -1,11 +1,11 @@
 import React from 'react';
 import '../../style/ArticleTitle.css';
 
-function ArticleTitle() {
+function ArticleTitle({ title }) {
   return (
       <h2>
-          <a href="the-pet-i-ll-never-forget.html">
-              The pet I'll never forget: Mrs Hinch on her alpacas, 'who fill my gardin with happiness'
+          <a href="#">
+              {title}
           </a>
       </h2>
   );

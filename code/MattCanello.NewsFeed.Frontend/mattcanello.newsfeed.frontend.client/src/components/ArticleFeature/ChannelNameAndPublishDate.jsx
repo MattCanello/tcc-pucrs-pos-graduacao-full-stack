@@ -2,9 +2,9 @@ import React from 'react';
 import '../../style/ChannelNameAndPublishDate.css';
 import Time from './Time';
 
-function ChannelNameAndPublishDate() {
+function ChannelNameAndPublishDate({ channelName, publishDate }) {
     return (
-        <small>The Guardian, <Time /></small>
+        <small>{channelName}, <Time dateTimeString={publishDate} /></small>
   );
 }
 

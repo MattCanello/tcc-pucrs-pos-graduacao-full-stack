@@ -5,16 +5,16 @@ import ArticleDetails from './ArticleDetails';
 import ArticleAuthor from './ArticleAuthor';
 import ArticleTitle from './ArticleTitle';
 
-function Article() {
+function Article({ title, channelName, publishDate, imageTitle, imageSrc, summary, description, authors }) {
   return (
       <article>
-          <Thumbnail />
+          <Thumbnail channelName={channelName} publishDate={publishDate} imageTitle={imageTitle} imageSrc={imageSrc} />
 
-          <ArticleTitle />
+          <ArticleTitle title={title} />
 
-          <ArticleDetails />
+          <ArticleDetails summary={summary} description={description} />
 
-          <ArticleAuthor />
+          <ArticleAuthor authors={authors} />
       </article>
   );
 }
