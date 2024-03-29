@@ -1,0 +1,22 @@
+main > header {
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    margin: 0 auto;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+    main > header > h1 {
+        font-size: xxx-large;
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        margin: 0 auto;
+    }
+
+        main > header > h1 > a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: "Lato", sans-serif;
+            font-weight: 100;
+            margin: 0 auto;
+        }

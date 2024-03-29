@@ -1,0 +1,23 @@
+main > section > article > details {
+    color: var(--medium);
+    padding-top: 0;
+    font-size: small;
+}
+
+    main > section > article > details > summary::marker {
+        content: "+";
+    }
+
+    main > section > article > details[open] > summary::marker {
+        content: "-";
+    }
+
+    main > section > article > p,
+    main > section > article > details > p {
+        margin-top: 1em;
+        color: var(--medium);
+    }
+
+main > section > article > p {
+    margin: 1rem;
+}

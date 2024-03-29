@@ -1,0 +1,8 @@
+main > section > article {
+    width: 30rem;
+    max-width: 30rem;
+    background-color: var(--background-dark);
+    padding-bottom: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
+    box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+}

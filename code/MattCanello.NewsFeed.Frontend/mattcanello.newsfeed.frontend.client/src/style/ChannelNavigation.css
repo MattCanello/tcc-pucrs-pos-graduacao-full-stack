@@ -1,0 +1,45 @@
+main > header > nav > ol {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: auto;
+    transform: rotateX(180deg);
+    margin-top: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hightlight) var(--dark);
+}
+
+    main > header > nav > ol::-webkit-scrollbar-track {
+        background: var(--background-dark);
+    }
+
+    main > header > nav > ol::-webkit-scrollbar-thumb {
+        background: var(--dark);
+    }
+
+        main > header > nav > ol::-webkit-scrollbar-thumb:hover {
+            background: var(--hightlight);
+        }
+
+    main > header > nav > ol > li {
+        list-style: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        cursor: default;
+        align-self: center;
+        white-space: nowrap;
+        transform: rotateX(180deg);
+        font-size: small;
+        margin-bottom: 0.25rem;
+    }
+
+        main > header > nav > ol > li > a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+        }
+
+        main > header > nav > ol > li.selected > a {
+            border-bottom: 0.15rem solid;
+            border-bottom-color: var(--hightlight);
+        }

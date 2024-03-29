@@ -1,0 +1,10 @@
+main > section {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+}

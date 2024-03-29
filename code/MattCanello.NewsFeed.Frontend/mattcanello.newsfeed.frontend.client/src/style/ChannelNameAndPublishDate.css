@@ -1,0 +1,10 @@
+main > section > article > figure > small {
+    position: absolute;
+    padding: 0.5rem;
+    font-size: x-small;
+    color: var(--text-light);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--transparent-dark);
+}

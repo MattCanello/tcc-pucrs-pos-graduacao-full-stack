@@ -1,0 +1,52 @@
+main > header > search {
+    border-radius: 25%;
+    height: 2em;
+}
+
+    main > header > search > form {
+        background-color: var(--medium);
+        color: var(--dark);
+        border: 0 none;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        height: 24px;
+        border-radius: 25%;
+    }
+
+        main > header > search > form > label {
+            background-color: var(--medium);
+            color: var(--dark);
+            border: 0 none;
+            height: 24px;
+        }
+
+            main > header > search > form > label:first-of-type {
+                border-top-left-radius: 25%;
+                border-bottom-left-radius: 25%;
+            }
+
+        main > header > search > form > input {
+            font-family: "Lato", sans-serif;
+            background-color: var(--medium);
+            color: var(--text-dark);
+            border: 0 none;
+            height: 24px;
+            flex-grow: 1;
+            padding-left: 0.25rem;
+        }
+
+            main > header > search > form > input::placeholder {
+                color: var(--dark);
+            }
+
+            main > header > search > form > input:focus + label:last-of-type {
+                display: none;
+            }
+
+        main > header > search > form > label:last-of-type {
+            border-top-right-radius: 25%;
+            border-bottom-right-radius: 25%;
+            width: 24px;
+            height: 24px;
+        }
