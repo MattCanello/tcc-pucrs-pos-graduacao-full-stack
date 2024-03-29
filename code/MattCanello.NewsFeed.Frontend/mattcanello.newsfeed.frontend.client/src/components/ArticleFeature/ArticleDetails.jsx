@@ -2,7 +2,8 @@ import React from 'react';
 import '../../style/ArticleDetails.css';
 
 function ArticleDetails({ summary, description }) {
-    const paragraphs = description.map(line => <p>{line}</p>);
+    let count = 0;
+    const paragraphs = description.map(line => <p key={count++}>{line}</p>);
 
     return (
         <details>

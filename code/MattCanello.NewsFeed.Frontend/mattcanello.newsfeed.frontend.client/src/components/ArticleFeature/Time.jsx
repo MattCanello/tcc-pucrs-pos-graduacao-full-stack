@@ -6,7 +6,7 @@ function Time({ dateTimeString }) {
     const localDateString = date.toLocaleDateString("pt-BR", formatOptions);
 
     return (
-        <time title={localDateString} datetime={date.toISOString()}>1 minuto atrás</time>
+        <time title={localDateString} dateTime={date.toISOString()}>1 minuto atrás</time>
   );
 }
 

@@ -2,16 +2,20 @@ import React from 'react';
 import '../../style/Search.css';
 
 function Search() {
-  return (
-      <search>
-          <form onsubmit="return false;">
-              <label for="searchInput" class="material-symbols-outlined">search</label>
-              <input type="search" placeholder="Busca..." name="searchInput" id="searchInput" />
+    return (
+        <search>
+            <form onSubmit={onSubmit}>
+                <label htmlFor="searchInput" className="material-symbols-outlined">search</label>
+                <input type="search" placeholder="Busca..." name="searchInput" id="searchInput" />
 
-              <label for="searchInput"></label>
-          </form>
-      </search>
-  );
+                <label htmlFor="searchInput"></label>
+            </form>
+        </search>
+    );
+
+    function onSubmit() {
+        return false;
+    }
 }
 
 export default Search;

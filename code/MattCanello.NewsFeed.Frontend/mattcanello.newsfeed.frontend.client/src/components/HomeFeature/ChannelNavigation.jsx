@@ -20,7 +20,7 @@ function ChannelNavigation() {
     return (
         <nav>
             <ol>
-                <li class="selected"><a href="#">Tudo</a></li>
+                <li className="selected"><a href="#">Tudo</a></li>
                 {channelData}
             </ol>
         </nav>
