@@ -1,3 +1,6 @@
+using MattCanello.NewsFeed.Frontend.Server.Interfaces;
+using MattCanello.NewsFeed.Frontend.Server.Mocks;
+
 namespace MattCanello.NewsFeed.Frontend.Server
 {
     public class Program
@@ -7,6 +10,8 @@ namespace MattCanello.NewsFeed.Frontend.Server
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton<IChannelRepository, MockedChannelRepository>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
