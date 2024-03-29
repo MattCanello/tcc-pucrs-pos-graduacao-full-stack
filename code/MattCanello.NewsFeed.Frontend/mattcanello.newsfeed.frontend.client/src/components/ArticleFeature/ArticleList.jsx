@@ -6,14 +6,7 @@ function ArticleList({ articles }) {
 
     const articleList = (articles || []).map(article => <Article
         key={article.id}
-        title={article.title}
-        channelName={article.channel.channelName}
-        publishDate={article.publishDate}
-        imageTitle={article.thumbnail.caption || article.thumbnail.credit || article.title}
-        imageSrc={article.thumbnail.imageUrl}
-        summary={article.details.summary}
-        description={article.details.lines}
-        authors={article.authors.map(author => author.name).join(", ")}
+        article={article}
     />);
 
     return (
