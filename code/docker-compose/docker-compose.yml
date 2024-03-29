@@ -224,6 +224,46 @@ services:
     volumes:
       - "../dapr/components/:/components"
 
+  mattcanello.newsfeed.frontend.server:
+    container_name: frontend-server
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedfrontendserver
+    depends_on:
+      - mattcanello.newsfeed.searchapi
+      - mattcanello.newsfeed.adminapi-dapr
+    build:
+      context: ..
+      dockerfile: ./MattCanello.NewsFeed.Frontend/MattCanello.NewsFeed.Frontend.Server/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5191:80"
+    networks:
+      - backend
+      
+  mattcanello.newsfeed.frontend.server-dapr:
+    container_name: frontend-server-dapr
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "frontend-server", "-app-port", "80", "--components-path", "./components" ]
+    depends_on:
+      - mattcanello.newsfeed.frontend.server
+    restart: on-failure
+    network_mode: "service:mattcanello.newsfeed.frontend.server"
+    volumes:
+      - "../dapr/components/:/components"
+      
+  mattcanello.newsfeed.frontend.client:
+    container_name: frontend-client
+    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedfrontendclient
+    depends_on:
+      - mattcanello.newsfeed.frontend.server
+    build:
+      context: ../MattCanello.NewsFeed.Frontend/mattcanello.newsfeed.frontend.client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - backend
+
 volumes:
   redis_data:
     driver: local
@@ -246,3 +286,4 @@ volumes:
 networks:
   backend:
     driver: bridge
+

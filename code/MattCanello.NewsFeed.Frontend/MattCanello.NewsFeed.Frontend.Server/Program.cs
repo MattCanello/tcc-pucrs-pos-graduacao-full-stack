@@ -28,6 +28,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.MapGet("/", () => Results.LocalRedirect("/swagger"));
             }
 
             app.UseAuthorization();
