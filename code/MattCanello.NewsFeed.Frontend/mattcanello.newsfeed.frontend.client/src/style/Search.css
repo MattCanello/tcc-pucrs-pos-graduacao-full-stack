@@ -50,3 +50,9 @@ main > header > search {
             width: 24px;
             height: 24px;
         }
+
+@media print {
+    main > header > search {
+        display: none;
+    }
+}

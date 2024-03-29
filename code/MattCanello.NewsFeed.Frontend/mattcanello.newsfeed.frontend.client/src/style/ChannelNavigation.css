@@ -43,3 +43,9 @@ main > header > nav > ol {
             border-bottom: 0.15rem solid;
             border-bottom-color: var(--hightlight);
         }
+
+@media print {
+    main > header > nav > ol {
+        display: none;
+    }
+}

@@ -1,10 +1,37 @@
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --transparent-dark: var(--darker);
+    }
+}
+
 main > section > article > figure > small {
-    position: absolute;
     padding: 0.5rem;
     font-size: x-small;
-    color: var(--text-light);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--transparent-dark);
+}
+
+@media screen {
+    main > section > article > figure > small {
+        position: absolute;
+        color: var(--text-light);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--transparent-dark);
+    }
+}
+
+@media print {
+    main > section > article > figure > small {
+        color: var(--text-dark);
+        border-top: 0.1rem solid;
+        border-top-color: var(--darker);
+        display: block;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article > figure > small {
+        position: unset;
+        background-color: unset;
+    }
 }
