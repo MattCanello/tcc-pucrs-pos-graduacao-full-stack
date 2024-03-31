@@ -7,27 +7,28 @@ namespace MattCanello.NewsFeed.Frontend.Server.Repositories
 {
     public sealed class AdminChannelRepository : IChannelRepository
     {
-        const int PageSize = 10;
-
         private readonly IAdminClient _adminClient;
         private readonly IMapper _mapper;
+        private readonly IChannelConfiguration _channelConfiguration;
 
-        public AdminChannelRepository(IAdminClient adminClient, IMapper mapper)
+        public AdminChannelRepository(IAdminClient adminClient, IMapper mapper, IChannelConfiguration channelConfiguration)
         {
             _adminClient = adminClient;
             _mapper = mapper;
+            _channelConfiguration = channelConfiguration;
         }
 
         public async Task<IEnumerable<Channel>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             int skip = 0;
-            bool hasMorePages = false;
+            bool hasMorePages;
             List<Channel>? channels = null;
             AdminQueryResponse<AdminChannel> results;
+            var bulkCount = _channelConfiguration.ChannelListBulkCount();
 
             do
             {
-                results = await _adminClient.QueryChannelsAsync(new AdminQueryCommand(PageSize, skip), cancellationToken);
+                results = await _adminClient.QueryChannelsAsync(new AdminQueryCommand(bulkCount, skip), cancellationToken);
 
                 channels ??= new List<Channel>(capacity: results.Total);
 
@@ -46,6 +47,5 @@ namespace MattCanello.NewsFeed.Frontend.Server.Repositories
 
             return channels;
         }
-
     }
 }

@@ -7,6 +7,7 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Commands
     public sealed record GetFeedCommand
     {
         public const int DefaultSize = 10;
+        public const int MaxPageSize = 100;
 
         public GetFeedCommand()
             : this(null, null, null) { }
@@ -20,7 +21,7 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Commands
 
         public string? FeedId { get; set; }
 
-        [Range(1, 100)]
+        [Range(1, MaxPageSize)]
         [DefaultValue(DefaultSize)]
         public int? Size { get; set; } = DefaultSize;
 

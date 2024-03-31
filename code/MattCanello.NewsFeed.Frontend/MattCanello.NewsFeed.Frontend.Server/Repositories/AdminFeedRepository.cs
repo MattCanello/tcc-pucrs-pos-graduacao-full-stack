@@ -27,16 +27,5 @@ namespace MattCanello.NewsFeed.Frontend.Server.Repositories
 
             return (feed, channel);
         }
-
-        public async Task<Feed> GetFeedAsync(string feedId, CancellationToken cancellationToken = default)
-        {
-            ArgumentNullException.ThrowIfNull(feedId);
-
-            var adminFeed = await _adminClient.GetFeedAsync(feedId, cancellationToken);
-
-            var feed = _mapper.Map<Feed>(adminFeed);
-
-            return feed;
-        }
     }
 }

@@ -18,9 +18,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Clients
         public async Task<AdminQueryResponse<AdminChannel>> QueryChannelsAsync(AdminQueryCommand queryCommand, CancellationToken cancellationToken = default)
             => await QueryAsync<AdminChannel>("/channel", queryCommand, cancellationToken);
 
-        public async Task<AdminQueryResponse<AdminFeed>> QueryFeedsAsync(AdminQueryCommand queryCommand, CancellationToken cancellationToken = default)
-            => await QueryAsync<AdminFeed>("/feed", queryCommand, cancellationToken);
-
         private async Task<AdminQueryResponse<TModel>> QueryAsync<TModel>(string baseUrl, AdminQueryCommand queryCommand, CancellationToken cancellationToken = default)
             where TModel : class, new()
         {
@@ -46,13 +43,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Clients
             ArgumentNullException.ThrowIfNull(feedId);
 
             return await SimpleGetAsync<AdminFeedWithChannel>($"/feed/{feedId}", cancellationToken);
-        }
-
-        public async Task<AdminChannel> GetChannelAsync(string channelId, CancellationToken cancellationToken = default)
-        {
-            ArgumentNullException.ThrowIfNull(channelId);
-
-            return await SimpleGetAsync<AdminChannel>($"/channel/{channelId}", cancellationToken);
         }
 
         private async Task<TModel> SimpleGetAsync<TModel>(string path, CancellationToken cancellationToken = default)

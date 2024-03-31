@@ -65,6 +65,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 .AddScoped<IFeedRepository, AdminFeedRepository>();
 
             services
+                .AddSingleton<IChannelConfiguration, ChannelConfiguration>()
+                .AddSingleton<IFrontPageConfiguration, FrontPageConfiguration>();
+
+            services
                 .AddAutoMapper(config =>
                 {
                     config.AddProfile<AdminProfile>();

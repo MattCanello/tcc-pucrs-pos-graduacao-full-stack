@@ -8,17 +8,20 @@ namespace MattCanello.NewsFeed.Frontend.Server.Application
         private readonly ISearchClient _searchClient;
         private readonly IFeedRepository _feedRepository;
         private readonly IArticleFactory _articleFactory;
+        private readonly IFrontPageConfiguration _frontPageConfiguration;
 
-        public ArticleApp(ISearchClient searchClient, IFeedRepository feedRepository, IArticleFactory articleFactory)
+        public ArticleApp(ISearchClient searchClient, IFeedRepository feedRepository, IArticleFactory articleFactory, IFrontPageConfiguration frontPageConfiguration)
         {
             _searchClient = searchClient;
             _feedRepository = feedRepository;
             _articleFactory = articleFactory;
+            _frontPageConfiguration = frontPageConfiguration;
         }
 
         public async Task<IEnumerable<Article>> GetFrontPageArticlesAsync(CancellationToken cancellationToken = default)
         {
-            var response = await _searchClient.GetRecentAsync(size: 10, cancellationToken: cancellationToken);
+            var numberOfArticles = _frontPageConfiguration.FrontPageNumberOfArticles();
+            var response = await _searchClient.GetRecentAsync(size: numberOfArticles, cancellationToken: cancellationToken);
             var articles = new List<Article>(capacity: response.Results.Count);
 
             foreach (var document in response.Results)

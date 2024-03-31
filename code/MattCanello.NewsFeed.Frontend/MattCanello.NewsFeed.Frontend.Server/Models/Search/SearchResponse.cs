@@ -16,11 +16,7 @@
 
             return new SearchResponse<TModel>()
             {
-                Paging = new SearchPaging()
-                {
-                    Size = command.PageSize,
-                    Skip = command.Skip
-                }
+                Paging = new SearchPaging(command.PageSize, command.Skip)
             };
         }
     }
