@@ -9,14 +9,19 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Application
     {
         private readonly IDocumentSearchRepository _documentSearchRepository;
 
-        public SearchApp(IDocumentSearchRepository documentSearchRepository)
-        {
-            _documentSearchRepository = documentSearchRepository;
-        }
+        public SearchApp(IDocumentSearchRepository documentSearchRepository) 
+            => _documentSearchRepository = documentSearchRepository;
 
         public async Task<SearchResponse<Document>> SearchAsync(SearchCommand searchCommand, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(searchCommand);
+
+            if (!string.IsNullOrEmpty(searchCommand.ChannelId))
+                return await _documentSearchRepository.SearchByChannelAsync(
+                    searchCommand.Query,
+                    searchCommand.Paging,
+                    searchCommand.ChannelId,
+                    cancellationToken);
 
             var response = await _documentSearchRepository.SearchAsync(
                 searchCommand.Query,

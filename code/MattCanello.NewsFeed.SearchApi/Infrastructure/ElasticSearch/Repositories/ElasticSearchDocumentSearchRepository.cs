@@ -27,6 +27,18 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
         {
             var indexName = GetIndexName(feedId)!;
 
+            return await SearchIndexAsync(indexName, query, paging, cancellationToken);
+        }
+
+        public async Task<DocumentSearchResponse> SearchByChannelAsync(string? query = null, Paging? paging = null, string? channelId = null, CancellationToken cancellationToken = default)
+        {
+            var indexName = GetIndexName($"{channelId}-*")!;
+
+            return await SearchIndexAsync(indexName, query, paging, cancellationToken);
+        }
+
+        private async Task<DocumentSearchResponse> SearchIndexAsync(IndexName indexName, string ? query = null, Paging? paging = null, CancellationToken cancellationToken = default)
+        {
             paging ??= new Paging();
 
             var response = await _elasticClient.SearchTemplateAsync<ElasticSearch.Models.Entry>(new SearchTemplateRequest(indexName)
