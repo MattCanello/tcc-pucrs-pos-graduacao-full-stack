@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/ChannelNavigation.css';
+import { Link, NavLink } from "react-router-dom";
 
 function ChannelNavigation() {
     const [channels, setChannels] = useState();
@@ -10,7 +11,19 @@ function ChannelNavigation() {
     }, []);
 
     function createListItems(channelList) {
-        return channelList.map(channel => <li key={channel.channelId}><a href={channel.channelId}>{channel.name}</a></li>);
+        return channelList.map(channel => createListItem(channel));
+    }
+
+    function createListItem(channel) {
+        var className = "";
+
+        return (
+            <li key={channel.channelId} className={className}>
+                <NavLink to={`/channel/${channel.channelId}`} className={({ isActive, isPending }) => isActive ? "selected" : isPending ? "pending" : ""}>
+                    {channel.name}
+                </NavLink>
+            </li>
+        );
     }
 
     const channelData = channels === undefined
@@ -20,14 +33,14 @@ function ChannelNavigation() {
     return (
         <nav>
             <ol>
-                <li className="selected"><a href="#">Tudo</a></li>
+                <li className="selected"><Link to="/">Tudo</Link></li>
                 {channelData}
             </ol>
         </nav>
     );
 
     async function populateChannels() {
-        const response = await fetch("channels");
+        const response = await fetch("/channels");
         const data = await response.json();
         setChannels(data);
     }

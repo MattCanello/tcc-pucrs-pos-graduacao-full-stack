@@ -5,10 +5,10 @@ import ArticleDetails from './ArticleDetails';
 import ArticleAuthor from './ArticleAuthor';
 import ArticleTitle from './ArticleTitle';
 
-function Article({ article }) {
+function Article({ article, options }) {
     function renderDetails() {
         if (article.details !== undefined) {
-            return <ArticleDetails summary={article.details.summary} description={article.details.lines} />
+            return <ArticleDetails summary={article.details.summary} description={article.details.lines} expanded={options ? options.expanded : false} />
         }
 
         return <ArticleDetails summary="" description={[]} />
@@ -23,7 +23,7 @@ function Article({ article }) {
     }
 
     return (
-        <article>
+        <article className={options ? options.expanded ? "expanded" : "" : ""}>
             <Thumbnail
                 channelName={article.channel.name}
                 publishDate={article.publishDate}
@@ -31,7 +31,7 @@ function Article({ article }) {
                 imageSrc={(article.thumbnail) ? article.thumbnail.imageUrl : ''}
             />
 
-            <ArticleTitle title={article.title} />
+            <ArticleTitle title={article.title} articleId={article.id} feedId={article.feed.feedId} />
 
             {renderDetails()}
 

@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 function AppName() {
   return (
       <h1>
-          <a href="/">News Feed</a>
+          <Link to="/">News Feed</Link>
       </h1>
   );
 }

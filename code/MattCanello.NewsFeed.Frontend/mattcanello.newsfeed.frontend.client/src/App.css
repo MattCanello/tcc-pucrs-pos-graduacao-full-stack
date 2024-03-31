@@ -19,3 +19,20 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+#loader {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+}
+
+.loading #loader {
+    z-index: 1000;
+    backdrop-filter: blur(0.25rem);
+    -webkit-backdrop-filter: blur(0.25rem);
+    opacity: 1;
+}

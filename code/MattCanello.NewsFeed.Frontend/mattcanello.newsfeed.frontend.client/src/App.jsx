@@ -1,28 +1,21 @@
-import { useEffect, useState } from 'react';
 import './App.css';
-import Header from './components/HomeFeature/Header';
-import ArticleList from './components/ArticleFeature/ArticleList';
+import Header from './components/Common/Header';
+import { Outlet, useNavigation } from "react-router-dom";
 
 function App() {
-    const [articles, setArticles] = useState();
+    const navigation = useNavigation();
 
-    useEffect(() => {
-        getHomePageArticles();
-    }, []);
+    console.log('navigation', navigation);
 
     return (
-        <main>
-            <Header />
+        <main className={navigation.state === "loading" ? "loading" : ""}>
+            {/* <div id="loader"></div>*/}
 
-            <ArticleList articles={articles} />
+            <Header displayChannels={true} />
+
+            <Outlet />
         </main>
     );
-
-    async function getHomePageArticles() {
-        const response = await fetch("articles");
-        const data = await response.json();
-        setArticles(data);
-    }
 }
 
 export default App;

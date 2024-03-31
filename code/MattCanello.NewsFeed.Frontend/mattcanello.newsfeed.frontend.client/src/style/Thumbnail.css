@@ -15,6 +15,11 @@
         main > section > article > figure > figcaption {
             display: none;
         }
+
+    main > section > article.expanded > figure > img {
+        width: 40rem;
+        max-width: 40rem;
+    }
 }
 
 @media print {
