@@ -45,5 +45,16 @@ namespace MattCanello.NewsFeed.Frontend.Server.Mocks
 
             return Task.FromResult(articles);
         }
+
+        public Task<Article?> GetArticleAsync(string feedId, string articleId, CancellationToken cancellationToken = default)
+        {
+            if (_article1.Feed!.FeedId == feedId && _article1.Id == articleId)
+                return Task.FromResult<Article?>(_article1);
+
+            if (_article2.Feed!.FeedId == feedId && _article2.Id == articleId)
+                return Task.FromResult<Article?>(_article2);
+
+            return Task.FromResult<Article?>(null);
+        }
     }
 }

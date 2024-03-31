@@ -34,5 +34,27 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
 
             return articles;
         }
+
+        public async Task<Article?> GetArticleAsync(string feedId, string articleId, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(feedId);
+            ArgumentNullException.ThrowIfNull(articleId);
+
+            var getDocumentTask = _searchClient.GetDocumentByIdAsync(feedId, articleId, cancellationToken);
+            var getFeedAndChannelTask = _feedRepository.GetFeedAndChannelAsync(feedId, cancellationToken);
+
+            await Task.WhenAll(getDocumentTask, getFeedAndChannelTask);
+
+            var document = getDocumentTask.Result;
+
+            if (document is null)
+                return null;
+
+            var (feed, channel) = getFeedAndChannelTask.Result;
+
+            var article = _articleFactory.FromSearch(document, channel, feed);
+
+            return article;
+        }
     }
 }

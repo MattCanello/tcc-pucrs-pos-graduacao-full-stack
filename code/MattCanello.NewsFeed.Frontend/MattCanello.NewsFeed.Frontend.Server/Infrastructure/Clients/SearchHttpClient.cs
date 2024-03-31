@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Search;
+using System.Net;
 using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
@@ -46,6 +47,22 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             return await response.Content.ReadFromJsonAsync<SearchResponse<SearchDocument>>(_jsonSerializerOptions, cancellationToken)
                 ?? SearchResponse<SearchDocument>.CreateEmpty(command);
+        }
+
+        public async Task<SearchDocument?> GetDocumentByIdAsync(string feedId, string id, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(feedId);
+            ArgumentNullException.ThrowIfNull(id);
+
+            var url = $"/feed/{feedId}/document/{id}";
+
+            using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<SearchDocument?>(_jsonSerializerOptions, cancellationToken);
         }
     }
 }
