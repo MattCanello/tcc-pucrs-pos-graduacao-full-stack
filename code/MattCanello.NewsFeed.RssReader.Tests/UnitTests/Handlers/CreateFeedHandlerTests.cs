@@ -18,6 +18,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Handlers
             Assert.NotNull(feed);
             Assert.Equal(command.Url, feed.Url);
             Assert.Equal(command.FeedId, feed.FeedId);
+            Assert.Equal(command.ChannelId, feed.ChannelId);
         }
     }
 }

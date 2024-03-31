@@ -22,9 +22,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
             SingleSyndicationFeedLoaderEvaluator.Default);
 
         [Theory, AutoData]
-        public async Task ProcessFeedAsync_OnFirstRequest_ShouldUpdateETagAndModifiedDate(Uri url, string feedId)
+        public async Task ProcessFeedAsync_OnFirstRequest_ShouldUpdateETagAndModifiedDate(Uri url, string feedId, string channelId)
         {
-            var feed = new Feed(feedId, url.ToString());
+            var feed = new Feed(feedId, channelId, url.ToString());
 
             var service = new RssApp(
                 new InMemoryFeedRepository(feed),
@@ -56,9 +56,9 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
         }
 
         [Theory, AutoData]
-        public async Task ProcessFeedAsync_WhenFeedIsAlreadyUpdated_ShouldNotProduceEvents(Uri url, string feedId)
+        public async Task ProcessFeedAsync_WhenFeedIsAlreadyUpdated_ShouldNotProduceEvents(Uri url, string feedId, string channelId)
         {
-            var feed = new Feed(feedId, url.ToString(), ETag, LastModifiedDate);
+            var feed = new Feed(feedId, channelId, url.ToString(), ETag, LastModifiedDate);
 
             var entryPublisher = new InMemoryEntryPublisher();
             var channelPublisher = new InMemoryFeedConsumedPublisher();

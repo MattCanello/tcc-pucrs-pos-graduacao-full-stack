@@ -41,7 +41,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Services
                 if (!_publishEntryPolicy.ShouldPublish(feed, entry))
                     continue;
 
-                var publishEntryTask = _newEntryFoundPublisher.PublishAsync(feed.FeedId, entry, cancellationToken);
+                var publishEntryTask = _newEntryFoundPublisher.PublishAsync(feed.FeedId, feed.ChannelId, entry, cancellationToken);
                 publishTasks.Add(publishEntryTask);
 
                 mostRecentPublishDate = _mostRecentPublishDateEvaluator.Evaluate(mostRecentPublishDate, entry.PublishDate);

@@ -15,14 +15,14 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Factories
             _bindingRequestFactory = bindingRequestFactory;
         }
 
-        public BindingRequest CreateNewEntryFoundEvent(string feedId, Entry entry, string bindingName)
+        public BindingRequest CreateNewEntryFoundEvent(string feedId, string channelId, Entry entry, string bindingName)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(entry);
             ArgumentNullException.ThrowIfNull(bindingName);
 
             var bindingRequest = _bindingRequestFactory
-                .CreateBindingRequest(new { feedId, entry }, bindingName);
+                .CreateBindingRequest(new { feedId, channelId, entry }, bindingName);
 
             bindingRequest
                 .SetFeedId(feedId);
