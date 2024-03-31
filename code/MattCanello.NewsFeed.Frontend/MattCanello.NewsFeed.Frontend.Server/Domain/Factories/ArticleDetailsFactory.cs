@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.HTML;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Domain.Factories
 {
@@ -11,6 +12,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Factories
                 return null;
 
             var lines = description
+                .StripHtmlTags()
                 .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             if (lines.Length == 0)
