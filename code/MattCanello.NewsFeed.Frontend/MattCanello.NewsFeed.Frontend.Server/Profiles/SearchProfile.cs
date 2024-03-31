@@ -8,14 +8,11 @@ namespace MattCanello.NewsFeed.Frontend.Server.Profiles
     {
         public SearchProfile() {
 
-            CreateMap<SearchAuthor, Author>()
-                .ForMember(author => author.Name, o => o.MapFrom(searchAuthor => searchAuthor.Name))
-                .ForMember(author => author.Email, o => o.MapFrom(searchAuthor => searchAuthor.Email));
+            CreateMap<SearchAuthor, Author>();
 
             CreateMap<SearchThumbnail, Thumbnail>()
                 .ForMember(thumb => thumb.ImageUrl, o => o.MapFrom(searchThumb => searchThumb.Url))
-                .ForMember(thumb => thumb.Caption, o => o.Ignore())
-                .ForMember(thumb => thumb.Credit, o => o.MapFrom(searchThumb => searchThumb.Credit));
+                .ForMember(thumb => thumb.Caption, o => o.Ignore());
         }
     }
 }
