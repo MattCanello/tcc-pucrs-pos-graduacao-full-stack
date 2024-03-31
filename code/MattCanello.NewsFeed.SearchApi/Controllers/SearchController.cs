@@ -40,7 +40,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResponse<Document>))]
         public async Task<IActionResult> Search(
             string? q = null,
-            [Range(1, Paging.MaxPagingSize)] int? size = null,
+            [Range(1, Paging.MaxPageSize)] int? size = null,
             [Range(0, int.MaxValue)] int? skip = null,
             [StringLength(100)] string? feedId = null,
             [StringLength(100)] string? channelId = null,

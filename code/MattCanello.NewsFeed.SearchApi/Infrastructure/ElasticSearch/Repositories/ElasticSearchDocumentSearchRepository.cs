@@ -32,7 +32,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
 
         public async Task<DocumentSearchResponse> SearchByChannelAsync(string? query = null, Paging? paging = null, string? channelId = null, CancellationToken cancellationToken = default)
         {
-            var indexName = GetIndexName($"{channelId}-*")!;
+            var indexName = GetIndexName(channelId: channelId)!;
 
             return await SearchIndexAsync(indexName, query, paging, cancellationToken);
         }
@@ -59,6 +59,16 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
             => (!string.IsNullOrEmpty(feedId))
                 ? _indexNameBuilder.WithFeedId(feedId).Build()
                 : _indexNameBuilder.AllEntriesIndices().Build();
+
+        private IndexName? GetIndexName(string? feedId = null, string? channelId = null)
+        {
+            if (!string.IsNullOrEmpty(feedId))
+                return  GetIndexName(feedId)!;
+            else if (!string.IsNullOrEmpty(channelId))
+                return GetIndexName($"{channelId}-*")!;
+            else
+                return GetIndexName(null);
+        }
 
         public async Task<FindResponse<Document>> FindByIdAsync(string entryId, string feedId, CancellationToken cancellationToken = default)
         {
@@ -89,13 +99,13 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                response.OriginalException);
         }
 
-        public async Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, CancellationToken cancellationToken = default)
+        public async Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, string? channelId = null, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(paging);
 
-            var indexName = GetIndexName(feedId)!;
+            var indexName = GetIndexName(feedId, channelId)!;
 
-            var response = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>((queryBuilder) => queryBuilder
+            var response = await _elasticClient.SearchAsync<Models.Entry>((queryBuilder) => queryBuilder
                 .Index(indexName)
                 .Size(paging.Size)
                 .Skip(paging.Skip)

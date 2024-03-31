@@ -14,6 +14,6 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Interfaces
         Task<FindResponse<Document>> FindByIdAsync(string entryId, string feedId, CancellationToken cancellationToken = default);
 
         Task<SearchResponse<Document>> GetRecentAsync(
-            Paging paging, string? feedId = null, CancellationToken cancellationToken = default);
+            Paging paging, string? feedId = null, string? channelId = null, CancellationToken cancellationToken = default);
     }
 }

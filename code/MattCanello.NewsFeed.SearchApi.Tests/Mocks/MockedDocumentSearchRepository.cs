@@ -92,9 +92,12 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             });
         }
 
-        public Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, CancellationToken cancellationToken = default)
+        public Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, string? channelId = null, CancellationToken cancellationToken = default)
         {
             IEnumerable<KeyValuePair<Key, Entry>> entries = _data.OrderBy(kvp => kvp.Value.PublishDate);
+
+            if (!string.IsNullOrEmpty(channelId))
+                entries = _data.Where(kvp => kvp.Key.ChannelId == channelId);
 
             if (!string.IsNullOrEmpty(feedId))
                 entries = _data.Where(kvp => kvp.Key.FeedId == feedId);

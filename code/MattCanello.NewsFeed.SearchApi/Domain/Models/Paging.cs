@@ -7,7 +7,7 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Models
     public sealed record Paging
     {
         public const int DefaultSize = 10;
-        public const int MaxPagingSize = 100;
+        public const int MaxPageSize = 100;
 
         public Paging()
             : this(0, DefaultSize)
@@ -29,7 +29,7 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Models
 
         [Required]
         [DefaultValue(DefaultSize)]
-        [Range(0, MaxPagingSize)]
+        [Range(0, MaxPageSize)]
         public int Size { get; init; } = DefaultSize;
     }
 }
