@@ -257,16 +257,20 @@ services:
       
   mattcanello.newsfeed.frontend.client:
     container_name: frontend-client
-    image: ${DOCKER_REGISTRY-}mattcanellonewsfeedfrontendclient
+    image: node:alpine
+    entrypoint: ["/bin/sh", "-c", "npm i && npm run dev"]
+    working_dir: /srv/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - mattcanello.newsfeed.frontend.server
-    build:
-      context: ../MattCanello.NewsFeed.Frontend/mattcanello.newsfeed.frontend.client
-      dockerfile: Dockerfile
     ports:
       - "5173:5173"
     networks:
       - backend
+    volumes:
+     - "../MattCanello.NewsFeed.Frontend/mattcanello.newsfeed.frontend.client:/srv/app"
+    tty: true
 
 volumes:
   redis_data:
