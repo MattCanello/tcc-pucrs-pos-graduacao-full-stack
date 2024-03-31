@@ -2,8 +2,8 @@
 
 namespace MattCanello.NewsFeed.Frontend.Server.Interfaces
 {
-    public interface IArticleRepository
+    public interface IArticleDetailsFactory
     {
-        Task<IEnumerable<Article>> GetFrontPageArticlesAsync();
+        ArticleDetails? FromDescription(string? description);
     }
 }

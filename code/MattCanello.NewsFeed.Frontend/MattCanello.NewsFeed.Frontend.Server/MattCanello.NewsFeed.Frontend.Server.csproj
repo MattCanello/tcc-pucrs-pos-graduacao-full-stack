@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>6.*-*</Version>
     </PackageReference>
@@ -20,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MattCanello.NewsFeed.Cross.Abstractions\MattCanello.NewsFeed.Cross.Abstractions.csproj" />
+    <ProjectReference Include="..\..\MattCanello.NewsFeed.Cross.Dapr\MattCanello.NewsFeed.Cross.Dapr.csproj" />
+    <ProjectReference Include="..\..\MattCanello.NewsFeed.Cross.Telemetry\MattCanello.NewsFeed.Cross.Telemetry.csproj" />
     <ProjectReference Include="..\mattcanello.newsfeed.frontend.client\mattcanello.newsfeed.frontend.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

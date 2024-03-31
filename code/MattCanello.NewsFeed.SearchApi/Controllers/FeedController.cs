@@ -1,6 +1,6 @@
 ﻿using MattCanello.NewsFeed.SearchApi.Domain.Commands;
 using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
-using MattCanello.NewsFeed.SearchApi.Domain.Models;
+using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +19,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
         [HttpGet("feed/recent")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Document>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedResponse))]
         public async Task<IActionResult> GetRecent(
             [FromQuery, Range(1, GetFeedCommand.DefaultSize), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, 
             CancellationToken cancellationToken = default)
@@ -39,7 +39,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
         [HttpGet("feed/{feedId}/recent")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Document>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedResponse))]
         public async Task<IActionResult> GetRecent(
             [FromRoute, Required] string feedId,
             [FromQuery, Range(1, GetFeedCommand.DefaultSize), DefaultValue(GetFeedCommand.DefaultSize)] int? size = GetFeedCommand.DefaultSize, 

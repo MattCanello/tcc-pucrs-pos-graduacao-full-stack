@@ -235,6 +235,8 @@ services:
       dockerfile: ./MattCanello.NewsFeed.Frontend/MattCanello.NewsFeed.Frontend.Server/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ADMIN_API_BASE_URL=http://admin-api:80/
+      - SEARCH_API_BASE_URL=http://search-api:80/
     ports:
       - "5191:80"
     networks:

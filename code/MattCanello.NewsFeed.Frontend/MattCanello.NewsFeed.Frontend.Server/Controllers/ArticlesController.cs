@@ -8,9 +8,9 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
     [ApiController]
     public class ArticlesController : ControllerBase
     {
-        private readonly IArticleRepository _articleRepository;
+        private readonly IArticleApp _articleRepository;
 
-        public ArticlesController(IArticleRepository articleRepository)
+        public ArticlesController(IArticleApp articleRepository)
             => _articleRepository = articleRepository;
 
         [HttpGet("")]

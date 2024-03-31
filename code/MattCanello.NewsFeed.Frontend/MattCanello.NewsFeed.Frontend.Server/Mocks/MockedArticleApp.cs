@@ -3,7 +3,7 @@ using MattCanello.NewsFeed.Frontend.Server.Models;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Mocks
 {
-    sealed class MockedArticleRepository : IArticleRepository
+    sealed class MockedArticleApp : IArticleApp
     {
         private readonly Article _article1 = new Article()
         {
@@ -35,7 +35,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Mocks
             Title = "2024 terá poucos 'feriadões' prolongados; veja as folgas previstas"
         };
 
-        public Task<IEnumerable<Article>> GetFrontPageArticlesAsync()
+        public Task<IEnumerable<Article>> GetFrontPageArticlesAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<Article> articles = new List<Article>()
             {
