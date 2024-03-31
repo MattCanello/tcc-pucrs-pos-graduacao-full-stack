@@ -7,7 +7,11 @@ function ArticlePage() {
     const [article] = useState(useLoaderData());
 
     const options = {
-        expanded: true
+        expanded: true,
+        displayShareButton: true,
+        displayAuthorsRightBeforeTitle: true,
+        displayReadMoreButton: true,
+        useAbsoluteTime: true
     };
 
     return (

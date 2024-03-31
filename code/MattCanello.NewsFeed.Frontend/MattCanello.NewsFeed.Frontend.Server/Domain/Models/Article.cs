@@ -11,6 +11,11 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Models
         [Required]
         public string? Title { get; set; }
 
+        [Url]
+        [Required]
+        [DataType(DataType.Url)]
+        public string? Url { get; set; }
+
         [Required]
         public DateTimeOffset PublishDate { get; set; }
 

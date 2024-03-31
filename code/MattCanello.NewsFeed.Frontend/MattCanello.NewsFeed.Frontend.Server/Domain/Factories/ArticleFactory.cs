@@ -29,7 +29,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Factories
                 Title = document.Entry.Title,
                 Authors = CreateAuthors(document.Entry.Authors),
                 Thumbnail = SelectThumbnail(document.Entry.Thumbnails),
-                Details = _articleDetailsFactory.FromDescription(document.Entry.Description)
+                Details = _articleDetailsFactory.FromDescription(document.Entry.Description),
+                Url = document.Entry.Url
             };
         }
 

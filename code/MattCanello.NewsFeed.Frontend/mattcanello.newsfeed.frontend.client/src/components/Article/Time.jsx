@@ -1,11 +1,15 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
-function Time({ dateTimeString }) {
+function Time({ dateTimeString, useAbsoluteTime }) {
     const [now, setNow] = useState(new Date());
     const [date] = useState(new Date(dateTimeString));
 
     useEffect(() => {
+        if (useAbsoluteTime) {
+            return;
+        }
+
         const interval = setInterval(() => setNow(new Date()), 1000);
         return () => {
             clearInterval(interval);
@@ -14,6 +18,7 @@ function Time({ dateTimeString }) {
 
     const formatOptions = { day: "2-digit", year: "numeric", month: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
     const localDateString = date.toLocaleDateString("pt-BR", formatOptions);
+    const absoluteDateString = date.toLocaleString('pt-BR', { dateStyle: "short", timeStyle: "short" });
 
     function relativeTime(time) {
         var msPerMinute = 60 * 1000;
@@ -45,7 +50,7 @@ function Time({ dateTimeString }) {
     }
 
     return (
-        <time title={localDateString} dateTime={date.toISOString()}>{relativeTime(now)}</time>
+        <time title={localDateString} dateTime={date.toISOString()}>{useAbsoluteTime ? absoluteDateString : relativeTime(now)}</time>
     );
 }
 
