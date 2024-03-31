@@ -24,10 +24,9 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Factories
             if (command.Entry is null)
                 throw new ArgumentException("The command must include an entry.", nameof(command));
 
-            var elasticModel = _mapper.Map<Entry>(command.Entry);
+            var elasticModel = _mapper.Map<ElasticSearch.Models.Entry>(command.Entry);
 
             elasticModel.FeedId = command.FeedId;
-            elasticModel.ChannelId = command.ChannelId;
             elasticModel.IndexDate = _dateTimeProvider.GetUtcNow();
 
             return elasticModel;

@@ -9,8 +9,10 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Application
     {
         private readonly IDocumentSearchRepository _documentSearchRepository;
 
-        public FeedApp(IDocumentSearchRepository documentSearchRepository) 
-            => _documentSearchRepository = documentSearchRepository;
+        public FeedApp(IDocumentSearchRepository documentSearchRepository)
+        {
+            _documentSearchRepository = documentSearchRepository;
+        }
 
         public async Task<FeedResponse> GetFeedAsync(GetFeedCommand command, CancellationToken cancellationToken = default)
         {

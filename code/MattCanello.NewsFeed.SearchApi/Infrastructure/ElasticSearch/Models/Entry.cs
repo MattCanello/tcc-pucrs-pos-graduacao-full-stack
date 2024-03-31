@@ -7,8 +7,6 @@
 
         public string? EntryId { get; set; }
 
-        public string? ChannelId { get; set; }
-
         public string? Title { get; set; }
 
         public string? Url { get; set; }

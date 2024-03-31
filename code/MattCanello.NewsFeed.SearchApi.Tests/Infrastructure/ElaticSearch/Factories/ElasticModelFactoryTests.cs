@@ -41,7 +41,6 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Infrastructure.ElaticSearch.Facto
             var entry = factory.CreateElasticModel(command);
 
             Assert.Equal(command.FeedId, entry.FeedId);
-            Assert.Equal(command.ChannelId, entry.ChannelId);
             Assert.Equal(command.Entry!.Id, entry.EntryId);
             Assert.Equal(command.Entry.Title, entry.Title);
             Assert.Equal(command.Entry.Url, entry.Url);
