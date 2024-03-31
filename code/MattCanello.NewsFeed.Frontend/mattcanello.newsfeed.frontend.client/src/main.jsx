@@ -8,6 +8,8 @@ import ErrorPage from './components/Common/ErrorPage.jsx';
 import { getArticle } from './functions/Articles.jsx';
 import ArticlePage from './components/Article/ArticlePage.jsx';
 import HomePage from './components/Home/HomePage.jsx';
+import ChannelPage from './components/Channel/ChannelPage.jsx';
+import { getChannelArticles } from './functions/Channels.jsx';
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,11 @@ const router = createBrowserRouter([
                 path: "article/:feedId/:articleId",
                 element: <ArticlePage />,
                 loader: getArticle
+            },
+            {
+                path: "channel/:channelId",
+                element: <ChannelPage />,
+                loader: getChannelArticles
             }
         ]
     }

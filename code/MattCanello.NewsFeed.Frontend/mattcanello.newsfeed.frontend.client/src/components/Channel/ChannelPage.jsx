@@ -2,7 +2,7 @@ import React from 'react';
 import { useLoaderData } from "react-router-dom";
 import ArticleList from '../Article/ArticleList';
 
-function HomePage() {
+function ChannelPage() {
     const articles = useLoaderData();
 
     return (
@@ -10,4 +10,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default ChannelPage;
