@@ -9,7 +9,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Mocks
     {
         private static readonly IDictionary<string, Feed> Data = new Dictionary<string, Feed>(StringComparer.OrdinalIgnoreCase)
         {
-            { "the-guardian-uk", new Feed(feedId: "the-guardian-uk", channelId: "the-guardian", url: "https://www.theguardian.com/uk/rss") }
+            { "the-guardian-uk", new Feed(feedId: "the-guardian-uk", url: "https://www.theguardian.com/uk/rss") }
         };
 
         public InMemoryFeedRepository() { }

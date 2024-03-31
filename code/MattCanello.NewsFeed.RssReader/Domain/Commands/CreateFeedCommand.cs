@@ -9,10 +9,6 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Commands
         [StringLength(100)]
         public string? FeedId { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string? ChannelId { get; set; }
-
         [Url]
         [Required]
         [DataType(DataType.Url)]

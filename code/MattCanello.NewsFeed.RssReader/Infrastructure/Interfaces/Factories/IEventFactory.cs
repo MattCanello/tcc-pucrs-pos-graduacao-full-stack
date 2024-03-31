@@ -5,7 +5,7 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories
 {
     public interface IEventFactory
     {
-        BindingRequest CreateNewEntryFoundEvent(string feedId, string channelId, Entry entry, string bindingName);
+        BindingRequest CreateNewEntryFoundEvent(string feedId, Entry entry, string bindingName);
         BindingRequest CreateFeedConsumedEvent(string feedId, DateTimeOffset consumedDate, Channel channel, string bindingName);
     }
 }

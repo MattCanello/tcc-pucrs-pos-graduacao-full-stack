@@ -17,12 +17,12 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.EventPublishers
             _eventFactory = eventFactory;
         }
 
-        public async Task PublishAsync(string feedId, string channelId, Entry entry, CancellationToken cancellationToken = default)
+        public async Task PublishAsync(string feedId, Entry entry, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(feedId);
             ArgumentNullException.ThrowIfNull(entry);
 
-            var bindingRequest = _eventFactory.CreateNewEntryFoundEvent(feedId, channelId, entry, BindingName);
+            var bindingRequest = _eventFactory.CreateNewEntryFoundEvent(feedId, entry, BindingName);
 
             await _daprClient.InvokeBindingAsync(bindingRequest, cancellationToken);
         }

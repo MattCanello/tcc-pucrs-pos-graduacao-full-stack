@@ -9,18 +9,15 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Models
         [JsonConstructor]
         private Feed() { }
 
-        public Feed(string feedId, string channelId, string url, string? lastETag = null, DateTimeOffset? lastModifiedDate = null)
+        public Feed(string feedId, string url, string? lastETag = null, DateTimeOffset? lastModifiedDate = null)
         {
             FeedId = feedId;
-            ChannelId = channelId;
             Url = url;
             LastETag = lastETag;
             LastModifiedDate = lastModifiedDate;
         }
 
         public string FeedId { get; set; }
-
-        public string ChannelId { get; set; }
 
         [Url]
         [DataType(DataType.Url)]
