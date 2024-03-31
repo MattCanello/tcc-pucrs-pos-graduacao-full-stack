@@ -38,13 +38,13 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
         public Task<FindResponse<Document>> FindByIdAsync(string entryId, string feedId, CancellationToken cancellationToken = default)
         {
             var item = _data
-                .Where(kvp => kvp.Key.KeyId == feedId)
+                .Where(kvp => kvp.Key.FeedId == feedId)
                 .FirstOrDefault(kvp => kvp.Key.EntryId == entryId);
 
             if (item.Value is null)
                 return Task.FromResult(FindResponse<Document>.NotFound);
 
-            return Task.FromResult(new FindResponse<Document>(item.Key.Id, new Document(item.Key.Id, item.Key.KeyId, item.Value), item.Key.IndexName));
+            return Task.FromResult(new FindResponse<Document>(item.Key.Id, new Document(item.Key.Id, item.Key.FeedId, item.Value), item.Key.IndexName));
         }
 
         public Task<DocumentSearchResponse> SearchAsync(string? query = null, Paging? paging = null, string? feedId = null, CancellationToken cancellationToken = default)
@@ -52,7 +52,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             IEnumerable<KeyValuePair<Key, Entry>> entries = _data;
 
             if (!string.IsNullOrEmpty(feedId))
-                entries = _data.Where(kvp => kvp.Key.KeyId == feedId);
+                entries = _data.Where(kvp => kvp.Key.FeedId == feedId);
 
             if (!string.IsNullOrEmpty(query))
                 entries = entries
@@ -67,7 +67,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             {
                 Paging = paging,
                 Total = countPrePaging,
-                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.KeyId, entries.Value)).ToList()
+                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.FeedId, entries.Value)).ToList()
             });
         }
 
@@ -76,7 +76,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             IEnumerable<KeyValuePair<Key, Entry>> entries = _data.OrderBy(kvp => kvp.Value.PublishDate);
 
             if (!string.IsNullOrEmpty(feedId))
-                entries = _data.Where(kvp => kvp.Key.KeyId == feedId);
+                entries = _data.Where(kvp => kvp.Key.FeedId == feedId);
 
             int countPrePaging = entries.Count();
 
@@ -87,33 +87,14 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             {
                 Paging = paging,
                 Total = countPrePaging,
-                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.KeyId, entries.Value)).ToList()
-            });
-        }
-
-        public Task<DocumentSearchResponse> GetRecentByChannelAsync(Paging paging, string channelId, CancellationToken cancellationToken = default)
-        {
-            IEnumerable<KeyValuePair<Key, Entry>> entries = _data
-                .OrderBy(kvp => kvp.Value.PublishDate)
-                .Where(kvp => kvp.Key.KeyId == channelId);
-
-            int countPrePaging = entries.Count();
-
-            if (paging != null)
-                entries = entries.Skip(paging.Skip).Take(paging.Size);
-
-            return Task.FromResult(new DocumentSearchResponse()
-            {
-                Paging = paging,
-                Total = countPrePaging,
-                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.KeyId, entries.Value)).ToList()
+                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.FeedId, entries.Value)).ToList()
             });
         }
 
         [Serializable]
-        public record class Key(string KeyId, string EntryId)
+        public record class Key(string FeedId, string EntryId)
         {
-            public string IndexName => KeyId;
+            public string IndexName => FeedId;
             public string Id => GetHashCode().ToString("F0");
         }
     }
