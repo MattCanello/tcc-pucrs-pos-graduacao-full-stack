@@ -17,20 +17,20 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
             _jsonSerializerOptions = jsonSerializerOptions;
         }
 
-        public async Task<SearchRecentResponse> GetRecentAsync(string? feedId = null, int? size = null, CancellationToken cancellationToken = default)
+        public async Task<SearchResponse<SearchDocument>> GetRecentAsync(string? channelId = null, int? size = null, CancellationToken cancellationToken = default)
         {
-            var url = string.IsNullOrEmpty(feedId)
+            var url = string.IsNullOrEmpty(channelId)
                 ? $"/feed/recent?size={size}"
-                : $"/feed/{feedId}/recent?size={size}";
+                : $"/feed/{channelId}/recent?size={size}";
 
             using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             response.EnsureSuccessStatusCode();
 
             if (response.Content is null)
-                return SearchRecentResponse.Empty;
+                return SearchResponse<SearchDocument>.CreateEmpty(size, skip: null);
 
-            return await response.Content.ReadFromJsonAsync<SearchRecentResponse>(_jsonSerializerOptions, cancellationToken)
-                ?? SearchRecentResponse.Empty;
+            return await response.Content.ReadFromJsonAsync<SearchResponse<SearchDocument>>(_jsonSerializerOptions, cancellationToken)
+                ?? SearchResponse<SearchDocument>.CreateEmpty(size, skip: null);
         }
 
         public async Task<SearchResponse<SearchDocument>> SearchAsync(SearchCommand command, CancellationToken cancellationToken = default)

@@ -29,13 +29,27 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetArticle(
             [FromRoute, Required, StringLength(100)] string feedId,
-            [FromRoute, Required, StringLength(100)] string articleId, 
+            [FromRoute, Required, StringLength(100)] string articleId,
             CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var articles = await _articleApp.GetArticleAsync(feedId, articleId, cancellationToken);
+            var article = await _articleApp.GetArticleAsync(feedId, articleId, cancellationToken);
+
+            return this.Ok(article);
+        }
+
+        [HttpGet("channel/{channelId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
+        public async Task<IActionResult> GetChannelArticles(
+            [FromRoute, Required, StringLength(100)] string channelId,
+            CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var articles = await _articleApp.GetChannelArticlesAsync(channelId, cancellationToken);
 
             return this.Ok(articles);
         }

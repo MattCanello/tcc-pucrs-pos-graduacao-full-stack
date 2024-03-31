@@ -33,9 +33,9 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories
 
                 channels ??= new List<Channel>(capacity: results.Total);
 
-                foreach (var result in results.Items)
+                foreach (var adminChannel in results.Items)
                 {
-                    var channel = _mapper.Map<Channel>(result);
+                    var channel = _mapper.Map<Channel>(adminChannel);
 
                     channels.Add(channel);
                 }
