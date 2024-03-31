@@ -10,11 +10,11 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
     [ApiController]
     public class FeedController : ControllerBase
     {
-        private readonly IFeedApp _feedRepository;
+        private readonly IFeedApp _feedApp;
 
-        public FeedController(IFeedApp feedRepository)
+        public FeedController(IFeedApp feedApp)
         {
-            _feedRepository = feedRepository;
+            _feedApp = feedApp;
         }
 
         [HttpGet("feed/recent")]
@@ -29,7 +29,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var command = new GetFeedCommand(size: size);
 
-            var results = await _feedRepository.GetFeedAsync(command, cancellationToken);
+            var results = await _feedApp.GetFeedAsync(command, cancellationToken);
 
             if (results.IsEmpty)
                 return NoContent();
@@ -50,7 +50,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
 
             var command = new GetFeedCommand(feedId, size);
 
-            var results = await _feedRepository.GetFeedAsync(command, cancellationToken);
+            var results = await _feedApp.GetFeedAsync(command, cancellationToken);
 
             if (results.IsEmpty)
                 return NoContent();

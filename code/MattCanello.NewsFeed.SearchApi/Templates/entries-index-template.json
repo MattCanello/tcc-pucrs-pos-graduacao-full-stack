@@ -12,6 +12,9 @@
         "feedId": {
           "type": "keyword"
         },
+        "channelId": {
+          "type": "keyword"
+        },
         "entryId": {
           "type": "keyword"
         },
@@ -74,5 +77,5 @@
       }
     }
   },
-  "version": 5
+  "version": 6
 }

@@ -10,6 +10,9 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Commands
         public string? FeedId { get; set; }
 
         [Required]
+        public string? ChannelId { get; set; }
+
+        [Required]
         public Entry? Entry { get; set; }
     }
 }
