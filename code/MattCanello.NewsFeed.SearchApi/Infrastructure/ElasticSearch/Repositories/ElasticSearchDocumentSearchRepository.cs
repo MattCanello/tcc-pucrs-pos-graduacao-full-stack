@@ -115,5 +115,22 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.ElasticSearch.Repositori
                 response.Total,
                 paging);
         }
+
+        public async Task<DocumentSearchResponse> GetRecentByChannelAsync(Paging paging, string channelId, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(paging);
+
+            var indexName = GetIndexName()!;
+
+            var response = await _elasticClient.SearchAsync<ElasticSearch.Models.Entry>((queryBuilder) => queryBuilder
+                .Index(indexName)
+                .Size(paging.Size)
+                .Skip(paging.Skip)
+                .Query(q => q.Term(term => term.Value(channelId).Field(entry => entry.ChannelId)))
+                .Sort(q => q.Descending(t => t.PublishDate)),
+                cancellationToken);
+
+            return ProcessSearchResponse(paging, indexName, response);
+        }
     }
 }
