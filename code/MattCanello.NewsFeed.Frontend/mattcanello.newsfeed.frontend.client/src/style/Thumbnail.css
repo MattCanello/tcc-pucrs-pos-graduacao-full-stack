@@ -1,6 +1,8 @@
 @media screen {
     main > section > article > figure {
         position: relative;
+        min-height: 1.75rem;
+        background-color: var(--background-color);
     }
 
         main > section > article > figure > img {

@@ -4,26 +4,8 @@ import Thumbnail from './Thumbnail';
 import ArticleDetails from './ArticleDetails';
 import ArticleAuthor from './ArticleAuthor';
 import ArticleTitle from './ArticleTitle';
-import ChannelNameAndPublishDate from './ChannelNameAndPublishDate';
 
 function Article({ article }) {
-
-    function renderThumbnailOrChannelAndPublishDate() {
-        if (article.thumbnail === undefined) {
-            return <ChannelNameAndPublishDate
-                channelName={article.channel.channelName}
-                publishDate={article.publishDate}
-                />
-        }
-
-        return <Thumbnail
-            channelName={article.channel.channelName}
-            publishDate={article.publishDate}
-            imageTitle={article.thumbnail.caption || article.thumbnail.credit || article.title}
-            imageSrc={article.thumbnail.imageUrl}
-            />
-    }
-
     function renderDetails() {
         if (article.details !== undefined) {
             return <ArticleDetails summary={article.details.summary} description={article.details.lines} />
@@ -42,7 +24,12 @@ function Article({ article }) {
 
     return (
         <article>
-            {renderThumbnailOrChannelAndPublishDate()}
+            <Thumbnail
+                channelName={article.channel.channelName}
+                publishDate={article.publishDate}
+                imageTitle={(article.thumbnail) ? (article.thumbnail.caption || article.thumbnail.credit || article.title) : article.title}
+                imageSrc={(article.thumbnail) ? article.thumbnail.imageUrl : ''}
+            />
 
             <ArticleTitle title={article.title} />
 
