@@ -1,5 +1,5 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Interfaces;
-using MattCanello.NewsFeed.Frontend.Server.Models;
+﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Mocks
 {

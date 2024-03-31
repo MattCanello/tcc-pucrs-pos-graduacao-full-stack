@@ -1,12 +1,12 @@
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
-using MattCanello.NewsFeed.Frontend.Server.Application;
-using MattCanello.NewsFeed.Frontend.Server.Clients;
-using MattCanello.NewsFeed.Frontend.Server.Configuration;
-using MattCanello.NewsFeed.Frontend.Server.Factories;
-using MattCanello.NewsFeed.Frontend.Server.Interfaces;
-using MattCanello.NewsFeed.Frontend.Server.Profiles;
-using MattCanello.NewsFeed.Frontend.Server.Repositories;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Factories;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json.Serialization;
 
