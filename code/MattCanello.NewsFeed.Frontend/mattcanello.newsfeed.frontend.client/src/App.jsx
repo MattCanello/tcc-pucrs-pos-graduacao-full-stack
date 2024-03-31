@@ -9,8 +9,6 @@ function App() {
 
     return (
         <main className={navigation.state === "loading" ? "loading" : ""}>
-            {/* <div id="loader"></div>*/}
-
             <Header displayChannels={true} />
 
             <Outlet />

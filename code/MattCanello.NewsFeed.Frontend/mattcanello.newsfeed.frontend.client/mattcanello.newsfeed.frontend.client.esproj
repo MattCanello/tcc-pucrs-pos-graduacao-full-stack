@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\functions\" />
-    <Folder Include="src\routes\" />
     <Folder Include="src\style\" />
   </ItemGroup>
 </Project>
