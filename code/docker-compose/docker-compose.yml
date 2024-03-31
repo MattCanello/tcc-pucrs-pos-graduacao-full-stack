@@ -239,6 +239,8 @@ services:
       - SEARCH_API_BASE_URL=http://search-api:80/
       - FRONTPAGE_ARTICLE_COUNT=25
       - CHANNEL_LIST_BULK_COUNT=100
+      - FEED_EXPIRY_TIME=00:01:00
+      - CHANNEL_EXPIRY_TIME=00:01:00
     ports:
       - "5191:80"
     networks:

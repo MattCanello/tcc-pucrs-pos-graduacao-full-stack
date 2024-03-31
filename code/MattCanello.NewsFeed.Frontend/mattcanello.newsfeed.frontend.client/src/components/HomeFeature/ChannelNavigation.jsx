@@ -10,7 +10,7 @@ function ChannelNavigation() {
     }, []);
 
     function createListItems(channelList) {
-        return channelList.map(channel => <li key={channel.channelId}><a href={channel.channelId}>{channel.channelName}</a></li>);
+        return channelList.map(channel => <li key={channel.channelId}><a href={channel.channelId}>{channel.name}</a></li>);
     }
 
     const channelData = channels === undefined

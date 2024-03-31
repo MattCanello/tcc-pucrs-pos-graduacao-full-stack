@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Admin;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories

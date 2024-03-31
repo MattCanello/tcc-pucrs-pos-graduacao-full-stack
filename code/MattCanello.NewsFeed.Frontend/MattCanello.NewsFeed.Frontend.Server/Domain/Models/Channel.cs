@@ -5,14 +5,14 @@
     {
         public Channel() { }
 
-        public Channel(string channelId, string channelName)
+        public Channel(string channelId, string name)
         {
             ChannelId = channelId;
-            ChannelName = channelName;
+            Name = name;
         }
 
         public string? ChannelId { get; set; }
 
-        public string? ChannelName { get; set; }
+        public string? Name { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces
+﻿namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces
 {
     public interface IChannelConfiguration
     {

@@ -3,6 +3,7 @@ main > section > article > strong {
     color: var(--text-light);
     font-family: "Sitka Banner", "Merriweather", serif;
     font-size: larger;
+    display: block;
 }
 
 @media print {

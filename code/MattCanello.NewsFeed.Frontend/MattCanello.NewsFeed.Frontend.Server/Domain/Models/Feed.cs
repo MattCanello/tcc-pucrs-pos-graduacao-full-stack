@@ -7,15 +7,15 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Models
     {
         public Feed() { }
 
-        public Feed(string feedId, string? feedName = null)
+        public Feed(string feedId, string? name = null)
         {
             FeedId = feedId;
-            FeedName = feedName;
+            Name = name;
         }
 
         [Required]
         public string? FeedId { get; set; }
 
-        public string? FeedName { get; set; }
+        public string? Name { get; set; }
     }
 }

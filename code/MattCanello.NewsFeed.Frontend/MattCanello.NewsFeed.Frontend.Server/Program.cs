@@ -3,8 +3,10 @@ using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Factories;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Caching;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -67,6 +69,14 @@ namespace MattCanello.NewsFeed.Frontend.Server
             services
                 .AddSingleton<IChannelConfiguration, ChannelConfiguration>()
                 .AddSingleton<IFrontPageConfiguration, FrontPageConfiguration>();
+
+            services
+                .AddMemoryCache()
+                .AddSingleton<ICachingConfiguration, CachingConfiguration>()
+                .AddScoped<ICachingService, MemoryCachingService>();
+
+            services
+                .Decorate<IFeedRepository, CachedFeedRepository>();
 
             services
                 .AddAutoMapper(config =>

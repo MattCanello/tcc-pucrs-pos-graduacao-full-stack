@@ -1,4 +1,4 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration
 {

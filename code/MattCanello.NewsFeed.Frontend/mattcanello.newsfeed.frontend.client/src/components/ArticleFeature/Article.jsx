@@ -25,7 +25,7 @@ function Article({ article }) {
     return (
         <article>
             <Thumbnail
-                channelName={article.channel.channelName}
+                channelName={article.channel.name}
                 publishDate={article.publishDate}
                 imageTitle={(article.thumbnail) ? (article.thumbnail.caption || article.thumbnail.credit || article.title) : article.title}
                 imageSrc={(article.thumbnail) ? article.thumbnail.imageUrl : ''}
