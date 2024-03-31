@@ -2,7 +2,7 @@ main > section > article > strong {
     padding: 1rem;
     color: var(--text-light);
     font-family: "Sitka Banner", "Merriweather", serif;
-    font-size: larger;
+    font-size: large;
     display: block;
 }
 

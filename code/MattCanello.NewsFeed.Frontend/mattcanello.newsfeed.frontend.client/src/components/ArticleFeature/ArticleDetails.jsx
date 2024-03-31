@@ -5,15 +5,13 @@ function ArticleDetails({ summary, description }) {
     let count = 0;
     const paragraphs = description.map(line => <p key={count++}>{line}</p>);
 
-    return (
-        <details>
-            <summary>
-                {summary}
-            </summary>
+    const summaryData = description.length == 0
+        ? <p>{summary}</p>
+        : <summary>{summary}</summary>
 
-            {paragraphs}
-        </details>
-    );
+    return description.length == 0
+        ? summaryData
+        : <details>{summaryData}{paragraphs}</details>;
 }
 
 export default ArticleDetails;
