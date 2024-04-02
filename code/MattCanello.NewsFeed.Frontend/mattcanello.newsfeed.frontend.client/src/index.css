@@ -140,6 +140,16 @@
         margin: 0 auto;
     }
 
+    h1 > a,
+    h2 > a,
+    h3 > a,
+    h4 > a,
+    h5 > a,
+    h6 > a {
+        font-family: "Lato", sans-serif;
+        margin: 0 auto;
+    }
+
     .material-symbols-outlined {
         font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
         cursor: default;

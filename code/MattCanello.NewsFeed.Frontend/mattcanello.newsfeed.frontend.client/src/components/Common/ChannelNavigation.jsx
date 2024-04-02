@@ -33,7 +33,11 @@ function ChannelNavigation() {
     return (
         <nav>
             <ol>
-                <li className="selected"><Link to="/">Tudo</Link></li>
+                <li key="all">
+                    <NavLink to={"/"} className={({ isActive, isPending }) => isActive ? "selected" : isPending ? "pending" : ""}>
+                        Tudo
+                    </NavLink>
+                </li>
                 {channelData}
             </ol>
         </nav>

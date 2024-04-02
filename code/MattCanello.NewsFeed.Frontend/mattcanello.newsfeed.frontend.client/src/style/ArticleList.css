@@ -7,9 +7,9 @@ main > section {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
-        align-items: flex-start;
         align-content: flex-start;
         gap: 1rem;
         padding-bottom: 1rem;
+        align-items: stretch;
     }
 }

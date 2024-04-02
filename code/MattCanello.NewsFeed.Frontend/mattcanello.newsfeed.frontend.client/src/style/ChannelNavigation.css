@@ -39,10 +39,10 @@ main > header > nav > ol {
             display: block;
         }
 
-        main > header > nav > ol > li.selected > a {
-            border-bottom: 0.15rem solid;
-            border-bottom-color: var(--hightlight);
-        }
+            main > header > nav > ol > li > a.selected {
+                border-bottom: 0.15rem solid;
+                border-bottom-color: var(--hightlight);
+            }
 
 @media print {
     main > header > nav > ol {
