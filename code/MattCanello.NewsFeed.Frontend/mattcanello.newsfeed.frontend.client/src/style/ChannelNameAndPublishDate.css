@@ -4,24 +4,39 @@
     }
 }
 
-main > section > article > figure > small {
+main > section > article > small {
     padding: 0.5rem;
-    font-size: x-small;
+    font-size: small;
+    color: var(--light);
+    padding-bottom: 0rem;
+    grid-area: ChannelAndDate;
 }
 
-@media screen {
-    main > section > article > figure > small {
-        position: absolute;
+main > section > article.expanded > small {
+    grid-area: ThumbPublisherAndDate;
+    color: var(--text-light);
+    background-color: var(--transparent-dark);
+    align-content: space-evenly;
+    padding-bottom: 0.25rem;
+    align-self: end;
+}
+
+@media only screen and (min-width: 961px) {
+    main > section > article > small {
         color: var(--text-light);
-        left: 0;
-        right: 0;
-        bottom: 0;
         background-color: var(--transparent-dark);
+        font-size: x-small;
+        z-index: 2;
+        align-content: space-evenly;
+        padding-bottom: 0.5rem;
+        align-self: end;
+        grid-area: ThumbPublisherAndDate;
     }
 }
 
 @media print {
-    main > section > article > figure > small {
+    main > section > article > small {
+        font-size: x-small;
         color: var(--text-dark);
         border-top: 0.1rem solid;
         border-top-color: var(--darker);
@@ -30,7 +45,7 @@ main > section > article > figure > small {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-    main > section > article > figure > small {
+    main > section > article > small {
         position: unset;
         background-color: unset;
     }

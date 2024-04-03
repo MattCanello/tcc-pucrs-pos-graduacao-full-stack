@@ -1,25 +1,72 @@
-@media screen {
+/* Mobile */
+@media only screen and (max-width: 961px) {
     main > section > article > figure {
-        position: relative;
-        min-height: 1.75rem;
-        background-color: var(--background-color);
+        grid-area: ThumbImg;
     }
 
+        main > section > article > figure:not(:empty) {
+            width: 10em;
+        }
+
         main > section > article > figure > img {
-            width: 30rem;
-            max-width: 30rem;
-            box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
-            box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
         }
 
         main > section > article > figure > figcaption {
             display: none;
         }
 
-    main > section > article.expanded > figure > img {
+    main > section > article.expanded > figure {
+        max-height: 12em;
+        width: unset;
+        grid-area: ThumbPublisherAndDate;
+        background-color: var(--background-color);
+    }
+
+
+        main > section > article.expanded > figure > img {
+            box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+        }
+}
+
+/* Desktop */
+@media only screen and (min-width: 961px) {
+    main > section > article > figure {
+        grid-row: 1;
+        grid-column: 1;
+        min-height: 1.75rem;
+        background-color: var(--background-color);
+        max-height: 18rem;
+        align-self: start;
+        max-width: 30rem;
+        grid-area: ThumbPublisherAndDate;
+    }
+
+        main > section > article > figure > img {
+            min-width: 30rem;
+            box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
+            box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+            max-height: 20rem;
+            object-fit: cover;
+            max-width: 30rem;
+            height: 18rem;
+        }
+
+        main > section > article > figure > figcaption {
+            display: none;
+        }
+
+    main > section > article.expanded > figure {
         width: 40rem;
         max-width: 40rem;
     }
+
+        main > section > article.expanded > figure > img {
+            width: 40rem;
+            max-width: 40rem;
+        }
 }
 
 @media print {

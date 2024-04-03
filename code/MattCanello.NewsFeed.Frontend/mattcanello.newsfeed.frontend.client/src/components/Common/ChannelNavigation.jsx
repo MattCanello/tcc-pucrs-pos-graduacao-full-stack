@@ -1,10 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/ChannelNavigation.css';
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function ChannelNavigation() {
     const [channels, setChannels] = useState();
+    const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
         populateChannels();
@@ -30,8 +31,25 @@ function ChannelNavigation() {
         ? createListItems([])
         : createListItems(channels);
 
+    function toggleExpand() {
+        setIsExpanded(!isExpanded);
+    }
+
+    function renderMenuButton() {
+        if (channels === undefined || channels.length === undefined || channels.length < 10) {
+            return null;
+        }
+
     return (
-        <nav>
+            <button type="button" onClick={toggleExpand}>
+                <span className="material-symbols-outlined">menu</span>
+            </button>
+        );
+    }
+
+    return (
+        <nav className={isExpanded ? "expanded" : null}>
+            {renderMenuButton()}
             <ol>
                 <li key="all">
                     <NavLink to={"/"} className={({ isActive, isPending }) => isActive ? "selected" : isPending ? "pending" : ""}>

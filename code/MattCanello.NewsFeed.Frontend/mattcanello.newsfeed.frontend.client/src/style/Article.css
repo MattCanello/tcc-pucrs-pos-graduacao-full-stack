@@ -1,22 +1,77 @@
-main > section > article {
-    width: 30rem;
-    max-width: 30rem;
-    padding-bottom: 1rem;
-    box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
-    box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
-}
-
 @media screen {
     main > section > article {
         background-color: var(--background-dark);
         box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
         box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+        display: grid;
+        gap: 0px 0px;
     }
 
-    main > section > article.expanded {
-        width: 40rem;
-        max-width: 40rem;
+        main > section > article.expanded {
+            width: 40rem;
+            max-width: 40rem;
+        }
+}
+
+/* Mobile */
+@media only screen and (max-width: 961px) {
+    main > section > article {
+        width: 100%;
+        margin-left: 0.5rem;
+        margin-right: 0.75rem;
+        grid-auto-columns: 1fr;
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: min-content 1fr min-content min-content;
+        grid-template-areas:
+            "ThumbImg ChannelAndDate"
+            "ThumbImg Title"
+            "ThumbImg Description"
+            "ThumbImg Authors";
     }
+
+        main > section > article.expanded {
+            display: grid;
+            grid-auto-columns: 1fr;
+            grid-template-columns: auto;
+            grid-template-rows: min-content min-content min-content 1fr min-content;
+            gap: 0px 0px;
+            grid-template-areas:
+                "ThumbPublisherAndDate"
+                "Title"
+                "Authors"
+                "Description"
+                "ReadMore";
+        }
+}
+
+/* Desktop */
+@media only screen and (min-width: 961px) {
+    main > section > article {
+        width: 30rem;
+        max-width: 30rem;
+        padding-bottom: 1rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content min-content min-content 1fr;
+        gap: 0px 0px;
+        grid-template-areas:
+            "ThumbPublisherAndDate"
+            "Title"
+            "Description"
+            "Authors";
+    }
+
+        main > section > article.expanded {
+            grid-auto-columns: 1fr;
+            grid-template-columns: auto;
+            grid-template-rows: min-content min-content min-content min-content 1fr min-content;
+            grid-template-areas:
+                "ThumbPublisherAndDate"
+                "ChannelAndDate"
+                "Title"
+                "Authors"
+                "Description"
+                "ReadMore";
+        }
 }
 
 @media print {

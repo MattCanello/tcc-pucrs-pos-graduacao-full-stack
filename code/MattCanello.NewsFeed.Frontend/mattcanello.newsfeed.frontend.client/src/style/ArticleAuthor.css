@@ -4,6 +4,9 @@ main > section > article > strong {
     font-family: "Sitka Banner", "Merriweather", serif;
     font-size: large;
     display: block;
+    grid-area: Authors;
+    padding-top: 0rem;
+    align-self: end;
 }
 
 @media print {

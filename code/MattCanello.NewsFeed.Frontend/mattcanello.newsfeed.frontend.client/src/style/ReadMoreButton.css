@@ -12,4 +12,5 @@ main > section > article > button.read-more {
     font-weight: 300;
     border: none;
     box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+    grid-area: ReadMore;
 }

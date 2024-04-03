@@ -6,6 +6,7 @@ import ArticleAuthor from './ArticleAuthor';
 import ArticleTitle from './ArticleTitle';
 import ShareButton from './ShareButton';
 import ReadMoreButton from './ReadMoreButton';
+import ChannelNameAndPublishDate from './ChannelNameAndPublishDate';
 
 function Article({ article, options }) {
     function renderDetails() {
@@ -43,12 +44,11 @@ function Article({ article, options }) {
     return (
         <article className={options ? options.expanded ? "expanded" : "" : ""}>
             <Thumbnail
-                channelName={article.channel.name}
-                publishDate={article.publishDate}
                 imageTitle={(article.thumbnail) ? (article.thumbnail.caption || article.thumbnail.credit || article.title) : article.title}
                 imageSrc={(article.thumbnail) ? article.thumbnail.imageUrl : ''}
-                useAbsoluteTime={options && options.useAbsoluteTime}
             />
+
+            <ChannelNameAndPublishDate channelName={article.channel.name} publishDate={article.publishDate} useAbsoluteTime={options && options.useAbsoluteTime} />
 
             {renderShareButton()}
 

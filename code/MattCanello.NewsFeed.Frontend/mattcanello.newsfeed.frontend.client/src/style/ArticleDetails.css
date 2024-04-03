@@ -3,6 +3,7 @@ main > section > article > details {
     color: var(--medium);
     padding-top: 0;
     font-size: small;
+    grid-area: Description;
 }
 
     main > section > article > details > summary::marker {
@@ -18,6 +19,8 @@ main > section > article > details {
     main > section > article > details > p {
         margin-top: 1em;
         color: var(--medium);
+        align-self: start;
+        grid-area: Description;
     }
 
     main > section > article > p {
@@ -28,5 +31,11 @@ main > section > article > details {
 @media print {
     main > section > article > details {
         color: var(--dark);
+    }
+}
+
+@media only screen and (max-width: 961px) and (orientation: portrait) {
+    main > section > article:not(.expanded) > details {
+        display: none;
     }
 }
