@@ -6,10 +6,7 @@ main > section > article > details {
     grid-area: Description;
 }
 
-    main > section > article > details > summary::marker {
-        content: "";
-    }
-
+    main > section > article > details > summary::marker,
     main > section > article > details[open] > summary::marker {
         content: "";
     }

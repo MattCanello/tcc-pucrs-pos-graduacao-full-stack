@@ -4,14 +4,14 @@ import Search from './Search';
 import AppName from './AppName';
 import ChannelNavigation from './ChannelNavigation';
 
-function Header({ displayChannels }) {
+function Header() {
   return (
       <header>
           <AppName />
 
           <Search />
 
-          {displayChannels ? <ChannelNavigation /> : null}
+          <ChannelNavigation />
       </header>
   );
 }

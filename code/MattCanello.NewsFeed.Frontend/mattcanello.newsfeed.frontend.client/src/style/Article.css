@@ -1,7 +1,6 @@
 @media screen {
     main > section > article {
         background-color: var(--background-dark);
-        box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
         box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
         display: grid;
         gap: 0px 0px;

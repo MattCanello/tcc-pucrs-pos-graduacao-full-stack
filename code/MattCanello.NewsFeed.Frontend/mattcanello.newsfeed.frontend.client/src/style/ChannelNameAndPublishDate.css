@@ -7,14 +7,13 @@
 main > section > article > small {
     padding: 0.5rem;
     font-size: small;
-    color: var(--light);
     padding-bottom: 0rem;
+    color: var(--text-light);
     grid-area: ChannelAndDate;
 }
 
 main > section > article.expanded > small {
     grid-area: ThumbPublisherAndDate;
-    color: var(--text-light);
     background-color: var(--transparent-dark);
     align-content: space-evenly;
     padding-bottom: 0.25rem;
@@ -23,7 +22,6 @@ main > section > article.expanded > small {
 
 @media only screen and (min-width: 961px) {
     main > section > article > small {
-        color: var(--text-light);
         background-color: var(--transparent-dark);
         font-size: x-small;
         z-index: 2;

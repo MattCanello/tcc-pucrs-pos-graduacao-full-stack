@@ -1,6 +1,6 @@
 main > section > article > h2 {
     padding: 1rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text-light);
     border-left: 0.2rem solid;
     border-left-color: var(--hightlight);
