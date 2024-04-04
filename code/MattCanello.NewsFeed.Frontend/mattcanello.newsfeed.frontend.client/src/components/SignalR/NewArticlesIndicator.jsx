@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SignalRConnection from './SignalRConnection';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import '../../style/NewArticlesIndicator.css';
 
 function NewArticlesIndicatorComponent({ channelId }) {
     const [newArticlesCount, setNewArticlesCount] = useState(0);

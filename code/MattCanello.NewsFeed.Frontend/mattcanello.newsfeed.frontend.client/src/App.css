@@ -2,10 +2,11 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content 1fr min-content;
+    grid-template-rows: min-content min-content 1fr min-content;
     gap: 0px 0px;
     grid-template-areas:
         "Header"
+        "ReadMoreButton"
         "Content"
         "Footer";
 }
