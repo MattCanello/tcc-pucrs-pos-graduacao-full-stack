@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLoaderData } from "react-router-dom";
 import ArticleList from '../Article/ArticleList';
-import NewArticlesIndicatorComponent from '../SignalR/NewArticlesIndicatorComponent';
+import NewArticlesIndicator from '../SignalR/NewArticlesIndicator';
 
 function HomePage() {
     const articles = useLoaderData();
 
     return (
         <>
-            <NewArticlesIndicatorComponent />
+            <NewArticlesIndicator />
 
             <ArticleList articles={articles} />
         </>

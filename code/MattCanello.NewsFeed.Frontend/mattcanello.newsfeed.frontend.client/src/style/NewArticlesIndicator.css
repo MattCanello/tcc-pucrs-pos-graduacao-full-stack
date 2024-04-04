@@ -1,0 +1,18 @@
+main > button.newEntries {
+    display: none;
+}
+
+@media screen {
+    main > button.newEntries:not(:empty) {
+        background-color: var(--hightlight);
+        border-radius: 5px;
+        border: 0 none;
+        color: var(--lighter);
+        display: block;
+        margin: 1rem auto;
+        padding: 1rem;
+        width: 12rem;
+        box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+        font-weight: bold;
+    }
+}

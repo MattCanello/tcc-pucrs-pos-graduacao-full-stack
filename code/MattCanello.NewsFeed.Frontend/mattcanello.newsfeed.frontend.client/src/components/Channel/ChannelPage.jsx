@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLoaderData } from "react-router-dom";
 import ArticleList from '../Article/ArticleList';
-import NewArticlesIndicatorComponent from '../SignalR/NewArticlesIndicatorComponent';
+import NewArticlesIndicator from '../SignalR/NewArticlesIndicator';
 
 function ChannelPage() {
     const articles = useLoaderData();
 
     return (
         <>
-            <NewArticlesIndicatorComponent channelId={articles ? articles[0].channel.channelId : null} />
+            <NewArticlesIndicator channelId={articles ? articles[0].channel.channelId : null} />
 
             <ArticleList articles={articles} />
         </>
