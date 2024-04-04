@@ -8,7 +8,7 @@ function ChannelPage() {
 
     return (
         <>
-            <NewArticlesIndicator channelId={articles ? articles[0].channel.channelId : null} />
+            <NewArticlesIndicator channelId={articles && articles.length ? articles[0].channel.channelId : null} />
 
             <ArticleList articles={articles} />
         </>

@@ -1,5 +1,7 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Exceptions;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Admin;
+using System.Net;
 using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
@@ -30,7 +32,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             response.EnsureSuccessStatusCode();
 
-            if (response.Content is null)
+            if (response.Content is null || response.StatusCode == HttpStatusCode.NoContent)
                 return AdminQueryResponse<TModel>.Empty;
 
             return await response.Content
@@ -42,18 +44,16 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
         {
             ArgumentNullException.ThrowIfNull(feedId);
 
-            return await SimpleGetAsync<AdminFeedWithChannel>($"/feed/{feedId}", cancellationToken);
-        }
-
-        private async Task<TModel> SimpleGetAsync<TModel>(string path, CancellationToken cancellationToken = default)
-            where TModel : class, new()
-        {
-            ArgumentNullException.ThrowIfNull(path);
+            var path = $"/feed/{feedId}";
 
             using var response = await _httpClient.GetAsync(path, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                throw new FeedNotFoundException(feedId);
+
             response.EnsureSuccessStatusCode();
 
-            var model = await response.Content.ReadFromJsonAsync<TModel>(_jsonSerializerOptions, cancellationToken);
+            var model = await response.Content.ReadFromJsonAsync<AdminFeedWithChannel>(_jsonSerializerOptions, cancellationToken);
 
             return model!;
         }

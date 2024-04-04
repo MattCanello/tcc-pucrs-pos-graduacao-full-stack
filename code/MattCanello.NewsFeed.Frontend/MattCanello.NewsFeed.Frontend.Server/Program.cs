@@ -9,6 +9,7 @@ using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Caching;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Filters;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Hubs;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
@@ -131,6 +132,8 @@ namespace MattCanello.NewsFeed.Frontend.Server
             {
                 options.RespectBrowserAcceptHeader = true;
                 options.OutputFormatters.RemoveType<StringOutputFormatter>();
+
+                options.Filters.Add<HttpExceptionFilter>();
             })
             .AddJsonOptions(options =>
             {

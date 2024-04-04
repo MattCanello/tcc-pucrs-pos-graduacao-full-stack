@@ -13,9 +13,13 @@ function ArticlePage() {
         useAbsoluteTime: true
     };
 
+    const isDocumentNotFound = (article && article.status && article.status === 404);
+
     return (
         <section>
-            <Article article={article} options={options} />
+            {isDocumentNotFound
+                ? <aside className="empty">Artigo não encontrado</aside>
+                : <Article article={article} options={options} />}
         </section>
     );
 }

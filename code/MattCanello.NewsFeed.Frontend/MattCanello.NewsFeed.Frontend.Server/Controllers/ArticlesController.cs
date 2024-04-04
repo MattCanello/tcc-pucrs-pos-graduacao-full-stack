@@ -41,6 +41,9 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
 
             var article = await _articleApp.GetArticleAsync(feedId, articleId, cancellationToken);
 
+            if (article is null)
+                return NotFound();
+
             return Ok(article);
         }
 
