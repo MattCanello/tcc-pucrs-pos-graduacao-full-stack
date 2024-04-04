@@ -2,10 +2,13 @@ using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Factories;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Handlers;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Caching;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.EventPublishers;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Hubs;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories;
@@ -27,6 +30,19 @@ namespace MattCanello.NewsFeed.Frontend.Server
             builder.Services.AddDapr();
             builder.Services.AddAppServices(builder.Configuration);
             builder.Services.ConfigureHealthChecks();
+            builder.Services.AddSignalR();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins(EnvironmentVariables.FrontendBaseUrl())
+                            .AllowAnyHeader()
+                            .WithMethods("GET", "POST")
+                            .AllowCredentials();
+                    });
+            });
 
             builder.AddDefaultTelemetry();
 
@@ -42,9 +58,13 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 app.MapGet("/", () => Results.LocalRedirect("/swagger"));
             }
 
+            app.UseCors();
+
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapHub<ArticleHub>("/hubs/article");
 
             app.MapHealthChecks("/app/health");
 
@@ -77,6 +97,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             services
                 .Decorate<IFeedRepository, CachedFeedRepository>();
+
+            services
+                .AddScoped<INewArticlePublisher, NewArticlePublisher>()
+                .AddScoped<INewEntryHandler, NewEntryHandler>();
 
             services
                 .AddAutoMapper(config =>

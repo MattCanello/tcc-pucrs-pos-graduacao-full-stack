@@ -241,6 +241,7 @@ services:
       - CHANNEL_LIST_BULK_COUNT=100
       - FEED_EXPIRY_TIME=00:02:00
       - CHANNEL_EXPIRY_TIME=00:02:00
+      - FRONTEND_BASE_URL=http://localhost:5173
     ports:
       - "5191:80"
     networks:

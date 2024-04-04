@@ -10,5 +10,10 @@
 
         public const string FEED_EXPIRY_TIME = "FEED_EXPIRY_TIME";
         public const string CHANNEL_EXPIRY_TIME = "CHANNEL_EXPIRY_TIME";
+
+
+        public const string FRONTEND_BASE_URL = "FRONTEND_BASE_URL";
+        public static string FrontendBaseUrl() 
+            => Environment.GetEnvironmentVariable(FRONTEND_BASE_URL) ?? "http://localhost:5173";
     }
 }

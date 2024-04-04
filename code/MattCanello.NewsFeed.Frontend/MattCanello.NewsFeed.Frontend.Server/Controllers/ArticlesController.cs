@@ -1,20 +1,24 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Commands;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Controllers
 {
-    [Route("articles")]
     [ApiController]
     public class ArticlesController : ControllerBase
     {
         private readonly IArticleApp _articleApp;
+        private readonly INewEntryHandler _newEntryHandler;
 
-        public ArticlesController(IArticleApp articleApp)
-            => _articleApp = articleApp;
+        public ArticlesController(IArticleApp articleApp, INewEntryHandler newEntryHandler)
+        {
+            _articleApp = articleApp;
+            _newEntryHandler = newEntryHandler;
+        }
 
-        [HttpGet("")]
+        [HttpGet("articles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
         public async Task<IActionResult> GetFrontPage(CancellationToken cancellationToken = default)
         {
@@ -23,7 +27,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
             return this.Ok(articles);
         }
 
-        [HttpGet("{feedId}/{articleId}")]
+        [HttpGet("articles/{feedId}/{articleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Article))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,7 +44,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
             return this.Ok(article);
         }
 
-        [HttpGet("channel/{channelId}")]
+        [HttpGet("articles/channel/{channelId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
         public async Task<IActionResult> GetChannelArticles(
             [FromRoute, Required, StringLength(100)] string channelId,
@@ -52,6 +56,17 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
             var articles = await _articleApp.GetChannelArticlesAsync(channelId, cancellationToken);
 
             return this.Ok(articles);
+        }
+
+        [HttpPost("new-entry")]
+        public async Task<IActionResult> NewEntry([FromBody, Required] NewEntryFoundCommand command, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _newEntryHandler.HandleAsync(command, cancellationToken);
+
+            return NoContent();
         }
     }
 }
