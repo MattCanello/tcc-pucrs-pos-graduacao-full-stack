@@ -71,8 +71,9 @@
 
 @media print {
     main > section > article > figure > img {
-        width: 30rem;
         max-width: 30rem;
+        margin: 0 auto;
+        display: block;
     }
 
     main > section > article > figure > figcaption {
@@ -80,8 +81,15 @@
         padding-bottom: 0.5rem;
         font-style: italic;
         font-size: xx-small;
-        text-align: right;
+        text-align: center;
         padding-top: 0rem;
         color: var(--text-dark);
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article.expanded > figure > img,
+    main > section > article > figure > img {
+        box-shadow: unset;
     }
 }

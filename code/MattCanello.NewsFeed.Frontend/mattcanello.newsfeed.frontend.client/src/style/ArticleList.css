@@ -1,5 +1,6 @@
 main > section {
     margin-top: 1rem;
+    grid-area: Content;
 }
 
 @media screen {

@@ -1,3 +1,17 @@
+main > header > h1 {
+    font-size: 4rem;
+    font-family: "Lato", sans-serif;
+    font-weight: 100;
+}
+
+    main > header > h1 > a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        margin: 0 auto;
+    }
+
 @media screen {
     main > header {
         background-color: var(--background-dark);
@@ -5,21 +19,9 @@
         padding: 0.5rem;
         padding-right: 1rem;
         padding-bottom: 0rem;
+        grid-area: Header;
+        width: 100%;
     }
-
-        main > header > h1 {
-            font-size: 4rem;
-            font-family: "Lato", sans-serif;
-            font-weight: 100;
-        }
-
-            main > header > h1 > a {
-                color: var(--text-light);
-                text-decoration: none;
-                font-family: "Lato", sans-serif;
-                font-weight: 100;
-                margin: 0 auto;
-            }
 }
 
 @media only screen and (min-width: 961px) {
@@ -36,7 +38,10 @@
 }
 
 @media print {
-    main > header > h1 {
+    main > header > h1,
+    main > header > h1 > a {
+        color: var(--text-dark);
         text-align: center;
+        font-weight: normal;
     }
 }

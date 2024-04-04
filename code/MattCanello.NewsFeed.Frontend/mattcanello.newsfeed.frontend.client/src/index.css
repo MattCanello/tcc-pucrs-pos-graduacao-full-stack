@@ -124,7 +124,6 @@
         margin: 0 auto;
         padding: 0;
         overflow-x: hidden;
-        margin-bottom: 1rem;
         scrollbar-width: thin;
         scrollbar-color: var(--medium) var(--dark);
     }
@@ -222,6 +221,12 @@
 }
 
 @media (prefers-contrast: more) {
+    html,
+    body,
+    main {
+        background-color: var(--lighter);
+    }
+
     h1,
     h2,
     h3,

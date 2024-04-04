@@ -12,6 +12,7 @@ main > header > search {
         align-items: stretch;
         height: 24px;
         border-radius: 25%;
+        max-width: 70%;
     }
 
         main > header > search > form > label {

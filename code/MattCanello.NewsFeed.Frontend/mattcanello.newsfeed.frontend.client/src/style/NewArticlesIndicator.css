@@ -1,5 +1,6 @@
 main > button.newEntries {
     display: none;
+    grid-area: Content;
 }
 
 @media screen {

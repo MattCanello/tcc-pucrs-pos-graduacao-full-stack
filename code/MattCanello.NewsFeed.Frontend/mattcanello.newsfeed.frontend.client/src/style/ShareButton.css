@@ -15,3 +15,15 @@ main > section > article > button.share {
     grid-area: Title;
     margin-left: calc(100% - 3.5rem);
 }
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article > button.share {
+        box-shadow: unset;
+    }
+}
+
+@media print {
+    main > section > article > button.share {
+        display: none;
+    }
+}

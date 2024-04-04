@@ -77,6 +77,12 @@
     main > section > article {
         border: 0.1rem solid;
         border-color: var(--darker);
-        margin-bottom: 1rem;
+        margin: 1rem;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article {
+        box-shadow: unset;
     }
 }

@@ -11,22 +11,28 @@ main > section > article > details {
         content: "";
     }
 
-@media screen {
     main > section > article > p,
     main > section > article > details > p {
         margin-top: 1em;
+    }
+
+main > section > article > p {
+    margin: 1rem;
+}
+
+@media screen {
+    main > section > article > p,
+    main > section > article > details > p {
         color: var(--medium);
         align-self: start;
         grid-area: Description;
     }
-
-    main > section > article > p {
-        margin: 1rem;
-    }
 }
 
 @media print {
-    main > section > article > details {
+    main > section > article > details,
+    main > section > article > details > p,
+    main > section > article > p {
         color: var(--dark);
     }
 }

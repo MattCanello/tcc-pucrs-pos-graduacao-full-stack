@@ -33,18 +33,18 @@ main > section > article.expanded > small {
 }
 
 @media print {
-    main > section > article > small {
+    main > section > article > small,
+    main > section > article.expanded > small {
         font-size: x-small;
         color: var(--text-dark);
-        border-top: 0.1rem solid;
         border-top-color: var(--darker);
         display: block;
+        background-color: unset;
     }
 }
 
 @media (prefers-reduced-transparency: reduce) {
     main > section > article > small {
         position: unset;
-        background-color: unset;
     }
 }

@@ -40,7 +40,7 @@ function ChannelNavigation() {
             return null;
         }
 
-    return (
+        return (
             <button type="button" onClick={toggleExpand}>
                 <span className="material-symbols-outlined">menu</span>
             </button>
