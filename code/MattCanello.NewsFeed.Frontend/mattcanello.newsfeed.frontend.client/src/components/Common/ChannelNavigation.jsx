@@ -2,8 +2,11 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/ChannelNavigation.css';
 import { NavLink } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 function ChannelNavigation() {
+    const { q } = useLoaderData();
+
     const [channels, setChannels] = useState();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -51,11 +54,21 @@ function ChannelNavigation() {
         <nav className={isExpanded ? "expanded" : null}>
             {renderMenuButton()}
             <ol>
-                <li key="all">
-                    <NavLink to={"/"} className={({ isActive, isPending }) => isActive ? "selected" : isPending ? "pending" : ""}>
+                {q ?
+                    <li key="__search">
+                        <NavLink to={"."} className={({ isActive, isPending }) => isActive ? "selected" : isPending ? "pending" : ""}>
+                            {q ? "Resultado da busca" : "Tudo"}
+                        </NavLink>
+                    </li>
+                    : null
+                }
+
+                <li key="__all">
+                    <NavLink to={"/"} className={({ isActive, isPending }) => isActive && !q ? "selected" : isPending ? "pending" : ""}>
                         Tudo
                     </NavLink>
                 </li>
+
                 {channelData}
             </ol>
         </nav>

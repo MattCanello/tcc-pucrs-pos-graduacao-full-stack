@@ -4,13 +4,13 @@ import ArticleList from '../Article/ArticleList';
 import NewArticlesIndicator from '../SignalR/NewArticlesIndicator';
 
 function HomePage() {
-    const articles = useLoaderData();
+    const { articles, q } = useLoaderData();
 
     return (
         <>
             <NewArticlesIndicator />
 
-            <ArticleList articles={articles} />
+            <ArticleList articles={articles} query={q} />
         </>
     );
 }

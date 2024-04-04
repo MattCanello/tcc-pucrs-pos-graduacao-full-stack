@@ -21,6 +21,10 @@ export default defineConfig({
             '^/articles': {
                 target: 'http://frontend-server:80/',
                 secure: false
+            },
+            '^/search': {
+                target: 'http://frontend-server:80/',
+                secure: false
             }
         },
         port: 5173,

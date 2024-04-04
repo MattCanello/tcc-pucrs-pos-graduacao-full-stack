@@ -71,5 +71,18 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
+        public async Task<IActionResult> Search([FromQuery, Required] string? q = null, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var searchResult = await _articleApp.SearchAsync(q, cancellationToken);
+
+            return Ok(searchResult);
+        }
     }
 }

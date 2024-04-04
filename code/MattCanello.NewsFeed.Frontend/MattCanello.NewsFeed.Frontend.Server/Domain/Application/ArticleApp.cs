@@ -1,5 +1,6 @@
 ﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Search;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
 {
@@ -11,9 +12,9 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
         private readonly IFrontPageConfiguration _frontPageConfiguration;
 
         public ArticleApp(
-            ISearchClient searchClient, 
-            IFeedRepository feedRepository, 
-            IArticleFactory articleFactory, 
+            ISearchClient searchClient,
+            IFeedRepository feedRepository,
+            IArticleFactory articleFactory,
             IFrontPageConfiguration frontPageConfiguration)
         {
             _searchClient = searchClient;
@@ -65,7 +66,26 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
         {
             var numberOfArticles = _frontPageConfiguration.FrontPageNumberOfArticles();
 
-            var searchResults = await _searchClient.GetRecentAsync(channelId, numberOfArticles,  cancellationToken);
+            var searchResults = await _searchClient.GetRecentAsync(channelId, numberOfArticles, cancellationToken);
+            var articles = new List<Article>(capacity: searchResults.Results.Count);
+
+            foreach (var document in searchResults.Results)
+            {
+                var (feed, channel) = await _feedRepository.GetFeedAndChannelAsync(document.FeedId, cancellationToken);
+
+                var article = _articleFactory.FromSearch(document, channel, feed);
+                articles.Add(article);
+            }
+
+            return articles;
+        }
+
+        public async Task<IEnumerable<Article>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(query);
+
+            var searchResults = await _searchClient.SearchAsync(new SearchCommand() { Query = query }, cancellationToken);
+
             var articles = new List<Article>(capacity: searchResults.Results.Count);
 
             foreach (var document in searchResults.Results)

@@ -67,5 +67,10 @@ namespace MattCanello.NewsFeed.Frontend.Server.Mocks
 
             return Task.FromResult<IEnumerable<Article>>(Array.Empty<Article>());
         }
+
+        public Task<IEnumerable<Article>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

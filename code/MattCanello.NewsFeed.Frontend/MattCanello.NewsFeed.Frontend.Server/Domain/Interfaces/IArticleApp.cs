@@ -7,5 +7,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces
         Task<IEnumerable<Article>> GetFrontPageArticlesAsync(CancellationToken cancellationToken = default);
         Task<Article?> GetArticleAsync(string feedId, string articleId, CancellationToken cancellationToken = default);
         Task<IEnumerable<Article>> GetChannelArticlesAsync(string channelId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Article>> SearchAsync(string query, CancellationToken cancellationToken = default);
     }
 }

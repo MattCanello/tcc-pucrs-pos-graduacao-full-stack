@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
-import { getHomePageArticles } from './functions/Home.jsx'
+import { getHomePageArticles, searchArticles } from './functions/Home.jsx'
 import './index.css'
 import ErrorPage from './components/Common/ErrorPage.jsx';
 import { getArticle } from './functions/Articles.jsx';
@@ -16,6 +16,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
         errorElement: <ErrorPage />,
+        loader: searchArticles,
         children: [
             {
                 index: true,

@@ -42,7 +42,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
             using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            if (response.Content is null)
+            if (response.Content is null || response.StatusCode == HttpStatusCode.NoContent)
                 return SearchResponse<SearchDocument>.CreateEmpty(command);
 
             return await response.Content.ReadFromJsonAsync<SearchResponse<SearchDocument>>(_jsonSerializerOptions, cancellationToken)
