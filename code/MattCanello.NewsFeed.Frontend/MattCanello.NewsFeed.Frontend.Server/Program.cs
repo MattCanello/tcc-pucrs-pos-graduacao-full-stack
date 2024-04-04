@@ -1,3 +1,4 @@
+using Dapr.Client;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
@@ -110,19 +111,17 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 });
 
             services
-                .AddHttpClient<IAdminClient, AdminHttpClient>(options =>
+                .AddHttpClient<IAdminClient, AdminHttpClient>((sp) => DaprClient.CreateInvokeHttpClient("admin-api"))
+                .ConfigureHttpClient(httpClient =>
                 {
-                    options.BaseAddress = new Uri(configuration[EnvironmentVariables.ADMIN_API_BASE_URL]!, UriKind.Absolute);
-                    options.DefaultRequestHeaders.Accept.Clear();
-                    options.DefaultRequestHeaders.Accept.ParseAdd("application/json");
+                    httpClient.BaseAddress = new Uri("http://admin-api/");
                 });
 
             services
-                .AddHttpClient<ISearchClient, SearchHttpClient>(options =>
+                .AddHttpClient<ISearchClient, SearchHttpClient>((sp) => DaprClient.CreateInvokeHttpClient("search-api"))
+                .ConfigureHttpClient(httpClient =>
                 {
-                    options.BaseAddress = new Uri(configuration[EnvironmentVariables.SEARCH_API_BASE_URL]!, UriKind.Absolute);
-                    options.DefaultRequestHeaders.Accept.Clear();
-                    options.DefaultRequestHeaders.Accept.ParseAdd("application/json");
+                    httpClient.BaseAddress = new Uri("http://search-api/");
                 });
         }
 

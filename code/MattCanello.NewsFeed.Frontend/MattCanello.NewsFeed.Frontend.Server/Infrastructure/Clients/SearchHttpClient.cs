@@ -5,7 +5,6 @@ using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 {
-    // TODO: Trocar para usar o Dapr - https://docs.dapr.io/developing-applications/building-blocks/service-invocation/howto-invoke-discover-services/
     public sealed class SearchHttpClient : ISearchClient
     {
         private readonly HttpClient _httpClient;
