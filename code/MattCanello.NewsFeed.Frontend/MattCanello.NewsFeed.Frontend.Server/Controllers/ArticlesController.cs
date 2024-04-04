@@ -24,7 +24,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
         {
             var articles = await _articleApp.GetFrontPageArticlesAsync(cancellationToken);
 
-            return this.Ok(articles);
+            return Ok(articles);
         }
 
         [HttpGet("articles/{feedId}/{articleId}")]
@@ -41,10 +41,11 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
 
             var article = await _articleApp.GetArticleAsync(feedId, articleId, cancellationToken);
 
-            return this.Ok(article);
+            return Ok(article);
         }
 
         [HttpGet("articles/channel/{channelId}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
         public async Task<IActionResult> GetChannelArticles(
             [FromRoute, Required, StringLength(100)] string channelId,
@@ -55,10 +56,12 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
 
             var articles = await _articleApp.GetChannelArticlesAsync(channelId, cancellationToken);
 
-            return this.Ok(articles);
+            return Ok(articles);
         }
 
         [HttpPost("new-entry")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> NewEntry([FromBody, Required] NewEntryFoundCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
