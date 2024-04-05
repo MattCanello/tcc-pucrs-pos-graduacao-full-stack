@@ -53,7 +53,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Tests.Domain.Handlers
             var publisher = new MockedNewArticlePublisher();
 
             var handler = new NewEntryHandler(
-                new MockedSearchClient((feedId, id) => null),
+                new MockedSearchClient((string feedId, string id) => null),
                 new ArticleFactory(mapper, new ArticleDetailsFactory()),
                 new MockedFeedRepository((feedId) => (feed, channel)),
                 publisher);

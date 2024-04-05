@@ -9,12 +9,21 @@ namespace MattCanello.NewsFeed.Frontend.Server.Tests.Mocks
         private readonly Func<string?, int?, SearchResponse<SearchDocument>> _getRecentFunc;
         private readonly Func<SearchCommand, SearchResponse<SearchDocument>> _searchFunc;
 
-        public MockedSearchClient(Func<string, string, SearchDocument?> getDocumentByIdFunc)
+        public MockedSearchClient()
         {
-            _getDocumentByIdFunc = getDocumentByIdFunc;
+            _getDocumentByIdFunc = (feedId, id) => throw new NotImplementedException();
             _getRecentFunc = (channelId, size) => throw new NotImplementedException();
             _searchFunc = (cmd) => throw new NotImplementedException();
         }
+
+        public MockedSearchClient(Func<string, string, SearchDocument?> getDocumentByIdFunc)
+            : this() => _getDocumentByIdFunc = getDocumentByIdFunc;
+
+        public MockedSearchClient(Func<string?, int?, SearchResponse<SearchDocument>> getRecentFunc)
+            : this() => _getRecentFunc = getRecentFunc;
+
+        public MockedSearchClient(Func<SearchCommand, SearchResponse<SearchDocument>> searchFunc)
+            : this() => _searchFunc = searchFunc;
 
         public Task<SearchDocument?> GetDocumentByIdAsync(string feedId, string id, CancellationToken cancellationToken = default)
         {

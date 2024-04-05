@@ -23,7 +23,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
             _frontPageConfiguration = frontPageConfiguration;
         }
 
-        public async Task<IEnumerable<Article>> GetFrontPageArticlesAsync(CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Article>> GetFrontPageArticlesAsync(CancellationToken cancellationToken = default)
         {
             var numberOfArticles = _frontPageConfiguration.FrontPageNumberOfArticles();
             var response = await _searchClient.GetRecentAsync(size: numberOfArticles, cancellationToken: cancellationToken);
@@ -62,8 +62,9 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
             return article;
         }
 
-        public async Task<IEnumerable<Article>> GetChannelArticlesAsync(string channelId, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Article>> GetChannelArticlesAsync(string channelId, CancellationToken cancellationToken = default)
         {
+            ArgumentNullException.ThrowIfNull(channelId);
             var numberOfArticles = _frontPageConfiguration.FrontPageNumberOfArticles();
 
             var searchResults = await _searchClient.GetRecentAsync(channelId, numberOfArticles, cancellationToken);
@@ -80,7 +81,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Application
             return articles;
         }
 
-        public async Task<IEnumerable<Article>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Article>> SearchAsync(string query, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(query);
 
