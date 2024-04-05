@@ -4,10 +4,10 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.HTML
 {
     public static class HtmlHelpers
     {
-        static readonly Regex TagToBreakLinePattern = new Regex(@"<\/?p>|<\/?ul>|<\/?li>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        static readonly Regex TagToBreakLinePattern = new Regex(@"<br *\/?>|<\/?p>|<\/?ol>|<\/?ul>|<\/?li>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         static readonly Regex EverythingBetweenQuotesPattern = new Regex(@"\w+=([""'])(?:(?=(\\?))\2.)*?\1", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         static readonly Regex AnchorPattern = new Regex(@"<a *>|<\/a>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        static readonly Regex TagToSupressPattern = new Regex(@"<\/?\w+>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+        static readonly Regex TagToSupressPattern = new Regex(@"<\/?\w+>|<\w+ *\/?>", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
         public static string StripHtmlTags(this string html)
         {
@@ -22,7 +22,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.HTML
 
             html = TagToSupressPattern.Replace(html, string.Empty);
 
-            return html;
+            return html.Trim();
         }
     }
 }
