@@ -4,6 +4,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces
 {
     public interface IChannelRepository
     {
-        Task<IEnumerable<Channel>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<Channel>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 }

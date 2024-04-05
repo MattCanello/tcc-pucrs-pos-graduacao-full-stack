@@ -19,7 +19,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories
             _channelConfiguration = channelConfiguration;
         }
 
-        public async Task<IEnumerable<Channel>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Channel>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             int skip = 0;
             bool hasMorePages;

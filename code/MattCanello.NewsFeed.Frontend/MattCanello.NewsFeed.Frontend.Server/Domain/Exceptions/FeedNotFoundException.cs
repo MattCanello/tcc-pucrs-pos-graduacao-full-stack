@@ -5,12 +5,12 @@
     {
         const string DefaultMessage = "The requested feed was not found";
 
-        public FeedNotFoundException(string feedId, string? message = null)
-            : base(message ?? DefaultMessage) 
-        {
-            FeedId = feedId;
-        }
+        public FeedNotFoundException() 
+            : base(DefaultMessage) { }
 
-        public string FeedId { get; }
+        public FeedNotFoundException(string feedId, string? message = null)
+            : base(message ?? DefaultMessage) => FeedId = feedId;
+
+        public string? FeedId { get; }
     }
 }

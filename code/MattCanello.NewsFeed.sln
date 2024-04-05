@@ -57,9 +57,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.AdminA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{83EB17C9-0270-4688-BCAF-798E52666B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Frontend.Server", "MattCanello.NewsFeed.Frontend\MattCanello.NewsFeed.Frontend.Server\MattCanello.NewsFeed.Frontend.Server.csproj", "{93478A22-8B7A-4133-AAA7-525799C78CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MattCanello.NewsFeed.Frontend.Server", "MattCanello.NewsFeed.Frontend\MattCanello.NewsFeed.Frontend.Server\MattCanello.NewsFeed.Frontend.Server.csproj", "{93478A22-8B7A-4133-AAA7-525799C78CF4}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "mattcanello.newsfeed.frontend.client", "MattCanello.NewsFeed.Frontend\mattcanello.newsfeed.frontend.client\mattcanello.newsfeed.frontend.client.esproj", "{E7907634-9D7A-4EA4-BB4C-E8956E20098D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MattCanello.NewsFeed.Frontend.Server.Tests", "MattCanello.NewsFeed.Frontend.Server.Tests\MattCanello.NewsFeed.Frontend.Server.Tests.csproj", "{2B9F75DB-500E-4598-B03F-A9F8B2C91C50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{E7907634-9D7A-4EA4-BB4C-E8956E20098D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7907634-9D7A-4EA4-BB4C-E8956E20098D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7907634-9D7A-4EA4-BB4C-E8956E20098D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2B9F75DB-500E-4598-B03F-A9F8B2C91C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9F75DB-500E-4598-B03F-A9F8B2C91C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9F75DB-500E-4598-B03F-A9F8B2C91C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9F75DB-500E-4598-B03F-A9F8B2C91C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +170,7 @@ Global
 		{80C8EFEC-0687-4E9C-94CB-CF27FC65D2E3} = {46420F95-D963-49EF-A2CA-71B3AFE850CB}
 		{93478A22-8B7A-4133-AAA7-525799C78CF4} = {83EB17C9-0270-4688-BCAF-798E52666B6A}
 		{E7907634-9D7A-4EA4-BB4C-E8956E20098D} = {83EB17C9-0270-4688-BCAF-798E52666B6A}
+		{2B9F75DB-500E-4598-B03F-A9F8B2C91C50} = {83EB17C9-0270-4688-BCAF-798E52666B6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {599BEDC0-A80F-4324-ACF8-6ECA581D8B02}

@@ -2,7 +2,7 @@
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration
 {
-    sealed class FrontPageConfiguration : IFrontPageConfiguration
+    public sealed class FrontPageConfiguration : IFrontPageConfiguration
     {
         private readonly int _frontPgeNumberOfArticles;
 

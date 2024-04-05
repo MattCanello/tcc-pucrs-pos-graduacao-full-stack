@@ -2,7 +2,7 @@
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration
 {
-    sealed class ChannelConfiguration : IChannelConfiguration
+    public sealed class ChannelConfiguration : IChannelConfiguration
     {
         private readonly int _channelListBulkCount;
 

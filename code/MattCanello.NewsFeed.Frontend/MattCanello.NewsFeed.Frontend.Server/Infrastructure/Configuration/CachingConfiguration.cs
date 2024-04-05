@@ -2,7 +2,7 @@
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration
 {
-    sealed class CachingConfiguration : ICachingConfiguration
+    public sealed class CachingConfiguration : ICachingConfiguration
     {
         private readonly TimeSpan _feedExpiryTime;
         private readonly TimeSpan _channelExpiryTime;
