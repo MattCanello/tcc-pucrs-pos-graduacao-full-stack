@@ -3,7 +3,6 @@ using MattCanello.NewsFeed.SearchApi.Domain.Interfaces;
 using MattCanello.NewsFeed.SearchApi.Domain.Models;
 using MattCanello.NewsFeed.SearchApi.Domain.Responses;
 using MattCanello.NewsFeed.SearchApi.Infrastructure.Telemetry;
-using System.Diagnostics;
 
 namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Decorators.SearchApp
 {

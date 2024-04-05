@@ -1,0 +1,39 @@
+main > section {
+    margin-top: 1rem;
+    grid-area: Content;
+}
+
+    main > section > aside {
+        display: block;
+        width: 100%;
+        margin-left: 15%;
+        margin-right: 15%;
+        text-align: center;
+        align-content: center;
+    }
+
+        main > section > aside.empty {
+            color: var(--light);
+            height: 60vh;
+            font-size: larger;
+        }
+
+        main > section > aside.deprecated {
+            padding: 0.5rem;
+            color: var(--text-dark);
+            background-color: var(--medium);
+            border-radius: 5px;
+            font-size: small;
+        }
+
+@media screen {
+    main > section {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: flex-start;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        align-items: stretch;
+    }
+}

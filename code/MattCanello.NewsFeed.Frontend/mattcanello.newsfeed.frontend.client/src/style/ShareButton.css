@@ -1,0 +1,29 @@
+main > section > article > button.share {
+    background-color: var(--lighter);
+    color: var(--text-dark);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    float: right;
+    margin-top: -1.5rem;
+    z-index: 2;
+    position: relative;
+    margin-right: 0.5rem;
+    border: none;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+    grid-area: Title;
+    margin-left: calc(100% - 3.5rem);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article > button.share {
+        box-shadow: unset;
+    }
+}
+
+@media print {
+    main > section > article > button.share {
+        display: none;
+    }
+}

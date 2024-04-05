@@ -1,0 +1,16 @@
+main > section > article > strong {
+    padding: 1rem;
+    color: var(--text-light);
+    font-family: "Sitka Banner", "Merriweather", serif;
+    font-size: large;
+    display: block;
+    grid-area: Authors;
+    padding-top: 0rem;
+    align-self: end;
+}
+
+@media print {
+    main > section > article > strong {
+        color: var(--text-dark);
+    }
+}

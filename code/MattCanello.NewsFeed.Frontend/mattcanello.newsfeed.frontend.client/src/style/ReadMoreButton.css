@@ -1,0 +1,28 @@
+main > section > article > button.read-more {
+    background-color: var(--hightlight);
+    color: var(--text-light);
+    width: calc(100% - 2rem);
+    display: block;
+    margin: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    line-height: 1;
+    font-size: larger;
+    font-family: "Lato";
+    font-weight: 300;
+    border: none;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+    grid-area: ReadMore;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article > button.read-more {
+        box-shadow: unset;
+    }
+}
+
+@media print {
+    main > section > article > button.read-more {
+        display: none;
+    }
+}

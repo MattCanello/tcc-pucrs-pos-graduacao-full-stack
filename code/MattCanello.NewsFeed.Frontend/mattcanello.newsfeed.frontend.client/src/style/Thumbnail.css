@@ -1,0 +1,95 @@
+/* Mobile */
+@media only screen and (max-width: 961px) {
+    main > section > article > figure {
+        grid-area: ThumbImg;
+    }
+
+        main > section > article > figure:not(:empty) {
+            width: 10em;
+        }
+
+        main > section > article > figure > img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+        main > section > article > figure > figcaption {
+            display: none;
+        }
+
+    main > section > article.expanded > figure {
+        max-height: 12em;
+        width: unset;
+        grid-area: ThumbPublisherAndDate;
+        background-color: var(--background-color);
+    }
+
+
+        main > section > article.expanded > figure > img {
+            box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+        }
+}
+
+/* Desktop */
+@media only screen and (min-width: 961px) {
+    main > section > article > figure {
+        grid-row: 1;
+        grid-column: 1;
+        min-height: 1.75rem;
+        background-color: var(--background-color);
+        max-height: 18rem;
+        align-self: start;
+        max-width: 30rem;
+        grid-area: ThumbPublisherAndDate;
+    }
+
+        main > section > article > figure > img {
+            min-width: 30rem;
+            box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);
+            box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+            max-height: 20rem;
+            object-fit: cover;
+            max-width: 30rem;
+            height: 18rem;
+        }
+
+        main > section > article > figure > figcaption {
+            display: none;
+        }
+
+    main > section > article.expanded > figure {
+        width: 40rem;
+        max-width: 40rem;
+    }
+
+        main > section > article.expanded > figure > img {
+            width: 40rem;
+            max-width: 40rem;
+        }
+}
+
+@media print {
+    main > section > article > figure > img {
+        max-width: 30rem;
+        margin: 0 auto;
+        display: block;
+    }
+
+    main > section > article > figure > figcaption {
+        padding: 0.25rem;
+        padding-bottom: 0.5rem;
+        font-style: italic;
+        font-size: xx-small;
+        text-align: center;
+        padding-top: 0rem;
+        color: var(--text-dark);
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article.expanded > figure > img,
+    main > section > article > figure > img {
+        box-shadow: unset;
+    }
+}

@@ -17,7 +17,7 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
         public MockedDocumentSearchRepository(params (string, Entry)[] feedIdAndEntries)
         {
             _data = new Dictionary<Key, Entry>();
-            
+
             if (feedIdAndEntries is null)
                 return;
 
@@ -25,11 +25,32 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
                 this.Add(entry, feedId);
         }
 
+        public MockedDocumentSearchRepository(params (string, string, Entry)[] feedIdAndEntries)
+        {
+            _data = new Dictionary<Key, Entry>();
+            
+            if (feedIdAndEntries is null)
+                return;
+
+            foreach (var (channelId, feedId, entry) in feedIdAndEntries)
+                this.Add(entry, channelId, feedId);
+        }
+
         public Key Add(Entry entry, string feedId)
         {
             ArgumentNullException.ThrowIfNull(entry);
 
-            var key = new Key(feedId, entry.Id!);
+            var key = new Key(feedId, feedId, entry.Id!);
+            _data[key] = entry;
+
+            return key;
+        }
+
+        public Key Add(Entry entry, string channelId, string feedId)
+        {
+            ArgumentNullException.ThrowIfNull(entry);
+
+            var key = new Key(channelId, feedId, entry.Id!);
             _data[key] = entry;
 
             return key;
@@ -71,9 +92,12 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             });
         }
 
-        public Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, CancellationToken cancellationToken = default)
+        public Task<DocumentSearchResponse> GetRecentAsync(Paging paging, string? feedId = null, string? channelId = null, CancellationToken cancellationToken = default)
         {
             IEnumerable<KeyValuePair<Key, Entry>> entries = _data.OrderBy(kvp => kvp.Value.PublishDate);
+
+            if (!string.IsNullOrEmpty(channelId))
+                entries = _data.Where(kvp => kvp.Key.ChannelId == channelId);
 
             if (!string.IsNullOrEmpty(feedId))
                 entries = _data.Where(kvp => kvp.Key.FeedId == feedId);
@@ -91,10 +115,30 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Mocks
             });
         }
 
-        [Serializable]
-        public record class Key(string FeedId, string EntryId)
+        public Task<DocumentSearchResponse> SearchByChannelAsync(string? query = null, Paging? paging = null, string? channelId = null, CancellationToken cancellationToken = default)
         {
-            public string IndexName => FeedId;
+            IEnumerable<KeyValuePair<Key, Entry>> entries = _data.OrderBy(kvp => kvp.Value.PublishDate);
+
+            if (!string.IsNullOrEmpty(channelId))
+                entries = _data.Where(kvp => kvp.Key.ChannelId == channelId);
+
+            int countPrePaging = entries.Count();
+
+            if (paging != null)
+                entries = entries.Skip(paging.Skip).Take(paging.Size);
+
+            return Task.FromResult(new DocumentSearchResponse()
+            {
+                Paging = paging,
+                Total = countPrePaging,
+                Results = entries.Select(entries => new Document(entries.Key.Id, entries.Key.FeedId, entries.Value)).ToList()
+            });
+        }
+
+        [Serializable]
+        public record class Key(string ChannelId, string FeedId, string EntryId)
+        {
+            public string IndexName => $"{ChannelId}/{FeedId}";
             public string Id => GetHashCode().ToString("F0");
         }
     }

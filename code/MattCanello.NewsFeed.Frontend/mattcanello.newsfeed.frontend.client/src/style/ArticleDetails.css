@@ -1,0 +1,44 @@
+main > section > article > details {
+    padding: 1rem;
+    color: var(--medium);
+    padding-top: 0;
+    font-size: small;
+    grid-area: Description;
+}
+
+    main > section > article > details > summary::marker,
+    main > section > article > details[open] > summary::marker {
+        content: "";
+    }
+
+    main > section > article > p,
+    main > section > article > details > p {
+        margin-top: 1em;
+    }
+
+main > section > article > p {
+    margin: 1rem;
+}
+
+@media screen {
+    main > section > article > p,
+    main > section > article > details > p {
+        color: var(--medium);
+        align-self: start;
+        grid-area: Description;
+    }
+}
+
+@media print {
+    main > section > article > details,
+    main > section > article > details > p,
+    main > section > article > p {
+        color: var(--dark);
+    }
+}
+
+@media only screen and (max-width: 961px) and (orientation: portrait) {
+    main > section > article:not(.expanded) > details {
+        display: none;
+    }
+}

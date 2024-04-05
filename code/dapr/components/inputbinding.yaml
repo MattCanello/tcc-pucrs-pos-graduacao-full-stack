@@ -122,3 +122,28 @@ spec:
     value: "cron-api"
 scopes:
   - cron-api
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: new-entry
+spec:
+  type: bindings.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "kafka:29092,localhost:9092"
+  - name: authType
+    value: "none"
+  - name: initialOffset
+    value: "newest"
+  - name: direction
+    value: "input"
+  - name: topics
+    value: "indexed-documents"
+  - name: clientID
+    value: "frontend-server"
+  - name: consumerGroup
+    value: "frontend-server"
+scopes:
+  - frontend-server
