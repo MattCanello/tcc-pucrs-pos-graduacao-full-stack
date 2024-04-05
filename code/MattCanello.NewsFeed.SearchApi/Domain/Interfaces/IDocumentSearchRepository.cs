@@ -8,9 +8,12 @@ namespace MattCanello.NewsFeed.SearchApi.Domain.Interfaces
         Task<SearchResponse<Document>> SearchAsync(
             string? query = null, Paging? paging = null, string? feedId = null, CancellationToken cancellationToken = default);
 
+        Task<SearchResponse<Document>> SearchByChannelAsync(
+            string? query = null, Paging? paging = null, string? channelId = null, CancellationToken cancellationToken = default);
+
         Task<FindResponse<Document>> FindByIdAsync(string entryId, string feedId, CancellationToken cancellationToken = default);
 
         Task<SearchResponse<Document>> GetRecentAsync(
-            Paging paging, string? feedId = null, CancellationToken cancellationToken = default);
+            Paging paging, string? feedId = null, string? channelId = null, CancellationToken cancellationToken = default);
     }
 }

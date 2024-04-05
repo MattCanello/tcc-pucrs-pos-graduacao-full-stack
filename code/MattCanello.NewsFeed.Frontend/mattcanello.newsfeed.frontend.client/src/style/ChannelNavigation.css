@@ -1,0 +1,99 @@
+main > header > nav {
+    position: relative;
+}
+
+    main > header > nav > ol {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        overflow: auto;
+        transform: rotateX(180deg);
+        margin-top: 0.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--dark) var(--darker);
+    }
+
+        main > header > nav > ol > li {
+            list-style: none;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            cursor: default;
+            align-self: center;
+            white-space: nowrap;
+            transform: rotateX(180deg);
+            font-size: small;
+            margin-bottom: 0.25rem;
+        }
+
+            main > header > nav > ol > li > a {
+                color: var(--text-light);
+                text-decoration: none;
+                display: block;
+            }
+
+                main > header > nav > ol > li > a.selected {
+                    border-bottom: 0.15rem solid;
+                    border-bottom-color: var(--hightlight);
+                }
+
+    main > header > nav > button {
+        display: none;
+    }
+
+@media only screen and (min-width: 961px) {
+    main > header > nav {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+        main > header > nav > button {
+            display: inline-block;
+            margin: 0 0.1rem;
+            font-size: xx-small;
+            background-color: transparent;
+            color: var(--text-light);
+            border: 0 none;
+        }
+
+        main > header > nav > ol {
+            overflow: hidden;
+            scrollbar-width: thin;
+            transform: unset;
+        }
+
+            main > header > nav > ol > li {
+                transform: unset;
+                margin-bottom: 0rem;
+            }
+
+        main > header > nav.expanded > ol {
+            margin-top: 0;
+            flex-wrap: wrap;
+        }
+
+            main > header > nav.expanded > ol > li {
+                margin: 0.25rem 0rem;
+            }
+
+        main > header > nav.expanded > button {
+            align-self: start;
+        }
+
+        main > header > nav > ol::-webkit-scrollbar-track {
+            background: var(--background-dark);
+        }
+
+        main > header > nav > ol::-webkit-scrollbar-thumb {
+            background: var(--dark);
+        }
+
+            main > header > nav > ol::-webkit-scrollbar-thumb:hover {
+                background: var(--hightlight);
+            }
+}
+
+@media print {
+    main > header > nav > ol {
+        display: none;
+    }
+}

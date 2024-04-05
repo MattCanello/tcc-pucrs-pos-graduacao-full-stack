@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.SearchApi.Infrastructure.Factories
             ArgumentNullException.ThrowIfNull(bindingName);
 
             var bindingRequest = _bindingRequestFactory
-                .CreateBindingRequest(document, bindingName);
+                .CreateBindingRequest(new { documentId = document.Id, document.FeedId, entryId = document.Entry?.Id }, bindingName);
 
             bindingRequest
                 .SetFeedId(document.FeedId);

@@ -74,8 +74,7 @@ namespace MattCanello.NewsFeed.SearchApi
 
             services
                 .AddScoped<IIndexApp, IndexApp>()
-                .AddScoped<ISearchApp, SearchApp>()
-                .AddScoped<IFeedApp, FeedApp>();
+                .AddScoped<ISearchApp, SearchApp>();
 
             services
                 .AddScoped<IEntryIndexPolicy, PreventDuplicateEntryIndexingPolicy>();
@@ -86,6 +85,7 @@ namespace MattCanello.NewsFeed.SearchApi
                 .Decorate<IIndexApp, IndexAppEventPublisherDecorator>();
 
             services
+                .Decorate<ISearchApp, SearchAppEmptyQueryDecorator>()
                 .Decorate<ISearchApp, SearchAppSearchSpeedMetricsDecorator>()
                 .Decorate<ISearchApp, SearchAppEmptySearchMetricsDecorator>()
                 .Decorate<ISearchApp, SearchAppSearchCountMetricsDecorator>()

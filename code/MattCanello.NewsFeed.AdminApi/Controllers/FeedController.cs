@@ -1,6 +1,7 @@
 ﻿using MattCanello.NewsFeed.AdminApi.Domain.Commands;
 using MattCanello.NewsFeed.AdminApi.Domain.Interfaces;
 using MattCanello.NewsFeed.AdminApi.Domain.Models;
+using MattCanello.NewsFeed.AdminApi.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -68,7 +69,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         [HttpGet("feed")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Feed))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<Feed>))]
         public async Task<IActionResult> Query([FromQuery]QueryCommand command, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)

@@ -1,0 +1,50 @@
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --transparent-dark: var(--darker);
+    }
+}
+
+main > section > article > small {
+    padding: 0.5rem;
+    font-size: small;
+    padding-bottom: 0rem;
+    color: var(--text-light);
+    grid-area: ChannelAndDate;
+}
+
+main > section > article.expanded > small {
+    grid-area: ThumbPublisherAndDate;
+    background-color: var(--transparent-dark);
+    align-content: space-evenly;
+    padding-bottom: 0.25rem;
+    align-self: end;
+}
+
+@media only screen and (min-width: 961px) {
+    main > section > article > small {
+        background-color: var(--transparent-dark);
+        font-size: x-small;
+        z-index: 2;
+        align-content: space-evenly;
+        padding-bottom: 0.5rem;
+        align-self: end;
+        grid-area: ThumbPublisherAndDate;
+    }
+}
+
+@media print {
+    main > section > article > small,
+    main > section > article.expanded > small {
+        font-size: x-small;
+        color: var(--text-dark);
+        border-top-color: var(--darker);
+        display: block;
+        background-color: unset;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    main > section > article > small {
+        position: unset;
+    }
+}

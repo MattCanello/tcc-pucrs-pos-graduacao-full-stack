@@ -21,7 +21,7 @@ namespace MattCanello.NewsFeed.AdminApi.Infrastructure.Factories
             ArgumentNullException.ThrowIfNull(bindingName);
 
             var bindingRequest = _bindingRequestFactory
-                .CreateBindingRequest(feed, bindingName);
+                .CreateBindingRequest(new { feedId = feed.FeedId, url = feed.Url, channelId = feed.Channel?.ChannelId }, bindingName);
 
             bindingRequest
                 .SetFeedId(feed.FeedId);

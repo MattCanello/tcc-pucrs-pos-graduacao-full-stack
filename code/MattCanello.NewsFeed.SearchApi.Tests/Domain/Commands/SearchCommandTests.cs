@@ -14,16 +14,18 @@ namespace MattCanello.NewsFeed.SearchApi.Tests.Domain.Commands
             Assert.Null(command.Query);
             Assert.Null(command.Paging);
             Assert.Null(command.FeedId);
+            Assert.Null(command.ChannelId);
         }
 
         [Theory, AutoData]
-        public void Constructor_GivenSpecificParams_ShouldPreserveGivenData(string query, Paging paging, string feedId)
+        public void Constructor_GivenSpecificParams_ShouldPreserveGivenData(string query, Paging paging, string feedId, string channelId)
         {
-            var command = new SearchCommand(query, paging, feedId);
+            var command = new SearchCommand(query, paging, feedId, channelId);
 
             Assert.Equal(query, command.Query);
             Assert.Equal(paging, command.Paging);
             Assert.Equal(feedId, command.FeedId);
+            Assert.Equal(channelId, command.ChannelId);
         }
     }
 }

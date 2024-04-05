@@ -40,15 +40,16 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResponse<Document>))]
         public async Task<IActionResult> Search(
             string? q = null,
-            [Range(1, Paging.MaxPagingSize)] int? size = null,
+            [Range(1, Paging.MaxPageSize)] int? size = null,
             [Range(0, int.MaxValue)] int? skip = null,
-            string? feedId = null,
+            [StringLength(100)] string? feedId = null,
+            [StringLength(100)] string? channelId = null,
             CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var command = new SearchCommand(q, new Paging(skip, size), feedId);
+            var command = new SearchCommand(q, new Paging(skip, size), feedId, channelId);
 
             return await Search(command, cancellationToken);
         }

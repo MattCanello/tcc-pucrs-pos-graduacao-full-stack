@@ -1,0 +1,238 @@
+:root {
+    --darker: #404040;
+    --dark: #737373;
+    --medium: #a6a6a6;
+    --light: #d0d0d0;
+    --lighter: #f6f6f6;
+    --text-dark: var(--darker);
+    --text-light: var(--lighter);
+    --background-dark: var(--darker);
+    --background-light: var(--lighter);
+    --background-color: var(--dark);
+    --hightlight: #ff6700;
+    --transparent-dark: rgba(64, 64, 64, 0.75);
+    --shadow: rgba(0,0,0,0.25);
+}
+
+@media print {
+    :root {
+        --darker: #404040;
+        --dark: #737373;
+        --medium: #a6a6a6;
+        --light: #d0d0d0;
+        --lighter: #f6f6f6;
+        --text-dark: #404040;
+        --text-light: #f6f6f6;
+        --background-dark: #404040;
+        --background-light: #f6f6f6;
+        --background-color: var(--lighter);
+        --hightlight: #ff6700;
+        --transparent-dark: rgba(64, 64, 64, 0.75);
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --transparent-dark: var(--darker);
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --darker: #000000;
+        --dark: #404040;
+        --medium: #d0d0d0;
+        --light: #f6f6f6;
+        --lighter: #fefefe;
+        --background-color: #737373;
+        --transparent-dark: var(--darker);
+    }
+
+    @media print {
+        :root {
+            --background-color: var(--lighter);
+        }
+    }
+}
+
+@media screen {
+    ::-webkit-scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--medium);
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--hightlight);
+        }
+
+    html,
+    body,
+    main,
+    p,
+    input,
+    span,
+    a,
+    ol,
+    ul,
+    li,
+    figure,
+    img,
+    section,
+    article,
+    small,
+    details,
+    summary,
+    strong,
+    button {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body,
+    main,
+    p,
+    input,
+    span,
+    a,
+    ol,
+    ul,
+    li,
+    section,
+    article,
+    small,
+    details,
+    summary,
+    strong {
+        font-family: "Merriweather", serif;
+        font-weight: 400;
+    }
+
+    html,
+    body,
+    main {
+        background-color: var(--background-color);
+        width: 100vw;
+        margin: 0 auto;
+        padding: 0;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: var(--medium) var(--dark);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        margin: 0 auto;
+    }
+
+    h1 > a,
+    h2 > a,
+    h3 > a,
+    h4 > a,
+    h5 > a,
+    h6 > a {
+        font-family: "Lato", sans-serif;
+        margin: 0 auto;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        cursor: default;
+    }
+
+    button {
+        font-family: "Lato", sans-serif;
+    }
+}
+
+@media print {
+    html,
+    body,
+    main {
+        background-color: var(--background-color);
+    }
+
+    html,
+    body,
+    main,
+    p,
+    input,
+    span,
+    a,
+    ol,
+    ul,
+    li,
+    figure,
+    img,
+    section,
+    article,
+    small,
+    details,
+    summary,
+    strong {
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    html,
+    body,
+    main,
+    p,
+    input,
+    span,
+    a,
+    ol,
+    ul,
+    li,
+    section,
+    article,
+    small,
+    details,
+    summary,
+    strong {
+        font-family: "Merriweather", serif;
+        font-weight: 400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+        margin: 0 auto;
+    }
+}
+
+@media (prefers-contrast: more) {
+    html,
+    body,
+    main {
+        background-color: var(--lighter);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 300;
+    }
+}

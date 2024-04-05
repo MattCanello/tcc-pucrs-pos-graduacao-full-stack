@@ -1,0 +1,21 @@
+button.newEntries {
+    display: none;
+    grid-area: ReadMoreButton;
+}
+
+@media screen {
+    button.newEntries:not(:empty) {
+        background-color: var(--hightlight);
+        border-radius: 5px;
+        border: 0 none;
+        color: var(--lighter);
+        display: block;
+        width: 12rem;
+        box-shadow: 0.1rem 0.1rem 0.2rem 0rem var(--shadow);
+        font-weight: bold;
+        height: 2rem;
+        margin: 0.5rem auto;
+        margin-bottom: 0;
+        margin-top: 0.75rem;
+    }
+}
