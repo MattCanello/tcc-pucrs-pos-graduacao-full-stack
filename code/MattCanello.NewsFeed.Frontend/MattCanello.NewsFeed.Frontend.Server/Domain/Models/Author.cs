@@ -5,14 +5,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Models
     [Serializable]
     public sealed record Author
     {
-        public Author() { }
-
-        public Author(string name, string? email = null)
-        {
-            Name = name;
-            Email = email;
-        }
-
         [Required]
         public string? Name { get; set; }
 
