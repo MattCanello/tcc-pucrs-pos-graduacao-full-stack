@@ -2,7 +2,7 @@ import * as signalR from "@microsoft/signalr";
 export default function getSignalRConnection() {
     function createConnection() {
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5191/hubs/article")  // TODO: tornar configurável
+            .withUrl('/hubs/article') 
             .configureLogging(signalR.LogLevel.Information)
             .withAutomaticReconnect()
             .build();
