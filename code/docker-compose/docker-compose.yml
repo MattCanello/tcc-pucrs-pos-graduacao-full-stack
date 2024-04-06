@@ -235,8 +235,6 @@ services:
       dockerfile: ./MattCanello.NewsFeed.Frontend/MattCanello.NewsFeed.Frontend.Server/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ADMIN_API_BASE_URL=http://admin-api:80/
-      - SEARCH_API_BASE_URL=http://search-api:80/
       - FRONTPAGE_ARTICLE_COUNT=30
       - CHANNEL_LIST_BULK_COUNT=100
       - FEED_EXPIRY_TIME=00:02:00
