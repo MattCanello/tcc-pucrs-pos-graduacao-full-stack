@@ -228,7 +228,7 @@ services:
     container_name: frontend-server
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedfrontendserver
     depends_on:
-      - mattcanello.newsfeed.searchapi
+      - mattcanello.newsfeed.searchapi-dapr
       - mattcanello.newsfeed.adminapi-dapr
     build:
       context: ..
