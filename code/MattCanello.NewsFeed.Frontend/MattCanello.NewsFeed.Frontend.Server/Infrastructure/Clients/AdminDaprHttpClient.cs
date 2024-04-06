@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Exceptions;
+﻿using Dapr.Client;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Exceptions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Admin;
 using System.Net;
@@ -6,14 +7,15 @@ using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 {
-    public sealed class AdminHttpClient : IAdminClient
+    public sealed class AdminDaprHttpClient : IAdminClient
     {
-        private readonly HttpClient _httpClient;
+        private readonly DaprClient _daprClient;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
+        const string AdminApiAppId = "admin-api";
 
-        public AdminHttpClient(HttpClient httpClient, JsonSerializerOptions jsonSerializerOptions)
+        public AdminDaprHttpClient(DaprClient daprClient, JsonSerializerOptions jsonSerializerOptions)
         {
-            _httpClient = httpClient;
+            _daprClient = daprClient;
             _jsonSerializerOptions = jsonSerializerOptions;
         }
 
@@ -28,7 +30,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             var url = $"{baseUrl}?pageSize={queryCommand.PageSize}&skip={queryCommand.Skip}";
 
-            using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AdminApiAppId, url);
+            using var response = await _daprClient.InvokeMethodWithResponseAsync(request, cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
@@ -46,7 +49,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             var path = $"/feed/{feedId}";
 
-            using var response = await _httpClient.GetAsync(path, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, AdminApiAppId, path);
+            using var response = await _daprClient.InvokeMethodWithResponseAsync(request, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.NotFound)
                 throw new FeedNotFoundException(feedId);
