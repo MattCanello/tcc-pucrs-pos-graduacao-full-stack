@@ -2,7 +2,7 @@ import * as signalR from "@microsoft/signalr";
 export default function getSignalRConnection() {
     function createConnection() {
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl('/hubs/article') 
+            .withUrl(`${import.meta.env.VITE_SIGNALR_SERVER_BASE_ADDRESS}/hubs/article`) 
             .configureLogging(signalR.LogLevel.Information)
             .withAutomaticReconnect()
             .build();
