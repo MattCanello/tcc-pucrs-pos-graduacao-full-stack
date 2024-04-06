@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import '../../style/ChannelNavigation.css';
 import { NavLink } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
+import { getChannelList } from "../../functions/Channels";
 
 function ChannelNavigation() {
     const { q } = useLoaderData();
@@ -75,8 +76,7 @@ function ChannelNavigation() {
     );
 
     async function populateChannels() {
-        const response = await fetch("/channels");
-        const data = await response.json();
+        const data = await getChannelList();
         setChannels(data);
     }
 }

@@ -112,18 +112,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 });
 
             services
-                .AddHttpClient<IAdminClient, AdminHttpClient>((sp) => DaprClient.CreateInvokeHttpClient("admin-api"))
-                .ConfigureHttpClient(httpClient =>
-                {
-                    httpClient.BaseAddress = new Uri("http://admin-api/");
-                });
+                .AddScoped<IAdminClient, AdminDaprHttpClient>();
 
             services
-                .AddHttpClient<ISearchClient, SearchHttpClient>((sp) => DaprClient.CreateInvokeHttpClient("search-api"))
-                .ConfigureHttpClient(httpClient =>
-                {
-                    httpClient.BaseAddress = new Uri("http://search-api/");
-                });
+                .AddScoped<ISearchClient, SearchDaprHttpClient>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)

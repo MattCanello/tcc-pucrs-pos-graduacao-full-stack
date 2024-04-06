@@ -7,8 +7,8 @@ export async function getHomePageArticles({ request }) {
     }
 
     const response = q 
-        ? await fetch("/search?q=" + q)
-        : await fetch("/articles");
+        ? await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/search?q=${q}`)
+        : await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/articles`);
 
     const articles = await response.json();
     return { articles, q };

@@ -1,18 +1,20 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+﻿using Dapr.Client;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Models.Search;
 using System.Net;
 using System.Text.Json;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 {
-    public sealed class SearchHttpClient : ISearchClient
+    public sealed class SearchDaprHttpClient : ISearchClient
     {
-        private readonly HttpClient _httpClient;
+        private readonly DaprClient _daprClient;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
+        const string SearchApiAppId = "search-api";
 
-        public SearchHttpClient(HttpClient httpClient, JsonSerializerOptions jsonSerializerOptions)
+        public SearchDaprHttpClient(DaprClient daprClient, JsonSerializerOptions jsonSerializerOptions)
         {
-            _httpClient = httpClient;
+            _daprClient = daprClient;
             _jsonSerializerOptions = jsonSerializerOptions;
         }
 
@@ -22,7 +24,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
                 ? $"/feed/recent?size={size}"
                 : $"/feed/{channelId}/recent?size={size}";
 
-            using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, SearchApiAppId, url);
+            using var response = await _daprClient.InvokeMethodWithResponseAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
 
             if (response.Content is null || response.StatusCode == HttpStatusCode.NoContent)
@@ -38,7 +41,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             var url = $"/search?q={command.Query}&size={command.PageSize}&skip={command.Skip}&feedId={command.FeedId}";
 
-            using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, SearchApiAppId, url);
+            using var response = await _daprClient.InvokeMethodWithResponseAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
 
             if (response.Content is null || response.StatusCode == HttpStatusCode.NoContent)
@@ -55,7 +59,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients
 
             var url = $"/feed/{feedId}/document/{id}";
 
-            using var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var request = _daprClient.CreateInvokeMethodRequest(HttpMethod.Get, SearchApiAppId, url);
+            using var response = await _daprClient.InvokeMethodWithResponseAsync(request, cancellationToken);
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
 
