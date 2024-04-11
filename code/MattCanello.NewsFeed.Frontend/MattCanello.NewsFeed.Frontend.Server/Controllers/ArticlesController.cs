@@ -27,6 +27,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
             return Ok(articles);
         }
 
+        [ResponseCache(Duration = 3600)]
         [HttpGet("articles/{feedId}/{articleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Article))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

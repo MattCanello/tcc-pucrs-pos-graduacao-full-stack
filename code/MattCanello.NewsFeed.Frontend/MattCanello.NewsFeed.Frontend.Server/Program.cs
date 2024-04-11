@@ -1,4 +1,3 @@
-using Dapr.Client;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
@@ -46,6 +45,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
                     });
             });
 
+            builder.Services.AddResponseCaching();
+
+            builder.Services.AddResponseCompression();
+
             builder.AddDefaultTelemetry();
 
             var app = builder.Build();
@@ -61,6 +64,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
             }
 
             app.UseCors();
+
+            app.UseResponseCaching();
+
+            app.UseResponseCompression();
 
             app.UseAuthorization();
 
