@@ -57,3 +57,10 @@ main > header > search {
         display: none;
     }
 }
+
+
+@media only screen and (max-width: 961px) {
+    main > header > search > form {
+        max-width: unset;
+    }
+}

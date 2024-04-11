@@ -20,7 +20,7 @@ main > header > h1 {
         padding-right: 1rem;
         padding-bottom: 0rem;
         grid-area: Header;
-        width: 100%;
+        overflow: auto;
     }
 }
 
@@ -30,6 +30,7 @@ main > header > h1 {
         padding: 0rem;
         padding-left: 15%;
         padding-right: 15%;
+        width: 100vw;
     }
 
         main > header > h1 {
