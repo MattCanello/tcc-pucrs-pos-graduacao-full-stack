@@ -2,15 +2,27 @@ import React from 'react';
 import '../../style/ArticleList.css';
 import Article from './Article';
 
-function ArticleList({ articles, query }) {
+function ArticleList({ articles, query, isLoading }) {
 
     const articleList = (articles || []).map(article => <Article
         key={article.id}
         article={article}
     />);
 
+    function getEmptyMessage() {
+        if (query) {
+            return "A sua busca não produziu resultados";
+        }
+
+        if (isLoading) {
+            return "Carregando...";
+        }
+
+        return "Parece que não há nenhum artigo por aqui";
+    }
+
     const emptyList = (articles || []).length == 0
-        ? <aside className="empty">{query ? "A sua busca não produziu resultados" : "Parece que não há nenhum artigo por aqui"}</aside>
+        ? <aside className="empty">{getEmptyMessage()}</aside>
         : null;
 
     function renderOldFeed() {

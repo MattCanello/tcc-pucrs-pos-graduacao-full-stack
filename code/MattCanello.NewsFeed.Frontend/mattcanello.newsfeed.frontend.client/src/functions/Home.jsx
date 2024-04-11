@@ -1,28 +1,25 @@
-export async function getHomePageArticles({ request }) {
+export async function getQuerySearchParam(params) {
     let q = null;
 
-    if (request.url) {
-        const url = new URL(request.url);
+    if (params && params.request && params.request.url) {
+        const url = new URL(params.request.url);
         q = url.searchParams.get("q");
     }
 
-    const response = q 
+    return { q };
+}
+
+export async function getHomePageArticles() {
+    const response = await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/articles`);
+    const articles = await response.json();
+    return articles;
+}
+
+export async function searchArticles(q) {
+    const response = q
         ? await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/search?q=${q}`)
         : await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/articles`);
 
     const articles = await response.json();
-    return { articles, q };
-}
-
-export async function searchArticles({ request }) {
-    const articles = [];
-
-    if (!request.url) {
-        return { articles, q };
-    }
-
-    const url = new URL(request.url || '/');
-    const q = url.searchParams.get("q");
-
-    return { articles, q };
+    return articles;
 }
