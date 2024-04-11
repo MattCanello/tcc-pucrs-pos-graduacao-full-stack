@@ -27,6 +27,7 @@
     }
 
         main > section > article.expanded {
+            width: 95vw;
             display: grid;
             grid-auto-columns: 1fr;
             grid-template-columns: auto;

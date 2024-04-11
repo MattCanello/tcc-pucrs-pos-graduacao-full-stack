@@ -34,3 +34,11 @@ main > section {
         padding-bottom: 1rem;
     }
 }
+
+
+/* Desktop */
+@media only screen and (min-width: 961px) {
+    main > section > aside.deprecated {
+        width: 100vw;
+    }
+}
