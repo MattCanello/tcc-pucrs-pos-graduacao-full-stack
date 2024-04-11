@@ -10,12 +10,16 @@ function ArticleList({ articles, query, isLoading }) {
     />);
 
     function getEmptyMessage() {
-        if (query) {
-            return "A sua busca não produziu resultados";
+        if (isLoading && query) {
+            return "Buscando...";
         }
 
         if (isLoading) {
             return "Carregando...";
+        }
+
+        if (query) {
+            return "A sua busca não produziu resultados";
         }
 
         return "Parece que não há nenhum artigo por aqui";
