@@ -34,6 +34,7 @@ namespace MattCanello.NewsFeed.SearchApi.Controllers
             return CreatedAtAction("GetById", "Document", new { feedId = command.FeedId, id }, doc);
         }
 
+        [ResponseCache(Duration = 3600)]
         [HttpGet("feed/{feedId}/document/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
