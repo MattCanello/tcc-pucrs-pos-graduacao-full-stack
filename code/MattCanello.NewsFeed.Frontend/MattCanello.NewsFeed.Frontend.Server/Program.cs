@@ -31,7 +31,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDapr();
-            builder.Services.AddAppServices(builder.Configuration);
+            builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
             builder.Services.AddSignalR();
 
@@ -88,7 +88,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
             app.Run();
         }
 
-        private static void AddAppServices(this IServiceCollection services, IConfiguration configuration)
+        private static void AddAppServices(this IServiceCollection services)
         {
             services
                 .AddScoped<IArticleApp, ArticleApp>();
