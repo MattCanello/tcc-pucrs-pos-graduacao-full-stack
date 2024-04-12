@@ -7,12 +7,14 @@ using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Caching;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Decorators;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Filters;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Hubs;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json.Serialization;
 
@@ -49,7 +51,9 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             builder.Services.AddResponseCompression();
 
-            builder.AddDefaultTelemetry();
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.ArticleDetailsHits.Name, Metrics.FrontPageHits.Name, Metrics.ChannelHits.Name, Metrics.ChannelHits.Name, Metrics.SearchHits.Name),
+                tracing => tracing.AddSource(ActivitySources.ArticleApp.Name));
 
             var app = builder.Build();
 
@@ -106,6 +110,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             services
                 .Decorate<IFeedRepository, CachedFeedRepository>();
+
+            services
+                .Decorate<IArticleApp, ArticleAppMetricsDecorator>()
+                .Decorate<IArticleApp, ArticleAppLogsDecorator>();
 
             services
                 .AddScoped<INewArticlePublisher, NewArticlePublisher>()
