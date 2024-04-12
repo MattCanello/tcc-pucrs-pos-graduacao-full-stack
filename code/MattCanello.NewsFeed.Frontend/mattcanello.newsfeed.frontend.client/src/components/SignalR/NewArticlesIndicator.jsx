@@ -1,37 +1,45 @@
 import React, { useState } from 'react';
 import SignalRConnection from './SignalRConnection';
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../../style/NewArticlesIndicator.css';
 
 function NewArticlesIndicatorComponent({ channelId }) {
     const [newArticlesCount, setNewArticlesCount] = useState(0);
-
+    const [articlesQueue, setArticlesQueue] = useState([]);
+        
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         setNewArticlesCount(0);
+        setArticlesQueue([]);
     }, [location]);
 
     const events = SignalRConnection();
 
-    function onNewArticleFound(article) {
-        if (channelId !== undefined && article.channel.channelId !== channelId) {
-            return 0;
+    useEffect(() => {
+        function onNewArticleFound(article) {
+            if (channelId !== undefined && article.channel.channelId !== channelId) {
+                return 0;
+            }
+
+            const newQueue = [...articlesQueue];
+            newQueue.push(article);
+            setArticlesQueue(newQueue);
+
+            setNewArticlesCount(newArticlesCount + 1);
+            return 1;
         }
 
-        setNewArticlesCount(newArticlesCount + 1);
-        return 1;
-    }
-
-    useEffect(() => {
         events((article) => onNewArticleFound(article));
-    });
+    }, [newArticlesCount, articlesQueue, events, channelId]);
 
     function onNewEntriesButtonClicked() {
+        var event = new CustomEvent("dequeueArticles", { detail: { articles: articlesQueue } });
+        document.dispatchEvent(event);
+
+        setArticlesQueue([]);
         setNewArticlesCount(0);
-        navigate(window.location.pathname, { replace: true });
         return true;
     }
 

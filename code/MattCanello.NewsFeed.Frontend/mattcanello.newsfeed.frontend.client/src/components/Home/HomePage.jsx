@@ -14,6 +14,50 @@ function HomePage() {
         populateArticles();
     }, [q]);
 
+    useEffect(() => {
+        function onDequeueArticles(e) {
+            if (e === undefined || e === null) {
+                return;
+            }
+
+            if (e.detail === undefined || e.detail === null) {
+                return;
+            }
+
+            if (e.detail.articles === undefined || e.detail.articles === null) {
+                return;
+            }
+
+            const newArticles = [];
+
+            for (let a of e.detail.articles) {
+                if (newArticles.find(item => item.id == a.id))
+                    continue;
+
+                newArticles.push(a);
+            }
+
+            for (let a of articles) {
+                if (newArticles.find(item => item.id == a.id))
+                    continue;
+
+                newArticles.push(a);
+            }
+
+            setArticles(newArticles);
+        }
+
+        document.addEventListener(
+            "dequeueArticles",
+            onDequeueArticles,
+            false
+        );
+
+        return () => {
+            document.removeEventListener("dequeueArticles", onDequeueArticles);
+        };
+    }, [articles]);
+
     return (
         <>
             <NewArticlesIndicator />
