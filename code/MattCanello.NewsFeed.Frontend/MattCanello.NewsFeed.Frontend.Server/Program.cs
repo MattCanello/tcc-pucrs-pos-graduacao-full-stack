@@ -109,7 +109,14 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             services
                 .AddScoped<INewArticlePublisher, NewArticlePublisher>()
-                .AddScoped<INewEntryHandler, NewEntryHandler>();
+                .AddScoped<INewEntryHandler, PublishNewEntryHandler>()
+                .Decorate<INewEntryHandler, UpdateHomePageCacheNewEntryHandler>();
+
+            services
+                .AddScoped<HomePageCacheFilter>();
+
+            services
+                .AddScoped<IHomePageCachingService, InMemoryHomePageCachingService>();
 
             services
                 .AddAutoMapper(config =>

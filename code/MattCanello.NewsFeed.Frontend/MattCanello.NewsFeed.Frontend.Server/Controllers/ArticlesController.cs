@@ -1,6 +1,7 @@
 ﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Commands;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,6 +20,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
         }
 
         [HttpGet("articles")]
+        [ServiceFilter(typeof(HomePageCacheFilter))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Article>))]
         public async Task<IActionResult> GetFrontPage(CancellationToken cancellationToken = default)
         {

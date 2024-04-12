@@ -3,14 +3,14 @@ using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Domain.Handlers
 {
-    public sealed class NewEntryHandler : INewEntryHandler
+    public sealed class PublishNewEntryHandler : INewEntryHandler
     {
         private readonly ISearchClient _searchClient;
         private readonly IArticleFactory _articleFactory;
         private readonly IFeedRepository _feedRepository;
         private readonly INewArticlePublisher _newArticlePublisher;
 
-        public NewEntryHandler(ISearchClient searchClient, IArticleFactory articleFactory, IFeedRepository feedRepository, INewArticlePublisher newArticlePublisher)
+        public PublishNewEntryHandler(ISearchClient searchClient, IArticleFactory articleFactory, IFeedRepository feedRepository, INewArticlePublisher newArticlePublisher)
         {
             _searchClient = searchClient;
             _articleFactory = articleFactory;

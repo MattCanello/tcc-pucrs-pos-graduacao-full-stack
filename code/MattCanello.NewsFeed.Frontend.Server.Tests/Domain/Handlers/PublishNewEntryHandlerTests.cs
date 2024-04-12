@@ -10,12 +10,12 @@ using MattCanello.NewsFeed.Frontend.Server.Tests.Mocks;
 
 namespace MattCanello.NewsFeed.Frontend.Server.Tests.Domain.Handlers
 {
-    public class NewEntryHandlerTests
+    public class PublishNewEntryHandlerTests
     {
         [Fact]
         public async Task HandleAsync_GivenNullCommand_ShouldThrowException()
         {
-            var handler = new NewEntryHandler(null!, null!, null!, null!);
+            var handler = new PublishNewEntryHandler(null!, null!, null!, null!);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => handler.HandleAsync(null!));
 
@@ -29,7 +29,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Tests.Domain.Handlers
 
             var publisher = new MockedNewArticlePublisher();
 
-            var handler = new NewEntryHandler(
+            var handler = new PublishNewEntryHandler(
                 new MockedSearchClient((feedId, id) => searchDocument),
                 new ArticleFactory(mapper, new ArticleDetailsFactory()),
                 new MockedFeedRepository((feedId) => (feed, channel)),
@@ -52,7 +52,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Tests.Domain.Handlers
 
             var publisher = new MockedNewArticlePublisher();
 
-            var handler = new NewEntryHandler(
+            var handler = new PublishNewEntryHandler(
                 new MockedSearchClient((string feedId, string id) => null),
                 new ArticleFactory(mapper, new ArticleDetailsFactory()),
                 new MockedFeedRepository((feedId) => (feed, channel)),
