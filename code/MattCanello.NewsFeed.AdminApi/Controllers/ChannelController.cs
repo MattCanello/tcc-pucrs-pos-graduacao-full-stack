@@ -19,6 +19,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
             _channelApp = channelApp;
         }
 
+        [ResponseCache(Duration = 60)]
         [HttpGet("channel/{channelId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
