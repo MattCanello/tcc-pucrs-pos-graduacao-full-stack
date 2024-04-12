@@ -20,6 +20,7 @@ namespace MattCanello.NewsFeed.AdminApi.Controllers
         }
 
         [HttpGet("feed/{feedId}")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FeedWithChannel))]

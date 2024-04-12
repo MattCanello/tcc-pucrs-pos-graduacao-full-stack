@@ -39,6 +39,9 @@ namespace MattCanello.NewsFeed.AdminApi
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
 
+            builder.Services.AddResponseCaching();
+            builder.Services.AddResponseCompression();
+
             builder.AddDefaultTelemetry(
                 configureTracing: (builder) => builder.AddSource(ActivitySources.FeedApp.Name, ActivitySources.ChannelApp.Name));
 
@@ -52,6 +55,10 @@ namespace MattCanello.NewsFeed.AdminApi
             }
 
             app.UseAuthorization();
+
+            app.UseResponseCompression();
+
+            app.UseResponseCaching();
 
             app.MapControllers();
 
