@@ -34,7 +34,9 @@ const router = createBrowserRouter([
 ]);
 
 const manifestLink = document.getElementById('webmanifestLink');
-manifestLink.href = manifestLink.href.replace("/assets/", "/");
+manifestLink.href = manifestLink.href
+    .replace("/assets/", "/")
+    .replace(/manifest-(?<x>\w+)\.webmanifest/is, "manifest.webmanifest");
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
