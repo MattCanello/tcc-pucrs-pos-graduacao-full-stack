@@ -52,8 +52,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
             builder.Services.AddResponseCompression();
 
             builder.AddDefaultTelemetry(
-                metrics => metrics.AddMeter(Metrics.ArticleDetailsHits.Name, Metrics.FrontPageHits.Name, Metrics.ChannelHits.Name, Metrics.ChannelHits.Name, Metrics.SearchHits.Name),
-                tracing => tracing.AddSource(ActivitySources.ArticleApp.Name));
+                metrics => metrics.AddMeter(Metrics.ArticleDetailsHits.Name, Metrics.FrontPageHits.Name, 
+                    Metrics.ChannelHits.Name, Metrics.ChannelHits.Name, Metrics.SearchHits.Name,
+                    Metrics.NewEntryHits.Name),
+                tracing => tracing.AddSource(ActivitySources.ArticleApp.Name, ActivitySources.NewEntryHandler.Name));
 
             var app = builder.Build();
 
@@ -112,12 +114,16 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 .Decorate<IFeedRepository, CachedFeedRepository>();
 
             services
+                .AddScoped<INewArticlePublisher, NewArticlePublisher>()
+                .AddScoped<INewEntryHandler, NewEntryHandler>();
+
+            services
                 .Decorate<IArticleApp, ArticleAppMetricsDecorator>()
                 .Decorate<IArticleApp, ArticleAppLogsDecorator>();
 
             services
-                .AddScoped<INewArticlePublisher, NewArticlePublisher>()
-                .AddScoped<INewEntryHandler, NewEntryHandler>();
+                .Decorate<INewEntryHandler, NewEntryHandlerMetricsDecorator>()
+                .Decorate<INewEntryHandler, NewEntryHandlerLogsDecorator>();
 
             services
                 .AddAutoMapper(config =>

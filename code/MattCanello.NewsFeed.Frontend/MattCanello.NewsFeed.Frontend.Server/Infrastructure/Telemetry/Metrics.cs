@@ -8,5 +8,6 @@ namespace MattCanello.NewsFeed.Frontend.Server.Infrastructure.Telemetry
         public static readonly Meter ArticleDetailsHits = new Meter("MattCanello.NewsFeed.Frontend.ArticleDetailsHits", "1.0.0");
         public static readonly Meter ChannelHits = new Meter("MattCanello.NewsFeed.Frontend.ChannelHits", "1.0.0");
         public static readonly Meter SearchHits = new Meter("MattCanello.NewsFeed.Frontend.SearchHits", "1.0.0");
+        public static readonly Meter NewEntryHits = new Meter("MattCanello.NewsFeed.Frontend.NewEntryHits", "1.0.0");
     }
 }
