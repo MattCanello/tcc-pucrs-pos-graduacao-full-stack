@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../style/Thumbnail.css';
+import { useNavigate } from "react-router-dom";
 
-function Thumbnail({ imageTitle, imageSrc }) {
+function Thumbnail({ imageTitle, imageSrc, articleId, feedId }) {
+
+    const navigate = useNavigate();
 
     const imgContent = (imageSrc)
         ? <img title={imageTitle} src={imageSrc} />
@@ -11,12 +14,25 @@ function Thumbnail({ imageTitle, imageSrc }) {
         ? <figcaption>{imageTitle}</figcaption>
         : null;
 
-  return (
-      <figure>
-          {imgContent}
-          {figCaptionContent}
-      </figure>
-  );
+    function isArticlePage() {
+        return window.location.pathname === `/article/${feedId}/${articleId}`;
+    }
+
+    function navigateToArticle() {
+        if (isArticlePage()) {
+            return false;
+        }
+
+        navigate(`/article/${feedId}/${articleId}`);
+        return true;
+    }
+
+    return (
+        <figure onClick={navigateToArticle} className={isArticlePage() ? "" : "pointer"}>
+            {imgContent}
+            {figCaptionContent}
+        </figure>
+    );
 }
 
 export default Thumbnail;
