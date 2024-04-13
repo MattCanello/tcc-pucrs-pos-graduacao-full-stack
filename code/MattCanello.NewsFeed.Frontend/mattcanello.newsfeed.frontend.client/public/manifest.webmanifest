@@ -1,7 +1,7 @@
 {
   "name": "News Feed",
   "short_name": "News Feed",
-  "start_url": ".",
+  "start_url": "/",
   "lang": "pt-BR",
   "display": "standalone",
   "background_color": "#404040",
@@ -9,22 +9,22 @@
   "description": "Seu agregador de notícias",
   "icons": [
     {
-      "src": "/public/icon-140.png",
+      "src": "icon-140.png",
       "type": "image/png",
       "sizes": "140x140"
     },
     {
-      "src": "/public/icon-180.png",
+      "src": "icon-180.png",
       "type": "image/png",
       "sizes": "180x180"
     },
     {
-      "src": "/public/icon-192.png",
+      "src": "icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/public/icon-512.png",
+      "src": "icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
