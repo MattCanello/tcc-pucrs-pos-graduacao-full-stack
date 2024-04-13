@@ -40,7 +40,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins(EnvironmentVariables.FrontendBaseUrl())
+                        builder.WithOrigins(EnvironmentVariables.FrontendBaseUrls())
                             .AllowAnyHeader()
                             .WithMethods("GET", "POST")
                             .AllowCredentials();

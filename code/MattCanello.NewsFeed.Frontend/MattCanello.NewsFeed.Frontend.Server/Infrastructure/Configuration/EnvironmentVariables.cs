@@ -10,7 +10,7 @@
 
         public const string FRONTEND_BASE_URL = "FRONTEND_BASE_URL";
 
-        public static string FrontendBaseUrl() 
-            => Environment.GetEnvironmentVariable(FRONTEND_BASE_URL) ?? "http://localhost:5173";
+        public static string[] FrontendBaseUrls()
+            => (Environment.GetEnvironmentVariable(FRONTEND_BASE_URL) ?? "http://localhost:5173").Split(";", StringSplitOptions.RemoveEmptyEntries);
     }
 }
