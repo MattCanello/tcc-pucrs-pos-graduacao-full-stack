@@ -44,6 +44,10 @@
         grid-area: ThumbPublisherAndDate;
     }
 
+        main > section > article > figure.pointer {
+            cursor: pointer;
+        }
+
         main > section > article > figure > img {
             min-width: 30rem;
             box-shadow: 0.1rem 0.1rem 0.5rem var(--darker);

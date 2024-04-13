@@ -46,6 +46,8 @@ function Article({ article, options }) {
             <Thumbnail
                 imageTitle={(article.thumbnail) ? (article.thumbnail.caption || article.thumbnail.credit || article.title) : article.title}
                 imageSrc={(article.thumbnail) ? article.thumbnail.imageUrl : ''}
+                articleId={article.id}
+                feedId={article.feed.feedId}
             />
 
             <ChannelNameAndPublishDate channelName={article.channel.name} publishDate={article.publishDate} useAbsoluteTime={options && options.useAbsoluteTime} />
