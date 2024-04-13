@@ -42,7 +42,14 @@ namespace MattCanello.NewsFeed.Frontend.Server
                     {
                         builder.WithOrigins(EnvironmentVariables.FrontendBaseUrls())
                             .AllowAnyHeader()
-                            .WithMethods("GET", "POST")
+                            .WithMethods("GET", "POST", "OPTIONS")
+                            .AllowCredentials();
+
+                        builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("*")
+                            .AllowAnyHeader()
+                            .WithMethods("OPTIONS")
                             .AllowCredentials();
                     });
             });
@@ -58,9 +65,6 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 tracing => tracing.AddSource(ActivitySources.ArticleApp.Name, ActivitySources.NewEntryHandler.Name));
 
             var app = builder.Build();
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             if (app.Environment.IsDevelopment())
             {
@@ -82,8 +86,6 @@ namespace MattCanello.NewsFeed.Frontend.Server
             app.MapHub<ArticleHub>("/hubs/article");
 
             app.MapHealthChecks("/app/health");
-
-            app.MapFallbackToFile("/index.html");
 
             app.Run();
         }
