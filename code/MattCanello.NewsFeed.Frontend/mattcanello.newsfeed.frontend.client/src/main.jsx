@@ -33,6 +33,9 @@ const router = createBrowserRouter([
     }
 ]);
 
+const manifestLink = document.getElementById('webmanifestLink');
+manifestLink.href = manifestLink.href.replace("/assets/", "/");
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <RouterProvider router={router} />
