@@ -31,7 +31,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 Util.Mapper,
                 _rssClient,
                 new ChannelService(new ChannelFactory(), new InMemoryFeedConsumedPublisher()),
-                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher(), new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance), new InMemoryEntryPublisher(), new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
                 );
 
             await service.ProcessFeedAsync(feedId);
@@ -48,7 +48,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 Util.Mapper,
                 _rssClient,
                 new ChannelService(new ChannelFactory(), new InMemoryFeedConsumedPublisher()),
-                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), new InMemoryEntryPublisher(), new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance), new InMemoryEntryPublisher(), new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
                 );
 
             var exception = await Assert.ThrowsAsync<FeedNotFoundException>(() => service.ProcessFeedAsync(feedId));
@@ -68,7 +68,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Application
                 Util.Mapper,
                 _rssClient,
                 new ChannelService(new ChannelFactory(), channelPublisher),
-                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), entryPublisher, new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
+                new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance), entryPublisher, new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator())
                 );
 
             await service.ProcessFeedAsync(feedId);

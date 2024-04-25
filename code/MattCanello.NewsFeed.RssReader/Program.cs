@@ -12,6 +12,7 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Evalulators;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.EventPublishers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Handlers;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Policies;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Repositories;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Services;
@@ -27,6 +28,7 @@ using MattCanello.NewsFeed.RssReader.Infrastructure.Filters;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Formatters.Rss091;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Evaluators;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Parsers;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Repositories;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Strategies;
 using MattCanello.NewsFeed.RssReader.Infrastructure.Telemetry;
@@ -117,6 +119,10 @@ namespace MattCanello.NewsFeed.RssReader
             services
                 .AddSingleton<IPublishEntryPolicy, ForwardOnlyPublishEntryPolicy>()
                 .AddSingleton<IMostRecentPublishDateEvaluator, MostRecentPublishDateEvaluator>();
+
+            services
+                .AddSingleton<IContentParserEvaluator, SingleContentParserEvaluator>()
+                .AddSingleton<IContentParser, HtmlContentParser>();
         }
 
         private static void AddDefaultControllers(this IServiceCollection services)
