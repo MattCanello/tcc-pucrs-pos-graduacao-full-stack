@@ -36,10 +36,10 @@ function ArticleList({ articles, query, isLoading }) {
 
         const now = new Date();
         const publishDate = new Date(articles[0].publishDate);
-        const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+        const twentyDaysInMs = 20 * 24 * 60 * 60 * 1000;
         const timeDiffInMs = now.getTime() - publishDate.getTime();
 
-        if (timeDiffInMs < thirtyDaysInMs) {
+        if (timeDiffInMs < twentyDaysInMs) {
             return null;
         }
 
