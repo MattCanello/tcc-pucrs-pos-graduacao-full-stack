@@ -74,5 +74,15 @@ namespace MattCanello.NewsFeed.Frontend.Server.Tests.Infrastructure.HTML
 
             Assert.Equal(content, resultingString);
         }
+
+        [Theory, AutoData]
+        public void StripHtmlTags_GivenDivTags_ShouldRemoveFromString(string part1, string part2)
+        {
+            var inputHtml = $"{part1}<div class=\"c-float-left c-float-hang\"><aside id=\"CWIXtR\"><div data-anthem-component=\"readmore\" data-anthem-component-data=''></div>{part2}";
+
+            var resultingString = inputHtml.StripHtmlTags();
+
+            Assert.Equal($"{part1} {part2}", resultingString);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
+﻿using MattCanello.NewsFeed.Frontend.Server.Domain.Extensions;
+using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Models;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.HTML;
 using System.Net;
@@ -20,6 +21,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Factories
                 .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .Select(line => WebUtility.HtmlDecode(line))
                 .Where(line => !IsContinueReading(line))
+                .Select(line => TrimLastLine(line))
                 .ToArray();
 
             if (lines.Length == 0)
@@ -34,5 +36,8 @@ namespace MattCanello.NewsFeed.Frontend.Server.Domain.Factories
 
         public bool IsContinueReading(string line)
             => ContinueReadingPattern.IsMatch(line);
+
+        public string TrimLastLine(string line)
+            => line.TrimEllipseLastLine();
     }
 }
