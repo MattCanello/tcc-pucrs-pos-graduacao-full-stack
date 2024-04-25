@@ -14,7 +14,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Factories
             using var xml = XmlReader.Create(new StringReader(Resources.sample_rss_the_guardian_uk));
             var feed = SyndicationFeed.Load(xml);
 
-            var factory = new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance);
+            var factory = new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance);
             var entries = factory.FromRSS(feed);
 
             Assert.NotNull(entries);

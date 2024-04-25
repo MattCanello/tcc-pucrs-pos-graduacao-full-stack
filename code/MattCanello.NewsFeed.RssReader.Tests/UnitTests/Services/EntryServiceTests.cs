@@ -19,7 +19,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var rss = SyndicationFeed.Load(xml);
 
             var publisher = new InMemoryEntryPublisher();
-            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher, new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator() );
+            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance), publisher, new NoEntryPublishPolicy(), new MostRecentPublishDateEvaluator() );
 
             var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feed, rss);
             Assert.NotNull(publishedEntriesResponse);
@@ -40,7 +40,7 @@ namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Services
             var rss = SyndicationFeed.Load(xml);
 
             var publisher = new InMemoryEntryPublisher();
-            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance), publisher, new PublishEntryMockedPolicy(false), new MostRecentPublishDateEvaluator());
+            var service = new EntryService(new EntryFactory(EmptyNonStandardEnricherEvaluator.Instance, NoContentParserEvaluator.Instance), publisher, new PublishEntryMockedPolicy(false), new MostRecentPublishDateEvaluator());
 
             var publishedEntriesResponse = await service.ProcessEntriesFromRSSAsync(feed, rss);
             Assert.NotNull(publishedEntriesResponse);

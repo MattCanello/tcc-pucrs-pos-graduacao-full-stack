@@ -3,16 +3,19 @@ using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using System.ServiceModel.Syndication;
 using System.Xml.Linq;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 {
     public sealed class EntryFactory : IEntryFactory
     {
         private readonly INonStandardEnricherEvaluator _nonStandardEnricherEvaluator;
+        private readonly IContentParserEvaluator _contentParserEvaluator;
 
-        public EntryFactory(INonStandardEnricherEvaluator nonStandardEnricherEvaluator)
+        public EntryFactory(INonStandardEnricherEvaluator nonStandardEnricherEvaluator, IContentParserEvaluator contentParserEvaluator)
         {
             _nonStandardEnricherEvaluator = nonStandardEnricherEvaluator;
+            _contentParserEvaluator = contentParserEvaluator;
         }
 
         public IEnumerable<Entry> FromRSS(SyndicationFeed syndicationFeed)
@@ -41,6 +44,8 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 
                 foreach (var category in BuildCategories(item.Categories))
                     entry.Categories.Add(category);
+
+                ReadContent(item, entry);
 
                 EnrichWithNonStandardData(item, entry);
 
@@ -96,6 +101,22 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 
                 enricher.Enrich(entry, group.Select(g => g.GetObject<XElement>()));
             }
+        }
+
+        public void ReadContent(SyndicationItem rssItem, Entry entry)
+        {
+            ArgumentNullException.ThrowIfNull(rssItem);
+            ArgumentNullException.ThrowIfNull(entry);
+
+            var parser = _contentParserEvaluator.EvaluateParser(rssItem);
+            if (parser is null)
+                return;
+
+            var parsedContent = parser.TryParse(rssItem.Content);
+            if (parsedContent is null)
+                return;
+
+            entry.ApplyParsedContent(parsedContent);
         }
     }
 }
