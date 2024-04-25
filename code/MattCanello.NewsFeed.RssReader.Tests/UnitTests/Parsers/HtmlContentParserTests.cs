@@ -1,14 +1,99 @@
-﻿using MattCanello.NewsFeed.RssReader.Infrastructure.Parsers;
+﻿using AutoFixture.Xunit2;
+using MattCanello.NewsFeed.RssReader.Infrastructure.Parsers;
 using MattCanello.NewsFeed.RssReader.Tests.Properties;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using static MattCanello.NewsFeed.RssReader.Infrastructure.Parsers.HtmlContentParser;
 
 namespace MattCanello.NewsFeed.RssReader.Tests.UnitTests.Parsers
 {
     public sealed class HtmlContentParserTests
     {
+        [Fact]
+        public void TryParse_GivenNullContent_ShouldThrowException()
+        {
+            var parser = new HtmlContentParser(new Mock<ILogger<HtmlContentParser>>().Object);
+
+            var ex = Assert.Throws<ArgumentNullException>(() => parser.TryParse(null!));
+
+            Assert.NotNull(ex);
+            Assert.Equal("content", ex.ParamName);
+        }
+
+        [Theory, AutoData]
+        public void TryParse_GiveNotHtmlContent_ShouldReturnNull(string contentText)
+        {
+            var parser = new HtmlContentParser(new Mock<ILogger<HtmlContentParser>>().Object);
+            var content = new TextSyndicationContent(contentText, TextSyndicationContentKind.Plaintext);
+
+            var parsedContent = parser.TryParse(content);
+
+            Assert.Null(parsedContent);
+        }
+
+        [Fact]
+        public void TryParse_GiveNotTextContent_ShouldReturnNull()
+        {
+            var parser = new HtmlContentParser(new Mock<ILogger<HtmlContentParser>>().Object);
+            var content = new XmlSyndicationContent(XmlReader.Create(new StringReader("<root></root>")));
+
+            var parsedContent = parser.TryParse(content);
+
+            Assert.Null(parsedContent);
+        }
+
+        [Fact]
+        public void TryParse_GiveEmptyHtmlContent_ShouldReturnNull()
+        {
+            var parser = new HtmlContentParser(new Mock<ILogger<HtmlContentParser>>().Object);
+            var content = new TextSyndicationContent("", TextSyndicationContentKind.Html);
+
+            var parsedContent = parser.TryParse(content);
+
+            Assert.Null(parsedContent);
+        }
+
+        [Theory, AutoData]
+        public void ToThumbnail_GivenValidData_ShouldResultExpectedObject(HtmlFigure htmlFigure)
+        {
+            var thumb = htmlFigure.ToThumbnail();
+
+            Assert.NotNull(thumb);
+            Assert.Equal(htmlFigure.Image!.Source, thumb.Url);
+            Assert.Equal(htmlFigure.Image!.AltText, thumb.Credit);
+        }
+
+        [Theory, AutoData]
+        public void ToThumbnail_GivenNullImageSource_ShouldReturnNull(HtmlFigure htmlFigure)
+        {
+            htmlFigure.Image!.Source = null;
+            var thumb = htmlFigure.ToThumbnail();
+
+            Assert.Null(thumb);
+        }
+
+        [Theory, AutoData]
+        public void ToThumbnail_GivenNullImage_ShouldReturnNull(HtmlFigure htmlFigure)
+        {
+            htmlFigure.Image = null;
+            var thumb = htmlFigure.ToThumbnail();
+
+            Assert.Null(thumb);
+        }
+
+        [Theory, AutoData]
+        public void ToThumbnail_GivenNullImageAltText_ShouldUseCaption(HtmlFigure htmlFigure)
+        {
+            htmlFigure.Image!.AltText = null;
+            var thumb = htmlFigure.ToThumbnail();
+
+            Assert.NotNull(thumb);
+            Assert.Equal(htmlFigure.Image!.Source, thumb.Url);
+            Assert.Equal(htmlFigure.Caption, thumb.Credit);
+        }
+
         [Fact]
         public void TryParse_GivenValidEntry_ShouldParseData()
         {

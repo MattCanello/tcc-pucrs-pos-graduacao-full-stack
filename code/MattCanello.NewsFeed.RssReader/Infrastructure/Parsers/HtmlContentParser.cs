@@ -23,10 +23,10 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
         {
             ArgumentNullException.ThrowIfNull(content);
 
-            if (!"html".Equals(content.Type))
+            if (content is not TextSyndicationContent textSyndicationContent)
                 return null;
 
-            if (content is not TextSyndicationContent textSyndicationContent)
+            if (!"html".Equals(content.Type))
                 return null;
 
             var html = textSyndicationContent.Text;
@@ -57,10 +57,8 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
             ArgumentNullException.ThrowIfNull(figureHtml);
 
             var htmlFigure = TryParseHtmlFigure(figureHtml);
-            if (htmlFigure?.Image is null || string.IsNullOrEmpty(htmlFigure.Image.Source))
-                return null;
 
-            return new Thumbnail() { Url = htmlFigure.Image.Source, Credit = htmlFigure.Image.AltText ?? htmlFigure.Caption };
+            return htmlFigure?.ToThumbnail();
         }
 
         private HtmlFigure? TryParseHtmlFigure(string figureHtml)
@@ -89,6 +87,18 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
 
             [XmlElement("figcaption")]
             public string? Caption { get; set; }
+
+            public Thumbnail? ToThumbnail()
+            {
+                if (Image is null || string.IsNullOrEmpty(Image.Source))
+                    return null;
+
+                return new Thumbnail()
+                {
+                    Url = Image.Source,
+                    Credit = Image.AltText ?? Caption
+                };
+            }
         }
 
         [Serializable]
