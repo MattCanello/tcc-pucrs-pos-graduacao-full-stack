@@ -10,7 +10,7 @@ import ChannelNameAndPublishDate from './ChannelNameAndPublishDate';
 
 function Article({ article, options }) {
     function renderDetails() {
-        if (article.details !== undefined) {
+        if (typeof article.details !== 'undefined' && article.details != null) {
             return <ArticleDetails summary={article.details.summary} description={article.details.lines} expanded={options ? options.expanded : false} />
         }
 
