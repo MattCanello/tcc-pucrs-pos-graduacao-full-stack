@@ -133,5 +133,24 @@ namespace MattCanello.NewsFeed.RssReader.Tests.Properties {
                 return ResourceManager.GetString("sample-rss-the-guardian-uk", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xml:lang=&quot;en&quot;&gt;
+        ///	&lt;title&gt;The Verge -  All Posts&lt;/title&gt;
+        ///	&lt;icon&gt;https://cdn.vox-cdn.com/community_logos/52801/VER_Logomark_32x32..png&lt;/icon&gt;
+        ///	&lt;updated&gt;2024-04-25T10:39:57-04:00&lt;/updated&gt;
+        ///	&lt;id&gt;https://www.theverge.com/rss/full.xml&lt;/id&gt;
+        ///	&lt;link type=&quot;text/html&quot; href=&quot;https://www.theverge.com/&quot; rel=&quot;alternate&quot;/&gt;
+        ///	&lt;entry&gt;
+        ///		&lt;published&gt;2024-04-25T10:39:57-04:00&lt;/published&gt;
+        ///		&lt;updated&gt;2024-04-25T10:39:57-04:00&lt;/updated&gt;
+        ///		&lt;titl [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string sample_rss_the_verge {
+            get {
+                return ResourceManager.GetString("sample-rss-the-verge", resourceCulture);
+            }
+        }
     }
 }

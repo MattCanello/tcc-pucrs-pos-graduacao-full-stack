@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Responses;
+using System.ComponentModel.DataAnnotations;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Models
 {
@@ -29,5 +30,19 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Models
         public IList<Thumbnail> Thumbnails { get; set; }
 
         public IList<Author> Authors { get; set; }
+
+        public void ApplyParsedContent(ParsedContent parsedContent)
+        {
+            ArgumentNullException.ThrowIfNull(parsedContent);
+
+            if (string.IsNullOrEmpty(Description))
+                Description = parsedContent.Description;
+
+            if (parsedContent.Thumbnail is null)
+                return;
+
+            Thumbnails ??= new List<Thumbnail>(1);
+            Thumbnails.Add(parsedContent.Thumbnail);
+        }
     }
 }
