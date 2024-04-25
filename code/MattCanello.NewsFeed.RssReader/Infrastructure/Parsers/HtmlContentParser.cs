@@ -1,4 +1,5 @@
-﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
+﻿using MattCanello.NewsFeed.RssReader.Domain.Extensions;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using MattCanello.NewsFeed.RssReader.Domain.Responses;
 using System.Net;
@@ -6,12 +7,13 @@ using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Xml.XPath;
 
 namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
 {
     public sealed class HtmlContentParser : IContentParser
     {
-        private readonly static Regex FigureRegex = new Regex(@"<figure>.*<\/figure>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        private readonly static Regex FigureRegex = new Regex(@"<figure>(?:(?!<figure>|<\/figure>).)*<img[^>]*>(?:(?!<figure>|<\/figure>).)*<\/figure>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
         private readonly ILogger<HtmlContentParser> _logger;
 
         public HtmlContentParser(ILogger<HtmlContentParser> logger)
@@ -67,9 +69,19 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
 
             try
             {
-                var xmlSerializer = new XmlSerializer(typeof(HtmlFigure));
-                var htmlFigure = xmlSerializer.Deserialize(new StringReader(figureHtml)) as HtmlFigure;
-                return htmlFigure;
+                var xDoc = new XPathDocument(new StringReader(figureHtml));
+                var nav = xDoc.CreateNavigator();
+                var imgNode = nav.SelectSingleNode(".//img");
+
+                if (imgNode is null)
+                    return null;
+
+                var alt = imgNode.GetAttribute("alt", "")?.ToNullWhenEmpty();
+                var src = imgNode.GetAttribute("src", "")?.ToNullWhenEmpty();
+
+                var figcaption = nav.SelectSingleNode(".//figcaption")?.Value?.ToNullWhenEmpty();
+
+                return new HtmlFigure(new HtmlImg(src, alt), figcaption);
             }
             catch (Exception ex)
             {
@@ -82,6 +94,13 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
         [XmlRoot("figure")]
         public sealed record HtmlFigure
         {
+            public HtmlFigure() { }
+            public HtmlFigure(HtmlImg? image, string? caption) 
+            {
+                Image = image;
+                Caption = caption;
+            }
+
             [XmlElement("img")]
             public HtmlImg? Image { get; set; }
 
@@ -105,6 +124,13 @@ namespace MattCanello.NewsFeed.RssReader.Infrastructure.Parsers
         [XmlRoot("img")]
         public sealed record HtmlImg
         {
+            public HtmlImg() { }
+            public HtmlImg(string? source, string? altText = null) 
+            {
+                Source = source;
+                AltText = altText;
+            }
+
             [XmlAttribute("alt")]
             public string? AltText { get; set; }
 

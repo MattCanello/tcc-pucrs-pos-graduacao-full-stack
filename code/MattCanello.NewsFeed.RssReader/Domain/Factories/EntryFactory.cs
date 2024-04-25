@@ -1,9 +1,9 @@
 ﻿using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Enrichers;
 using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Factories;
+using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
 using MattCanello.NewsFeed.RssReader.Domain.Models;
 using System.ServiceModel.Syndication;
 using System.Xml.Linq;
-using MattCanello.NewsFeed.RssReader.Domain.Interfaces.Parsers;
 
 namespace MattCanello.NewsFeed.RssReader.Domain.Factories
 {
