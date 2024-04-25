@@ -42,8 +42,7 @@ main > header > nav {
 
 @media only screen and (min-width: 961px) {
     main > header > nav {
-        display: grid;
-        grid-template-columns: auto auto;
+        display: flex;
     }
 
         main > header > nav > button {
@@ -53,12 +52,14 @@ main > header > nav {
             background-color: transparent;
             color: var(--text-light);
             border: 0 none;
+            width: 2rem;
         }
 
         main > header > nav > ol {
             overflow: hidden;
             scrollbar-width: thin;
             transform: unset;
+            max-width: 58rem;
         }
 
             main > header > nav > ol > li {

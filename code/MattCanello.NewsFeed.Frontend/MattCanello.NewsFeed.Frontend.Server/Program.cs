@@ -1,4 +1,3 @@
-using Dapr.Client;
 using MattCanello.NewsFeed.Cross.Dapr.Extensions;
 using MattCanello.NewsFeed.Cross.Telemetry.Extensions;
 using MattCanello.NewsFeed.Frontend.Server.Domain.Application;
@@ -8,12 +7,14 @@ using MattCanello.NewsFeed.Frontend.Server.Domain.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Caching;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Clients;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Configuration;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Decorators;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.EventPublishers;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Filters;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Hubs;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Interfaces;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Profiles;
 using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Repositories;
+using MattCanello.NewsFeed.Frontend.Server.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json.Serialization;
 
@@ -30,7 +31,7 @@ namespace MattCanello.NewsFeed.Frontend.Server
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDapr();
-            builder.Services.AddAppServices(builder.Configuration);
+            builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
             builder.Services.AddSignalR();
 
@@ -39,19 +40,31 @@ namespace MattCanello.NewsFeed.Frontend.Server
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins(EnvironmentVariables.FrontendBaseUrl())
+                        builder.WithOrigins(EnvironmentVariables.FrontendBaseUrls())
                             .AllowAnyHeader()
-                            .WithMethods("GET", "POST")
+                            .WithMethods("GET", "POST", "OPTIONS")
+                            .AllowCredentials();
+
+                        builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("*")
+                            .AllowAnyHeader()
+                            .WithMethods("OPTIONS")
                             .AllowCredentials();
                     });
             });
 
-            builder.AddDefaultTelemetry();
+            builder.Services.AddResponseCaching();
+
+            builder.Services.AddResponseCompression();
+
+            builder.AddDefaultTelemetry(
+                metrics => metrics.AddMeter(Metrics.ArticleDetailsHits.Name, Metrics.FrontPageHits.Name, 
+                    Metrics.ChannelHits.Name, Metrics.ChannelHits.Name, Metrics.SearchHits.Name,
+                    Metrics.NewEntryHits.Name),
+                tracing => tracing.AddSource(ActivitySources.ArticleApp.Name, ActivitySources.NewEntryHandler.Name));
 
             var app = builder.Build();
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
 
             if (app.Environment.IsDevelopment())
             {
@@ -62,6 +75,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             app.UseCors();
 
+            app.UseResponseCaching();
+
+            app.UseResponseCompression();
+
             app.UseAuthorization();
 
             app.MapControllers();
@@ -70,12 +87,10 @@ namespace MattCanello.NewsFeed.Frontend.Server
 
             app.MapHealthChecks("/app/health");
 
-            app.MapFallbackToFile("/index.html");
-
             app.Run();
         }
 
-        private static void AddAppServices(this IServiceCollection services, IConfiguration configuration)
+        private static void AddAppServices(this IServiceCollection services)
         {
             services
                 .AddScoped<IArticleApp, ArticleApp>();
@@ -103,6 +118,14 @@ namespace MattCanello.NewsFeed.Frontend.Server
             services
                 .AddScoped<INewArticlePublisher, NewArticlePublisher>()
                 .AddScoped<INewEntryHandler, NewEntryHandler>();
+
+            services
+                .Decorate<IArticleApp, ArticleAppMetricsDecorator>()
+                .Decorate<IArticleApp, ArticleAppLogsDecorator>();
+
+            services
+                .Decorate<INewEntryHandler, NewEntryHandlerMetricsDecorator>()
+                .Decorate<INewEntryHandler, NewEntryHandlerLogsDecorator>();
 
             services
                 .AddAutoMapper(config =>

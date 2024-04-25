@@ -1,18 +1,37 @@
 import { useRouteError } from "react-router-dom";
+import Footer from './Footer';
+import AppName from "./AppName";
 
 export default function ErrorPage() {
     const error = useRouteError();
     console.log(error);
 
+    function getMessage() {
+        if (error.status == 404) {
+            return "Página não encontrada";
+        }
+
+        return (
+            <>
+                <p>Aconteceu um erro inesperado.</p>
+                <p>{error.statusText || error.message}</p>
+            </>
+        );
+    }
+
     return (
-        <section>
-            <h2>Ooops!</h2>
+        <main>
+            <header>
+                <AppName />
+            </header>
 
-            <p>Aconteceu um erro inesperado.</p>
+            <section>
+                <aside className="error">
+                    {getMessage()}
+                </aside>
+            </section>
 
-            <p>
-                <em>{error.statusText || error.message}</em>
-            </p>
-        </section>
+            <Footer />
+        </main>
     );
 }

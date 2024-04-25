@@ -36,6 +36,9 @@ namespace MattCanello.NewsFeed.SearchApi
             builder.Services.AddAppServices();
             builder.Services.ConfigureHealthChecks();
 
+            builder.Services.AddResponseCaching();
+            builder.Services.AddResponseCompression();
+
             builder.AddDefaultTelemetry(
                 metrics => metrics
                     .AddMeter(Metrics.IndexedDocuments.Name)
@@ -56,6 +59,10 @@ namespace MattCanello.NewsFeed.SearchApi
             }
 
             app.UseAuthorization();
+
+            app.UseResponseCaching();
+
+            app.UseResponseCompression();
 
             app.MapControllers();
 

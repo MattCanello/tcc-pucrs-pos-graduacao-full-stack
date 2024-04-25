@@ -15,9 +15,7 @@
 /* Mobile */
 @media only screen and (max-width: 961px) {
     main > section > article {
-        width: 100%;
-        margin-left: 0.5rem;
-        margin-right: 0.75rem;
+        width: 95vw;
         grid-auto-columns: 1fr;
         grid-template-columns: min-content 1fr;
         grid-template-rows: min-content 1fr min-content min-content;
@@ -29,6 +27,7 @@
     }
 
         main > section > article.expanded {
+            width: 95vw;
             display: grid;
             grid-auto-columns: 1fr;
             grid-template-columns: auto;

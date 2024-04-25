@@ -1,9 +1,23 @@
-import React from 'react';
-import { useLoaderData } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 import Article from './Article';
+import { useParams } from 'react-router';
+import { getArticle } from '../../functions/Articles';
 
 function ArticlePage() {
-    const article = useLoaderData();
+    const params = useParams();
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [article, setArticle] = useState(null);
+
+    useEffect(() => {
+        setIsLoading(true);
+        setArticle(null);
+
+        getArticle({ params: params }).then(data => {
+            setArticle(data);
+            setIsLoading(false);
+        });
+    }, [params]);
 
     const options = {
         expanded: true,
@@ -17,8 +31,8 @@ function ArticlePage() {
 
     return (
         <section>
-            {isDocumentNotFound
-                ? <aside className="empty">Artigo não encontrado</aside>
+            {(isDocumentNotFound || isLoading)
+                ? <aside className="empty">{isDocumentNotFound ? "Artigo não encontrado" : "Carregando..."}</aside>
                 : <Article article={article} options={options} />}
         </section>
     );

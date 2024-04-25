@@ -14,6 +14,7 @@ namespace MattCanello.NewsFeed.Frontend.Server.Controllers
             => _channelRepository = channelRepository;
 
         [HttpGet("")]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Channel>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
