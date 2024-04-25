@@ -82,7 +82,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
                 yield return new Category(category.Name, category.Label, category.Scheme);
         }
 
-        public void EnrichWithNonStandardData(SyndicationItem rssItem, Entry entry)
+        private void EnrichWithNonStandardData(SyndicationItem rssItem, Entry entry)
         {
             ArgumentNullException.ThrowIfNull(rssItem);
             ArgumentNullException.ThrowIfNull(entry);
@@ -103,7 +103,7 @@ namespace MattCanello.NewsFeed.RssReader.Domain.Factories
             }
         }
 
-        public void ReadContent(SyndicationItem rssItem, Entry entry)
+        private void ReadContent(SyndicationItem rssItem, Entry entry)
         {
             ArgumentNullException.ThrowIfNull(rssItem);
             ArgumentNullException.ThrowIfNull(entry);
