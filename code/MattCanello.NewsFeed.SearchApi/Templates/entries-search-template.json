@@ -14,7 +14,17 @@
         }
       },
       "from": "{{from}}",
-      "size": "{{size}}"
+      "size": "{{size}}",
+      "sort": [
+        {
+          "publishDate": {
+            "order": "desc"
+          },
+          "indexDate": {
+            "order": "desc"
+          }
+        }
+      ]
     },
     "params": {
       "query_string": "Query string"
