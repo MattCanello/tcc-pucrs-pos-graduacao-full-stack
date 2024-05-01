@@ -7,7 +7,7 @@ function Thumbnail({ imageTitle, imageSrc, articleId, feedId }) {
     const navigate = useNavigate();
 
     const imgContent = (imageSrc)
-        ? <img title={imageTitle} src={imageSrc} />
+        ? <img loading="lazy" title={imageTitle} src={imageSrc} />
         : null;
 
     const figCaptionContent = (imageSrc)
