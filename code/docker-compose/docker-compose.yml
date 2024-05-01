@@ -120,12 +120,13 @@ services:
     container_name: rss-reader
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedrssreader
     build:
-      context: ..
-      dockerfile: ./MattCanello.NewsFeed.RssReader/Dockerfile
+      context: ../..
+      dockerfile: ./code/MattCanello.NewsFeed.RssReader/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+      - "64705:80"
     networks:
       - backend
 
@@ -146,12 +147,13 @@ services:
     container_name: cron-api
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedcronapi
     build:
-      context: ..
-      dockerfile: ./MattCanello.NewsFeed.CronApi/Dockerfile
+      context: ../..
+      dockerfile: ./code/MattCanello.NewsFeed.CronApi/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+      - "64706:80"
     networks:
       - backend
       
@@ -172,8 +174,8 @@ services:
     container_name: search-api
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedsearchapi
     build:
-      context: ..
-      dockerfile: ./MattCanello.NewsFeed.SearchApi/Dockerfile
+      context: ../..
+      dockerfile: ./code/MattCanello.NewsFeed.SearchApi/Dockerfile
     depends_on:
       - elasticsearch
     environment:
@@ -181,6 +183,7 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "80"
+      - "64708:80"
     networks:
       - backend
       
@@ -200,8 +203,8 @@ services:
     container_name: admin-api
     image: ${DOCKER_REGISTRY-}mattcanellonewsfeedadminapi
     build:
-      context: ..
-      dockerfile: ./MattCanello.NewsFeed.AdminApi/Dockerfile
+      context: ../..
+      dockerfile: ./code/MattCanello.NewsFeed.AdminApi/Dockerfile
     depends_on:
       - elasticsearch
     environment:
@@ -209,6 +212,7 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "80"
+      - "64707:80"
     networks:
       - backend
       
@@ -231,8 +235,8 @@ services:
       - mattcanello.newsfeed.searchapi-dapr
       - mattcanello.newsfeed.adminapi-dapr
     build:
-      context: ..
-      dockerfile: ./MattCanello.NewsFeed.Frontend/MattCanello.NewsFeed.Frontend.Server/Dockerfile
+      context: ../..
+      dockerfile: ./code/MattCanello.NewsFeed.Frontend/MattCanello.NewsFeed.Frontend.Server/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - FRONTPAGE_ARTICLE_COUNT=30
