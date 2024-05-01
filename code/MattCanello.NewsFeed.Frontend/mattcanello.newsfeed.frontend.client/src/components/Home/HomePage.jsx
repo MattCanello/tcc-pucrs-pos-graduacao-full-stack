@@ -44,6 +44,10 @@ function HomePage() {
                 newArticles.push(a);
             }
 
+            newArticles.sort(function (a, b) {
+                return new Date(b.publishDate) - new Date(a.publishDate);
+            });
+
             setArticles(newArticles);
         }
 
