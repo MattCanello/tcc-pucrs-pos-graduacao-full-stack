@@ -10,16 +10,28 @@ export async function getQuerySearchParam(params) {
 }
 
 export async function getHomePageArticles() {
+    if (!isServiceOnline()) {
+        return [];
+    }
+
     const response = await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/articles`);
     const articles = await response.json();
     return articles;
 }
 
 export async function searchArticles(q) {
+    if (!isServiceOnline()) {
+        return [];
+    }
+
     const response = q
         ? await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/search?q=${q}`)
         : await fetch(`${import.meta.env.VITE_FRONTEND_SERVER_BASE_ADDRESS}/articles`);
 
     const articles = await response.json();
     return articles;
+}
+
+export function isServiceOnline() {
+    return import.meta.env.VITE_IS_SERVICE_ONLINE != "false";
 }

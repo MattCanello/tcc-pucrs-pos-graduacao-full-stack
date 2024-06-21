@@ -4,6 +4,7 @@ import '../../style/ChannelNavigation.css';
 import { NavLink } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { getChannelList } from "../../functions/Channels";
+import { isServiceOnline } from '../../functions/Home';
 
 function ChannelNavigation() {
     const { q } = useLoaderData();
@@ -51,6 +52,18 @@ function ChannelNavigation() {
         );
     }
 
+    function renderAll() {
+        if (!isServiceOnline()) {
+            return null;
+        }
+
+        return (<li key="__all">
+            <NavLink to={"/"} className={({ isActive, isPending }) => isActive && !q ? "selected" : isPending ? "pending" : ""}>
+                Tudo
+            </NavLink>
+        </li>);
+    }
+
     return (
         <nav className={isExpanded ? "expanded" : null}>
             {renderMenuButton()}
@@ -64,11 +77,7 @@ function ChannelNavigation() {
                     : null
                 }
 
-                <li key="__all">
-                    <NavLink to={"/"} className={({ isActive, isPending }) => isActive && !q ? "selected" : isPending ? "pending" : ""}>
-                        Tudo
-                    </NavLink>
-                </li>
+                {renderAll()}
 
                 {channelData}
             </ol>
