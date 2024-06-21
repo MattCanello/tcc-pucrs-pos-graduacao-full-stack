@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../style/ArticleList.css';
 import Article from './Article';
+import { isServiceOnline } from '../../functions/Home';
 
 function ArticleList({ articles, query, isLoading }) {
 
@@ -8,7 +9,7 @@ function ArticleList({ articles, query, isLoading }) {
         key={article.id}
         article={article}
     />);
-
+    
     function getEmptyMessage() {
         if (isLoading && query) {
             return "Buscando...";
@@ -25,8 +26,12 @@ function ArticleList({ articles, query, isLoading }) {
         return "Parece que não há nenhum artigo por aqui";
     }
 
-    const emptyList = (articles || []).length == 0
+    const emptyList = (articles || []).length == 0 && isServiceOnline()
         ? <aside className="empty">{getEmptyMessage()}</aside>
+        : null;
+
+    const serviceOffline = (isServiceOnline() == false)
+        ? <aside className="empty">A aplicação foi descontinuada.</aside>
         : null;
 
     function renderOldFeed() {
@@ -52,6 +57,8 @@ function ArticleList({ articles, query, isLoading }) {
 
     return (
         <section>
+            {serviceOffline}
+            
             {renderOldFeed()}
 
             {emptyList}
